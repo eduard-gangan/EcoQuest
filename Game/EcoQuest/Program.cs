@@ -76,7 +76,7 @@ to maintain modularity, extensibility, and maintainability.
 */
 
 
-namespace WorldOfZuul
+namespace EcoQuest
 {
     public class Program
     {
