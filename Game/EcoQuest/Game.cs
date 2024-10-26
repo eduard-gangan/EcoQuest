@@ -21,9 +21,7 @@
             Room? srilnaka_townhall = new("Town Hall", "You are at the Town Hall, you can see the mayor's office but the door is closed and you're not allowed in, he doesn't speak to no names.");
             Room? srilanka_recycling_station = new("Recycling Station", "You are at the Recycling Station, currently it is not working.");
 
-            // Room? pub = new("Pub", "You've entered the campus pub. It's a cozy place, with a few students chatting over drinks. There's a bar near you and some pool tables at the far end.");
-            // Room? lab = new("Lab", "You're in a computing lab. Desks with computers line the walls, and there's an office to the east. The hum of machines fills the room.");
-            // Room? office = new("Office", "You've entered what seems to be an administration office. There's a large desk with a computer on it, and some bookshelves lining one wall.");
+
 
             start.SetExits(null, srilanka_boat, null, null); // North, East, South, West
 
@@ -32,13 +30,7 @@
             srilanka_beach.SetExit("west", srilanka_port);
             srilanka_recycling_station.SetExit("south", srilanka_port);
             srilnaka_townhall.SetExit("east", srilanka_port);
-            // theatre.SetExit("west", outside);
 
-            // pub.SetExit("east", outside);
-
-            // lab.SetExits(outside, office, null, null);
-
-            // office.SetExit("west", lab);
 
             currentRoom = start;
         }
