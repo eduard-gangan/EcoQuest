@@ -1,4 +1,6 @@
-﻿namespace EcoQuest
+﻿using System;
+
+namespace EcoQuest
 {
     public class Game
     {
