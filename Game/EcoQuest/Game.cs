@@ -46,7 +46,7 @@ namespace EcoQuest
             bool continuePlaying = true;
             while (continuePlaying)
             {
-                Console.WriteLine(currentRoom?.ShortDescription);
+                Console.WriteLine(currentRoom?.RoomName);
                 Console.Write("> ");
 
                 string? input = Console.ReadLine();
@@ -68,7 +68,7 @@ namespace EcoQuest
                 switch (command.Name)
                 {
                     case "look":
-                        Console.WriteLine(currentRoom?.LongDescription);
+                        Console.WriteLine(currentRoom?.RoomDescription);
                         break;
 
                     case "back":
