@@ -92,6 +92,12 @@ namespace EcoQuest
                     case "help":
                         PrintHelp();
                         break;
+                    case "balance":
+                        Console.WriteLine($"You currently have {Money.Get()} EcoCoins in your wallet!");
+                        break;
+                    case "reputation":
+                        Console.WriteLine($"You currently have {Reputation.Get()} reputation!");
+                        break;
 
                     default:
                         Console.WriteLine("I don't know what command.");
@@ -132,6 +138,8 @@ namespace EcoQuest
             Console.WriteLine("Navigate by typing 'north', 'south', 'east', or 'west'.");
             Console.WriteLine("Type 'look' for more details.");
             Console.WriteLine("Type 'back' to go to the previous room.");
+            Console.WriteLine("Type 'balance' to see how many EcoCoins you have.");
+            Console.WriteLine("Type 'reputation' to see your reputation.");
             Console.WriteLine("Type 'help' to print this message again.");
             Console.WriteLine("Type 'quit' to exit the game.");
         }

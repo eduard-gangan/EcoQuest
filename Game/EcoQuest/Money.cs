@@ -11,14 +11,14 @@ Use the Money.Get() method to get the current amount of money anywhere in the co
 ex. Money.Get() will return the current amount of money, in integer format
 
 2.Adding money
-Use the Money.AddMoney() method for adding money anywhere in the code by passing it the amount
+Use the Money.Add() method for adding money anywhere in the code by passing it the amount
 you want to increase the money by
-ex. Money.AddMoney(30) will increase it by 30
+ex. Money.Add(30) will increase it by 30
 
 3.Decreasing money
-Use the  Money.DecreaseMoney() method for decreasing money anywhere in the code by passing it the amount
+Use the  Money.Decrease() method for decreasing money anywhere in the code by passing it the amount
 you want to decrease the money by. You cannot decrease it lower than 0.
-ex. Money.DecreaseMoney(30) will decrease it by 30
+ex. Money.Decrease(30) will decrease it by 30
 
 
  */
@@ -29,12 +29,12 @@ namespace EcoQuest
     {
         private static int money = 0;
 
-        public static void AddMoney(int amount)
+        public static void Add(int amount)
         {
             money += amount;
         }
 
-        public static void DecreaseMoney(int amount)
+        public static void Decrease(int amount)
         {
             if (money - amount >= 0)
             {
