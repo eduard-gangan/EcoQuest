@@ -124,6 +124,8 @@ namespace EcoQuest
 
         private static void PrintWelcome()
         {
+            Console.Clear(); //This doesn't work properly
+            Console.WriteLine("\x1b[3J"); //For some reason this clears the console, I found this on stackoverflow -V
             Console.WriteLine("Welcome to EcoQuest!");
             Console.WriteLine("EcoQuest is a new, incredibly interesting adventure game.");
             PrintHelp();
