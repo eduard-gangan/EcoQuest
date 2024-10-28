@@ -1,24 +1,24 @@
-namespace EcoQuest
+namespace EcoQuest;
 
-pulic class Item
+public class Item
 {
-   public string name { get; private set; }
-   public string descripion { get; private set; }
-   public bool droppable { get; set; }
-   public int numberOfTimeUsable { get; private set; }
+   public string Name { get; private set; }
+   public string Description { get; private set; }
+   public bool Droppable { get; set; }
+   public int NumberOfTimeUsable { get; set; }
 
-   
+
    public Item(string name, string description, bool droppable, int numberOfTimeUsable)
    {
-      this.name = name;
-      this.descripion = descripion;
-      this.droppable = droppable;
-      this.numberOfTimeUsable = numberOfTimeUsable;
+      this.Name = name;
+      this.Description = description;
+      this.Droppable = droppable;
+      this.NumberOfTimeUsable = numberOfTimeUsable;
    }
 
-   public void printDescription()
+   public void PrintDescription()
    {
-      Console.WriteLine(this.descripion);
+      Console.WriteLine(this.Description);
    }
 
 }

@@ -38,10 +38,16 @@ namespace EcoQuest
         }
 
         public void Play()
+
         {
             Parser parser = new();
 
             PrintWelcome();
+
+            //For testing :D
+            Inventory.InventoryCapacity = 10;
+            Item dick = new("dick", "no description", true, 10);
+            Inventory.PickUpItem(dick);
 
             bool continuePlaying = true;
             while (continuePlaying)
@@ -108,6 +114,9 @@ namespace EcoQuest
                             Console.WriteLine($"You currently have {Energy.Get()} energy!");
                         }
                         break;
+                    case "inventory":
+                        Inventory.DisplayInventory();
+                        break;
 
                     default:
                         Console.WriteLine("I don't know that command.");
@@ -153,6 +162,7 @@ namespace EcoQuest
             Console.WriteLine("Type 'balance' to see how many EcoCoins you have.");
             Console.WriteLine("Type 'reputation' to see your reputation.");
             Console.WriteLine("Type 'energy' to see your energy levels.");
+            Console.WriteLine("Type 'inventory' to see your inventory.");
             Console.WriteLine("Type 'help' to print this message again.");
             Console.WriteLine("Type 'quit' to exit the game.");
         }

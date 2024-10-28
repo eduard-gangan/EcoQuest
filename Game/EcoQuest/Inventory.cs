@@ -1,34 +1,17 @@
-namespace EcoQuest
+namespace EcoQuest;
 
-public class Inventory
+public static class Inventory
 {
-    public List<Item>? Items { get; private set; }
-    public int inevntoryCapacity { get; private set}
+    public static List<Item> Items = new List<Item>();
+    public static int InventoryCapacity { get; set; }
 
-    public Inventory(int inevntoryCapacity)
-    {
-        this.Items = new List<Item>;
-        this.inevntoryCapacity = inevntoryCapacity;
-    }
 
-    public bool pickUpItem(Item item) 
-    {
-        if(item != null && Items.Count < this.inevntoryCapacity)
-        {
-            this.Items.add(item);
-            return true;
-        }
-        else
-        {
-            return false
-        }
-    }
 
-    public bool dropItem(Item item)
+    public static bool PickUpItem(Item item)
     {
-        if(item != null && item.droppable == true)
+        if (item != null && Items.Count < InventoryCapacity)
         {
-            Items.remove(item);
+            Items.Add(item);
             return true;
         }
         else
@@ -37,17 +20,46 @@ public class Inventory
         }
     }
 
-    public void use(Item item)
-   {
-      if (item.numberOfTimeUsable <= 1)
-      {
-        this.Items.remove(item);
-      }
-      else
-      {
-        item.numberOfTimeUsable--;
-      }
-   }
+    public static bool DropItem(Item item)
+    {
+        if (item != null && Items.Contains(item) && item.Droppable == true)
+        {
+
+            return Items.Remove(item);
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public static void Use(Item item)
+    {
+        if (item.NumberOfTimeUsable <= 1)
+        {
+            Items.Remove(item);
+        }
+        else
+        {
+            item.NumberOfTimeUsable--;
+        }
+    }
+
+    public static void DisplayInventory()
+    {
+        if (Items.Count > 0)
+        {
+            for (int i = 0; i < Items.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {Items[i].Name}");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Your inventory is empty.");
+        }
+
+    }
 
 
 }

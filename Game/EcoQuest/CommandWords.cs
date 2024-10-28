@@ -8,7 +8,7 @@ namespace EcoQuest
 {
     public class CommandWords
     {
-        public List<string> ValidCommands { get; } = new List<string> { "north", "east", "south", "west", "look", "back", "quit", "reputation", "balance", "energy" };
+        public List<string> ValidCommands { get; } = new List<string> { "north", "east", "south", "west", "look", "back", "quit", "reputation", "balance", "energy", "inventory" };
 
         public bool IsValidCommand(string command)
         {
