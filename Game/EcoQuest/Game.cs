@@ -98,9 +98,19 @@ namespace EcoQuest
                     case "reputation":
                         Console.WriteLine($"You currently have {Reputation.Get()} reputation!");
                         break;
+                    case "energy":
+                        if (Energy.Get() <= 1)
+                        {
+                            Console.WriteLine($"You need to sleep, you have {Energy.Get()} energy!");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"You currently have {Energy.Get()} energy!");
+                        }
+                        break;
 
                     default:
-                        Console.WriteLine("I don't know what command.");
+                        Console.WriteLine("I don't know that command.");
                         break;
                 }
             }
@@ -142,6 +152,7 @@ namespace EcoQuest
             Console.WriteLine("Type 'back' to go to the previous room.");
             Console.WriteLine("Type 'balance' to see how many EcoCoins you have.");
             Console.WriteLine("Type 'reputation' to see your reputation.");
+            Console.WriteLine("Type 'energy' to see your energy levels.");
             Console.WriteLine("Type 'help' to print this message again.");
             Console.WriteLine("Type 'quit' to exit the game.");
         }
