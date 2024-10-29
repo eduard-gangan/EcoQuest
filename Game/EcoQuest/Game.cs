@@ -38,16 +38,11 @@ namespace EcoQuest
         }
 
         public void Play()
-
         {
             Parser parser = new();
 
             PrintWelcome();
 
-            //For testing :D
-            Inventory.InventoryCapacity = 10;
-            Item dick = new("dick", "no description", true, 10);
-            Inventory.PickUpItem(dick);
 
             bool continuePlaying = true;
             while (continuePlaying)
@@ -67,7 +62,7 @@ namespace EcoQuest
 
                 if (command == null)
                 {
-                    Console.WriteLine("I don't know that command.");
+                    ColorWriteLine("I don't know that command.", ConsoleColor.Red);
                     continue;
                 }
 
@@ -79,7 +74,7 @@ namespace EcoQuest
 
                     case "back":
                         if (previousRoom == null)
-                            Console.WriteLine("You can't go back from here!");
+                            ColorWriteLine("You can't go back from here!", ConsoleColor.Red);
                         else
                             currentRoom = previousRoom;
                         break;
@@ -99,7 +94,7 @@ namespace EcoQuest
                         PrintHelp();
                         break;
                     case "balance":
-                        Console.WriteLine($"You currently have {Money.Get()} EcoCoins in your wallet!");
+                        ColorWriteLine($"You currently have {Money.Get()} EcoCoins in your wallet!", ConsoleColor.Green);
                         break;
                     case "reputation":
                         Console.WriteLine($"You currently have {Reputation.Get()} reputation!");
@@ -123,7 +118,7 @@ namespace EcoQuest
                         break;
                 }
             }
-
+            Console.ResetColor();
             Console.WriteLine("Thank you for playing EcoQuest");
         }
 
@@ -145,8 +140,10 @@ namespace EcoQuest
         {
             Console.Clear(); //This doesn't work properly
             Console.WriteLine("\x1b[3J"); //For some reason this clears the console, I found this on stackoverflow -V
-            Console.WriteLine("Welcome to EcoQuest!");
+            ColorWriteLine("Welcome to EcoQuest!", ConsoleColor.Blue);
+
             Console.WriteLine("EcoQuest is a new, incredibly interesting adventure game.");
+
             PrintHelp();
             Console.WriteLine();
         }
@@ -165,6 +162,20 @@ namespace EcoQuest
             Console.WriteLine("Type 'inventory' to see your inventory.");
             Console.WriteLine("Type 'help' to print this message again.");
             Console.WriteLine("Type 'quit' to exit the game.");
+        }
+
+        //Bro i don't even know why I added this, it's cool i guess
+        public static void ColorWriteLine(string text, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            System.Console.WriteLine(text);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+        public static void ColorWrite(string text, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            System.Console.Write(text);
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }

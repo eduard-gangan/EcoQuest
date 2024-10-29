@@ -3,7 +3,7 @@ namespace EcoQuest;
 public static class Inventory
 {
     public static List<Item> Items = new List<Item>();
-    public static int InventoryCapacity { get; set; }
+    public static int InventoryCapacity { get; set; } = 10;
 
 
 
