@@ -6,40 +6,21 @@ namespace EcoQuest
     {
         private Room? currentRoom;
         private Room? previousRoom;
-
-        public Game()
-        {
-            CreateRooms();
-        }
-
-        private void CreateRooms()
-        {
-            //I think we need to make another class for the Locations such as Sri Lanka, instead of using the same room system. -V
-            Room? start = new("Starting Room", "Sri Lanka to the East."); // This is for reference only, needs to be changed -V
-            Room? srilanka_boat = new("Sri Lanka", "You just arrived at Sri Lanka. Get off the boat and go to the port.");
-            // I'm still thinking about this, so it's not final 
-            Room? srilanka_port = new("Port", "You are at the central port. To the east is a very dirty and polluted beach, to the north there is a recycling station, and to the west is the Town Hall.");
-            Room? srilanka_beach = new("Polluted Beach", "You are walking through piles of trash. Supposedly you are on a beach.");
-            Room? srilnaka_townhall = new("Town Hall", "You are at the Town Hall, you can see the mayor's office but the door is closed and you're not allowed in, he doesn't speak to no names.");
-            Room? srilanka_recycling_station = new("Recycling Station", "You are at the Recycling Station, currently it is not working.");
-
-
-
-            start.SetExits(null, srilanka_boat, null, null); // North, East, South, West
-
-            srilanka_boat.SetExits(srilanka_port, null, null, start);
-            srilanka_port.SetExits(srilanka_recycling_station, srilanka_beach, srilanka_boat, srilnaka_townhall);
-            srilanka_beach.SetExit("west", srilanka_port);
-            srilanka_recycling_station.SetExit("south", srilanka_port);
-            srilnaka_townhall.SetExit("east", srilanka_port);
-
-
-            currentRoom = start;
-        }
+        private Location? currentLocation;
+        public Start startingLocation;
+        public SriLanka sriLanka;
+        public Australia australia;
+        public Indonesia indonesia;
 
         public void Play()
         {
             Parser parser = new();
+            sriLanka = new SriLanka("Sri Lanka", "Description for Sri Lanka", 0);
+            australia = new Australia("Australia", "Description for Australia", 1000);
+            indonesia = new Indonesia("Indonesia", "Description for Indonesia", 2000);
+            startingLocation = new Start("Somewhere at sea", "Description for starting location", 0, sriLanka, australia, indonesia);
+
+            currentLocation = startingLocation;
 
             PrintWelcome();
 
@@ -77,6 +58,12 @@ namespace EcoQuest
                             ColorWriteLine("You can't go back from here!", ConsoleColor.Red);
                         else
                             currentRoom = previousRoom;
+                        break;
+
+                    case "sail":
+                        Console.WriteLine("Where do you want to sail ?");
+                        Console.WriteLine("(Sri Lanka, Sea)");
+                        Sail(Console.ReadLine());
                         break;
 
                     case "north":
@@ -122,7 +109,44 @@ namespace EcoQuest
             Console.WriteLine("Thank you for playing EcoQuest");
         }
 
-        private void Move(string direction)
+        private void Sail(string destination) //Sail will be used to move between locations
+        {
+            switch (destination)
+            {
+                case "sri":
+                case "sri lanka":
+                case "srilanka":
+                    if(currentLocation != sriLanka)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("\x1b[3J");
+                        Console.WriteLine("You're on your way to Sri Lanka... \n\n\n");
+                        Console.WriteLine("You arrived in Sri Lanka !");
+                        currentLocation = sriLanka;
+                        currentRoom = sriLanka.Rooms["port"];
+                    } else
+                    {
+                        Console.WriteLine("You're already in Sri Lanka !");
+                    }
+                break;
+                case "sea":
+                    if(currentLocation != startingLocation)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("\x1b[3J");
+                        Console.WriteLine("You're travelling back to the big blue sea...");
+                        currentLocation = startingLocation;
+                    } else
+                    {
+                        Console.WriteLine("You're already at sea !");
+                    }
+                break;
+                default: Console.WriteLine("You sure that place exists ?");
+                break;
+            }
+        }
+
+        private void Move(string direction) //Move will be used inside of locations
         {
             if (currentRoom?.Exits.ContainsKey(direction) == true)
             {
@@ -134,7 +158,6 @@ namespace EcoQuest
                 Console.WriteLine($"You can't go {direction}!");
             }
         }
-
 
         private static void PrintWelcome()
         {
@@ -153,6 +176,7 @@ namespace EcoQuest
             Console.WriteLine("You are at the Starting Point,"); //needs to be changed
             Console.WriteLine("go do some shit."); // also needs to be changed :))
             Console.WriteLine();
+            Console.WriteLine("Type 'sail' to go to another destination");
             Console.WriteLine("Navigate by typing 'north', 'south', 'east', or 'west'.");
             Console.WriteLine("Type 'look' for more details.");
             Console.WriteLine("Type 'back' to go to the previous room.");
