@@ -1,9 +1,18 @@
+/*
+An Option is a class that contains a Prompt, a Reply and a type.
+The Prompt is what the player asks the NPC, the Reply is what the NPC's replies.
+Depending on the type, the option may call a method when the player chooses it or do something else like start a new Dialogue.
+
+*/
 namespace EcoQuest;
+
 public enum OptionType
 {
     CLOSE_DIALOGUE,
 
     ADD_INVENTORY_ITEM,
+
+    START_NEW_DIALOGUE,
     DEFAULT
 }
 public class Option
