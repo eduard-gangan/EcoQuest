@@ -24,11 +24,23 @@ namespace EcoQuest
 
             PrintWelcome();
 
-
             bool continuePlaying = true;
             while (continuePlaying)
             {
-                Console.WriteLine(currentRoom?.RoomName);
+                /*
+                Noticed it was printing a blank line when starting, also if you sail to sri lanka then sail
+                back to sea currentRoom stays port or whatever location you were in which is probably not intended.
+                - PS: We probably need to have a room inside of the "Sea/StartingLocation" location called ship/boat
+                so that we could have descriptions for the look command.
+                 */
+                if (currentRoom?.RoomName == null){
+                    ColorWriteLine("-NO ROOM-", ConsoleColor.Red);
+                }
+                else{
+                    Console.WriteLine($"[{currentRoom?.RoomName}]");
+                }
+
+                //Console.WriteLine($"[{currentRoom?.RoomName}]");
                 Console.Write("> ");
 
                 string? input = Console.ReadLine();
@@ -61,15 +73,20 @@ namespace EcoQuest
                         break;
 
                     case "sail":
-                        Console.WriteLine("Where do you want to sail ?");
+                    if (currentLocation == startingLocation || currentRoom.RoomName == "Port")
+                    {
+                        Console.WriteLine("Where do you want to sail?");
                         Console.WriteLine("(Sri Lanka, Sea)");
                         Sail(Console.ReadLine());
                         break;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"You can't depart from {currentRoom.RoomName}, go to the port.");
+                        break;
+                    }
 
-                    case "north":
-                    case "south":
-                    case "east":
-                    case "west":
+                    case "north": case "south": case "east": case "west":
                         Move(command.Name);
                         break;
 
@@ -109,44 +126,40 @@ namespace EcoQuest
             Console.WriteLine("Thank you for playing EcoQuest");
         }
 
-        private void Sail(string destination) //Sail will be used to move between locations
+        private void Sail(string destination) // Use the Sail method to move between locations
         {
             switch (destination)
             {
-                case "sri":
-                case "sri lanka":
-                case "srilanka":
+                case "Sri": case "sri": case "Sri Lanka": case "sri lanka": case "Srilanka": case "srilanka": case "Lanka": case "lanka":
                     if(currentLocation != sriLanka)
                     {
                         Console.Clear();
-                        Console.WriteLine("\x1b[3J");
                         Console.WriteLine("You're on your way to Sri Lanka... \n\n\n");
-                        Console.WriteLine("You arrived in Sri Lanka !");
+                        Console.WriteLine("You arrived in Sri Lanka!");
                         currentLocation = sriLanka;
                         currentRoom = sriLanka.Rooms["port"];
                     } else
                     {
-                        Console.WriteLine("You're already in Sri Lanka !");
+                        Console.WriteLine("You're already in Sri Lanka!");
                     }
                 break;
-                case "sea":
+                case "Sea": case "sea":
                     if(currentLocation != startingLocation)
                     {
                         Console.Clear();
-                        Console.WriteLine("\x1b[3J");
                         Console.WriteLine("You're travelling back to the big blue sea...");
                         currentLocation = startingLocation;
                     } else
                     {
-                        Console.WriteLine("You're already at sea !");
+                        Console.WriteLine("You're already at sea!");
                     }
                 break;
-                default: Console.WriteLine("You sure that place exists ?");
+                default: Console.WriteLine("You sure that place exists?");
                 break;
             }
         }
 
-        private void Move(string direction) //Move will be used inside of locations
+        private void Move(string direction) // Use the Move method to move inside locations
         {
             if (currentRoom?.Exits.ContainsKey(direction) == true)
             {
@@ -161,23 +174,23 @@ namespace EcoQuest
 
         private static void PrintWelcome()
         {
-            Console.Clear(); //This doesn't work properly
-            Console.WriteLine("\x1b[3J"); //For some reason this clears the console, I found this on stackoverflow -V
+            Console.Clear(); // -- Works after upgrading to .NET 8.0 (Was set to 6.0 previously)
             ColorWriteLine("Welcome to EcoQuest!", ConsoleColor.Blue);
-
-            Console.WriteLine("EcoQuest is a new, incredibly interesting adventure game.");
-
-            PrintHelp();
+            Console.WriteLine();
+            
+            // [Insert game lore here]
+            // @Gene to the rescue right there
+            Console.WriteLine("You are on a boat, at sea.");
+            Console.WriteLine("Type 'sail' to choose your destination.");
+            // Felt like all the 'help' stuff was overcluttering the console in the beginning.
+            Console.WriteLine("Type 'help' to see a list of available commands.");
             Console.WriteLine();
         }
 
         private static void PrintHelp()
         {
-            Console.WriteLine("You are at the Starting Point,"); //needs to be changed
-            Console.WriteLine("go do some shit."); // also needs to be changed :))
-            Console.WriteLine();
-            Console.WriteLine("Type 'sail' to go to another destination");
             Console.WriteLine("Navigate by typing 'north', 'south', 'east', or 'west'.");
+            Console.WriteLine("Type 'sail' to go to another destination.");
             Console.WriteLine("Type 'look' for more details.");
             Console.WriteLine("Type 'back' to go to the previous room.");
             Console.WriteLine("Type 'balance' to see how many EcoCoins you have.");
@@ -188,14 +201,14 @@ namespace EcoQuest
             Console.WriteLine("Type 'quit' to exit the game.");
         }
 
-        //Bro i don't even know why I added this, it's cool i guess
-        public static void ColorWriteLine(string text, ConsoleColor color)
+// Temporary console styling methods
+        private static void ColorWriteLine(string text, ConsoleColor color)
         {
             Console.ForegroundColor = color;
             System.Console.WriteLine(text);
             Console.ForegroundColor = ConsoleColor.White;
         }
-        public static void ColorWrite(string text, ConsoleColor color)
+        private static void ColorWrite(string text, ConsoleColor color)
         {
             Console.ForegroundColor = color;
             System.Console.Write(text);
