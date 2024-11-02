@@ -7,10 +7,10 @@ namespace EcoQuest
         private Room? currentRoom;
         private Room? previousRoom;
         private Location? currentLocation;
-        public Start startingLocation;
-        public SriLanka sriLanka;
-        public Australia australia;
-        public Indonesia indonesia;
+        public Start? startingLocation;
+        public SriLanka? sriLanka;
+        public Australia? australia;
+        public Indonesia? indonesia;
 
         public void Play()
         {
@@ -73,7 +73,7 @@ namespace EcoQuest
                         break;
 
                     case "sail":
-                    if (currentLocation == startingLocation || currentRoom.RoomName == "Port")
+                    if (currentLocation == startingLocation || currentRoom?.RoomName == "Port")
                     {
                         Console.WriteLine("Where do you want to sail?");
                         Console.WriteLine("(Sri Lanka, Sea)");
@@ -82,7 +82,7 @@ namespace EcoQuest
                     }
                     else
                     {
-                        Console.WriteLine($"You can't depart from {currentRoom.RoomName}, go to the port.");
+                        Console.WriteLine($"You can't depart from {currentRoom?.RoomName}, go to the port.");
                         break;
                     }
 
@@ -105,18 +105,19 @@ namespace EcoQuest
                         break;
                     case "energy":
                         if (Energy.Get() <= 1)
-                        {
                             Console.WriteLine($"You need to sleep, you have {Energy.Get()} energy!");
-                        }
                         else
-                        {
                             Console.WriteLine($"You currently have {Energy.Get()} energy!");
-                        }
                         break;
                     case "inventory":
                         Inventory.DisplayInventory();
                         break;
-
+                    case "dump":
+                        if (currentRoom?.RoomName == "Recycling Station")
+                            TrashDump.Dump();
+                        else
+                            Console.WriteLine("You are not in the recycling station!");
+                        break;
                     default:
                         Console.WriteLine("I don't know that command.");
                         break;
@@ -137,7 +138,7 @@ namespace EcoQuest
                         Console.WriteLine("You're on your way to Sri Lanka... \n\n\n");
                         Console.WriteLine("You arrived in Sri Lanka!");
                         currentLocation = sriLanka;
-                        currentRoom = sriLanka.Rooms["port"];
+                        currentRoom = sriLanka?.Rooms["port"];
                     } else
                     {
                         Console.WriteLine("You're already in Sri Lanka!");
@@ -197,6 +198,7 @@ namespace EcoQuest
             Console.WriteLine("Type 'reputation' to see your reputation.");
             Console.WriteLine("Type 'energy' to see your energy levels.");
             Console.WriteLine("Type 'inventory' to see your inventory.");
+            Console.WriteLine("Type 'dump' to dump your trash.");
             Console.WriteLine("Type 'help' to print this message again.");
             Console.WriteLine("Type 'quit' to exit the game.");
         }
