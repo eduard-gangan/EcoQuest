@@ -2,7 +2,7 @@ namespace EcoQuest;
 
     public class QuestSriLanka : Quest
 {
-    public QuestSriLanka(string description, Reputation reputation, int requiredReputation) : base(description, reputation, requiredReputation)
+    public QuestSriLanka(string description, int reputation, int requiredReputation) : base(description, reputation, requiredReputation)
     {
 
     }
@@ -12,7 +12,7 @@ namespace EcoQuest;
         Active = true;
         while (Active == true)
         {
-            if(reputation.Get() <= RequiredReputation)
+            if(Reputation <= RequiredReputation)
             {
                 this.start();
             }
