@@ -34,13 +34,17 @@ public class Dialogue
             {
                 System.Console.WriteLine($"{i + 1}. {Options[i].Prompt}");
             }
+            System.Console.WriteLine();
 
             //Takes input converts index into Options array
+            System.Console.Write(">");
             int input = Int32.Parse(Console.ReadLine()) - 1;
+            System.Console.WriteLine();
             var chosenOption = Options[input];
             if (chosenOption.Reply != null)
             {
                 System.Console.WriteLine(chosenOption.Reply);
+                System.Console.WriteLine();
             }
 
             if (chosenOption.Type == OptionType.CLOSE_DIALOGUE)
@@ -50,6 +54,15 @@ public class Dialogue
             if (chosenOption.Type == OptionType.ADD_INVENTORY_ITEM)
             {
                 // Inventory.Add(item);
+            }
+            if (chosenOption.Type == OptionType.GARY_ADD_OPTION)
+            {
+                Options.Insert(Options.Count() - 1, new Option(PlayerReply.GARY_START_QUEST, NpcReply.GARY_QUEST, OptionType.GARY_QUEST));
+            }
+            if (chosenOption.Type == OptionType.GARY_QUEST)
+            {
+                isTalkingTo = false;
+                Inventory.InventoryCapacity = 5;
             }
 
         }

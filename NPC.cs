@@ -4,17 +4,18 @@ public class NPC
     public List<Dialogue> Dialogues { get; private set; }
     public string Name { get; private set; }
 
-    public string NpcDescription { get; private set; }
+    private string Greeting;
 
-    public NPC(string name, string npcDescription, List<Dialogue> dialogues)
+
+    public NPC(string name, string greeting, List<Dialogue> dialogues)
     {
         Name = name;
-        NpcDescription = npcDescription;
         Dialogues = dialogues;
+        Greeting = greeting;
     }
 
     public void Talk(int dialogueNumber)
     {
-        Dialogues[dialogueNumber].Start(NpcReply.GREETING);
+        Dialogues[dialogueNumber].Start(Greeting);
     }
 }

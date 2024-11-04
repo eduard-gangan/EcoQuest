@@ -25,10 +25,10 @@ public class Quest
     {
 
     }
-    
+
     public virtual void getDescription()
     {
 
     }
-    
+
 }

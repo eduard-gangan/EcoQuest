@@ -13,6 +13,8 @@ public enum OptionType
     ADD_INVENTORY_ITEM,
 
     START_NEW_DIALOGUE,
+    GARY_ADD_OPTION,
+    GARY_QUEST,
     DEFAULT
 }
 public class Option

@@ -15,6 +15,7 @@ namespace EcoQuest
         public void Play()
         {
             Parser parser = new();
+
             sriLanka = new SriLanka("Sri Lanka", "Description for Sri Lanka", 0);
             australia = new Australia("Australia", "Description for Australia", 1000);
             indonesia = new Indonesia("Indonesia", "Description for Indonesia", 2000);
@@ -33,10 +34,12 @@ namespace EcoQuest
                 - PS: We probably need to have a room inside of the "Sea/StartingLocation" location called ship/boat
                 so that we could have descriptions for the look command.
                  */
-                if (currentRoom?.RoomName == null){
+                if (currentRoom?.RoomName == null)
+                {
                     ColorWriteLine("-NO ROOM-", ConsoleColor.Red);
                 }
-                else{
+                else
+                {
                     Console.WriteLine($"[{currentRoom?.RoomName}]");
                 }
 
@@ -73,20 +76,23 @@ namespace EcoQuest
                         break;
 
                     case "sail":
-                    if (currentLocation == startingLocation || currentRoom?.RoomName == "Port")
-                    {
-                        Console.WriteLine("Where do you want to sail?");
-                        Console.WriteLine("(Sri Lanka, Sea)");
-                        Sail(Console.ReadLine());
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine($"You can't depart from {currentRoom?.RoomName}, go to the port.");
-                        break;
-                    }
+                        if (currentLocation == startingLocation || currentRoom?.RoomName == "Port")
+                        {
+                            Console.WriteLine("Where do you want to sail?");
+                            Console.WriteLine("(Sri Lanka, Sea)");
+                            Sail(Console.ReadLine());
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"You can't depart from {currentRoom?.RoomName}, go to the port.");
+                            break;
+                        }
 
-                    case "north": case "south": case "east": case "west":
+                    case "north":
+                    case "south":
+                    case "east":
+                    case "west":
                         Move(command.Name);
                         break;
 
@@ -118,6 +124,9 @@ namespace EcoQuest
                         else
                             Console.WriteLine("You are not in the recycling station!");
                         break;
+                    case "talk":
+                        currentRoom.RoomNPC.Talk(0);
+                        break;
                     default:
                         Console.WriteLine("I don't know that command.");
                         break;
@@ -131,32 +140,43 @@ namespace EcoQuest
         {
             switch (destination)
             {
-                case "Sri": case "sri": case "Sri Lanka": case "sri lanka": case "Srilanka": case "srilanka": case "Lanka": case "lanka":
-                    if(currentLocation != sriLanka)
+                case "Sri":
+                case "sri":
+                case "Sri Lanka":
+                case "sri lanka":
+                case "Srilanka":
+                case "srilanka":
+                case "Lanka":
+                case "lanka":
+                    if (currentLocation != sriLanka)
                     {
                         Console.Clear();
                         Console.WriteLine("You're on your way to Sri Lanka... \n\n\n");
                         Console.WriteLine("You arrived in Sri Lanka!");
                         currentLocation = sriLanka;
                         currentRoom = sriLanka?.Rooms["port"];
-                    } else
+                    }
+                    else
                     {
                         Console.WriteLine("You're already in Sri Lanka!");
                     }
-                break;
-                case "Sea": case "sea":
-                    if(currentLocation != startingLocation)
+                    break;
+                case "Sea":
+                case "sea":
+                    if (currentLocation != startingLocation)
                     {
                         Console.Clear();
                         Console.WriteLine("You're travelling back to the big blue sea...");
                         currentLocation = startingLocation;
-                    } else
+                    }
+                    else
                     {
                         Console.WriteLine("You're already at sea!");
                     }
-                break;
-                default: Console.WriteLine("You sure that place exists?");
-                break;
+                    break;
+                default:
+                    Console.WriteLine("You sure that place exists?");
+                    break;
             }
         }
 
@@ -178,7 +198,7 @@ namespace EcoQuest
             Console.Clear(); // -- Works after upgrading to .NET 8.0 (Was set to 6.0 previously)
             ColorWriteLine("Welcome to EcoQuest!", ConsoleColor.Blue);
             Console.WriteLine();
-            
+
             // [Insert game lore here]
             // @Gene to the rescue right there
             Console.WriteLine("You are on a boat, at sea.");
@@ -203,7 +223,12 @@ namespace EcoQuest
             Console.WriteLine("Type 'quit' to exit the game.");
         }
 
-// Temporary console styling methods
+        private static void CreateNpcs()
+        {
+
+        }
+
+        // Temporary console styling methods
         private static void ColorWriteLine(string text, ConsoleColor color)
         {
             Console.ForegroundColor = color;
