@@ -309,7 +309,7 @@ namespace EcoQuest
                                 }
                                 else if (random == 9999)
                                 {
-                                    item = new("Half-full Nutella Jar", "Godly", true, true, 150, 0);
+                                    item = new("Half-full Nutella Jar", "Godly", true, true, 500, 0);
                                     Inventory.PickUpItem(item);
                                     ColorWriteLine("You found a Half-full Nutella Jar ! (Godly)", ConsoleColor.Blue);
                                 }
