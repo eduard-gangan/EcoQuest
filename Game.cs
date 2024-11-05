@@ -411,7 +411,7 @@ namespace EcoQuest
             Console.WriteLine("Type 'energy' to see your energy levels.");
             Console.WriteLine("Type 'inventory' to see your inventory.");
             Console.WriteLine("Type 'dump' to dump your trash.");
-            Console.WriteLine("Type 'talk' to talk to an NPC".);
+            Console.WriteLine("Type 'talk' to talk to an NPC.");
             Console.WriteLine("Type 'help' to print this message again.");
             Console.WriteLine("Type 'quit' to exit the game.");
         }
