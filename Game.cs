@@ -391,7 +391,7 @@ namespace EcoQuest
             ColorWriteLine("Welcome to EcoQuest!", ConsoleColor.Blue);
             Console.WriteLine();
 
-            // [Insert game lore here]
+            System.Console.WriteLine("You begin on board a research vessel, drifting along calm blue waters under an open sky.\nThe ship gently rocks, its deck bustling with equipment—nets, sonar tools, oxygen tanks, and more—all arranged with precision. \nAs an aspiring marine biologist, you're on your first expedition. The setting is new, thrilling, and a little overwhelming. \nThe crisp salt air and distant cry of seagulls fill you with excitement for the adventure that awaits.\n");
             // @Gene to the rescue right there
             Console.WriteLine("You are on a boat, at sea.");
             Console.WriteLine("Type 'sail' to choose your destination.");
@@ -411,6 +411,7 @@ namespace EcoQuest
             Console.WriteLine("Type 'energy' to see your energy levels.");
             Console.WriteLine("Type 'inventory' to see your inventory.");
             Console.WriteLine("Type 'dump' to dump your trash.");
+            Console.WriteLine("Type 'talk' to talk to an NPC".);
             Console.WriteLine("Type 'help' to print this message again.");
             Console.WriteLine("Type 'quit' to exit the game.");
         }
