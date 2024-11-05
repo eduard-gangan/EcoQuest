@@ -28,22 +28,11 @@ namespace EcoQuest
             bool continuePlaying = true;
             while (continuePlaying)
             {
-                /*
-                Noticed it was printing a blank line when starting, also if you sail to sri lanka then sail
-                back to sea currentRoom stays port or whatever location you were in which is probably not intended.
-                - PS: We probably need to have a room inside of the "Sea/StartingLocation" location called ship/boat
-                so that we could have descriptions for the look command.
-                 */
                 if (currentRoom?.RoomName == null)
-                {
                     System.Console.WriteLine("[Boat]");
-                }
                 else
-                {
                     Console.WriteLine($"[{currentRoom?.RoomName}]");
-                }
 
-                //Console.WriteLine($"[{currentRoom?.RoomName}]");
                 Console.Write("> ");
 
                 string? input = Console.ReadLine();
@@ -104,16 +93,28 @@ namespace EcoQuest
                         PrintHelp();
                         break;
                     case "balance":
-                        ColorWriteLine($"You currently have {Money.Get()} EcoCoins in your wallet!", ConsoleColor.Green);
+                        Console.Write($"You currently have");
+                        ColorWrite($" {Money.Get()} ", ConsoleColor.Yellow);
+                        Console.WriteLine("EcoCoins in your wallet!");
                         break;
                     case "reputation":
-                        Console.WriteLine($"You currently have {Reputation.Get()} reputation!");
+                        Console.Write($"You currently have");
+                        ColorWrite($" {Reputation.Get()} ", ConsoleColor.Green);
+                        Console.WriteLine("reputation!");
                         break;
                     case "energy":
                         if (Energy.Get() <= 1)
-                            Console.WriteLine($"You need to sleep, you have {Energy.Get()} energy!");
+                        {
+                            Console.Write("You need to sleep, you have");
+                            ColorWrite($" {Energy.Get()} ", ConsoleColor.Cyan);
+                            Console.WriteLine("energy!");
+                        }
                         else
-                            Console.WriteLine($"You currently have {Energy.Get()} energy!");
+                        {
+                            Console.Write($"You currently have");
+                            ColorWrite($" {Energy.Get()} ", ConsoleColor.Cyan);
+                            Console.WriteLine("energy!");
+                        }
                         break;
                     case "inventory":
                         Inventory.DisplayInventory();
@@ -122,11 +123,11 @@ namespace EcoQuest
                         if (currentRoom.RoomName.Contains("Port"))
                         {
                             Energy.Replenish();
-                            System.Console.WriteLine("You slept and your energy was replenished!");
+                           Console.WriteLine("You slept and your energy was replenished!");
                         }
                         else
                         {
-                            System.Console.WriteLine("You can't sleep here, dumbass...");
+                            Console.WriteLine("You can't sleep here, dumbass...");
                         }
                         break;
                     case "dump":
@@ -136,7 +137,7 @@ namespace EcoQuest
                             Console.WriteLine("You are not in the recycling station!");
                         break;
                     case "talk":
-                        currentRoom.RoomNPC.Talk(0);
+                        currentRoom?.RoomNPC.Talk(0);
                         break;
                     case "pick": //At the moment, the system doesnt take upgrades into account
                         if (currentRoom != sriLanka.Rooms["beach"])
@@ -387,15 +388,13 @@ namespace EcoQuest
 
         private static void PrintWelcome()
         {
-            Console.Clear(); // -- Works after upgrading to .NET 8.0 (Was set to 6.0 previously)
+            Console.Clear();
             ColorWriteLine("Welcome to EcoQuest!", ConsoleColor.Blue);
             Console.WriteLine();
 
-            System.Console.WriteLine("You begin on board a research vessel, drifting along calm blue waters under an open sky.\nThe ship gently rocks, its deck bustling with equipment—nets, sonar tools, oxygen tanks, and more—all arranged with precision. \nAs an aspiring marine biologist, you're on your first expedition. The setting is new, thrilling, and a little overwhelming. \nThe crisp salt air and distant cry of seagulls fill you with excitement for the adventure that awaits.\n");
-            // @Gene to the rescue right there
-            Console.WriteLine("You are on a boat, at sea.");
+            Console.WriteLine("You begin on board a research vessel, drifting along calm blue waters under an open sky.\nThe ship gently rocks, its deck bustling with equipment—nets, sonar tools, oxygen tanks, and more—all arranged with precision. \nAs an aspiring marine biologist, you're on your first expedition. The setting is new, thrilling, and a little overwhelming. \nThe crisp salt air and distant cry of seagulls fill you with excitement for the adventure that awaits.\n");
+            // [Insert more lore about the character here]
             Console.WriteLine("Type 'sail' to choose your destination.");
-            // Felt like all the 'help' stuff was overcluttering the console in the beginning.
             Console.WriteLine("Type 'help' to see a list of available commands.");
             Console.WriteLine();
         }
@@ -426,13 +425,13 @@ namespace EcoQuest
         {
             Console.ForegroundColor = color;
             System.Console.WriteLine(text);
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ResetColor();
         }
         public static void ColorWrite(string text, ConsoleColor color)
         {
             Console.ForegroundColor = color;
             System.Console.Write(text);
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ResetColor();
         }
     }
 }
