@@ -36,7 +36,7 @@ namespace EcoQuest
                  */
                 if (currentRoom?.RoomName == null)
                 {
-                    ColorWriteLine("-NO ROOM-", ConsoleColor.Red);
+                    System.Console.WriteLine("[Boat]");
                 }
                 else
                 {
@@ -76,7 +76,7 @@ namespace EcoQuest
                         break;
 
                     case "sail":
-                        if (currentLocation == startingLocation || currentRoom?.RoomName == "Port")
+                        if (currentLocation == startingLocation || currentRoom.RoomName.Contains("Port"))
                         {
                             Console.WriteLine("Where do you want to sail?");
                             Console.WriteLine("(Sri Lanka, Sea)");
@@ -118,6 +118,17 @@ namespace EcoQuest
                     case "inventory":
                         Inventory.DisplayInventory();
                         break;
+                    case "sleep":
+                        if (currentRoom.RoomName.Contains("Port"))
+                        {
+                            Energy.Replenish();
+                            System.Console.WriteLine("You slept and your energy was replenished!");
+                        }
+                        else
+                        {
+                            System.Console.WriteLine("You can't sleep here, dumbass...");
+                        }
+                        break;
                     case "dump":
                         if (currentRoom?.RoomName == "Recycling Station")
                             TrashDump.Dump();
@@ -128,13 +139,18 @@ namespace EcoQuest
                         currentRoom.RoomNPC.Talk(0);
                         break;
                     case "pick": //At the moment, the system doesnt take upgrades into account
-                        if(currentRoom != sriLanka.Rooms["beach"])
+                        if (currentRoom != sriLanka.Rooms["beach"])
                         {
                             Console.WriteLine("What are you picking up dumbass ?");
-                        } else
+                        }
+                        else
                         {
                             if (Inventory.Items.Count() == Inventory.InventoryCapacity)
                                 Console.WriteLine("Your inventory is full !");
+                            else if (Energy.Get() < 5)
+                            {
+                                ColorWriteLine("You don't have enough energy to pick up this trash!", ConsoleColor.Red);
+                            }
                             else
                             {
                                 Random rnd = new Random();
@@ -340,6 +356,7 @@ namespace EcoQuest
                 case "sea":
                     if (currentLocation != startingLocation)
                     {
+                        currentRoom = null;
                         Console.Clear();
                         Console.WriteLine("You're travelling back to the big blue sea...");
                         currentLocation = startingLocation;
@@ -404,13 +421,13 @@ namespace EcoQuest
         }
 
         // Temporary console styling methods
-        private static void ColorWriteLine(string text, ConsoleColor color)
+        public static void ColorWriteLine(string text, ConsoleColor color)
         {
             Console.ForegroundColor = color;
             System.Console.WriteLine(text);
             Console.ForegroundColor = ConsoleColor.White;
         }
-        private static void ColorWrite(string text, ConsoleColor color)
+        public static void ColorWrite(string text, ConsoleColor color)
         {
             Console.ForegroundColor = color;
             System.Console.Write(text);

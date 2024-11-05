@@ -3,7 +3,7 @@
     public static class Trash
     {
         public static int amount = 1000000;
-        
+
 
         public static int Get() { return amount; }
 
@@ -11,8 +11,10 @@
         {
             if (amount - Stats.Get() > 0)
             {
+                Energy.Decrease(5);
                 amount -= Stats.Get();
-            } else
+            }
+            else
             {
                 Console.WriteLine("There is no more trash !");
             }

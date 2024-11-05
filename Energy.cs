@@ -29,7 +29,7 @@ namespace EcoQuest
 
         public static int Get() { return energy; }
 
-        public static void Replenish(int amount)
+        public static void Replenish()
         {
             energy = maxCapacity;
         }
@@ -45,7 +45,7 @@ namespace EcoQuest
                 energy = 0;
             }
         }
-        
+
         public static void IncreaseCapacity(int amount)
         {
             maxCapacity += amount;

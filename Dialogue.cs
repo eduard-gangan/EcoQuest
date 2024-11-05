@@ -63,6 +63,10 @@ public class Dialogue
             {
                 isTalkingTo = false;
                 Inventory.InventoryCapacity = 5;
+                Game.ColorWriteLine("\n(You received a trash bag! Your inventory space has been increased to 5)", ConsoleColor.Green);
+
+
+                System.Console.WriteLine();
             }
 
         }
