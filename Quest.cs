@@ -16,19 +16,32 @@ public class Quest
         RequiredReputation = requiredReputation;
     }
 
-    public virtual void start()
+    public void start()
     {
-
+        Active = true;
+        while (Active == true)
+        {
+            if(Reputation <= RequiredReputation)
+            {
+                this.start();
+            }
+            else
+            {
+                this.Finished();
+            }
+        }
     }
 
-    public virtual void Finished()
+    public void Finished()
     {
-
+        Completed = true;
+        Active = false;
+        Console.WriteLine($"You have reached {RequiredReputation} reputation. Quest is completed and you can move on to Indonesia");
     }
 
-    public virtual void getDescription()
+    public void getDescription()
     {
-
+        Console.WriteLine(Description);
     }
 
 }
