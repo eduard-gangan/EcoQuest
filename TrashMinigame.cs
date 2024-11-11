@@ -24,7 +24,7 @@ public static class TrashMinigame
         }
         if (Energy.Get() < EnergyConsumption)
         {
-            Game.ColorWriteLine("You don't have enough energy to pick up this trash!", ConsoleColor.Red);
+            Game.ColorWriteLine("You don't have enough energy to sort this trash!", ConsoleColor.Red);
             return;
         }
         
@@ -63,6 +63,7 @@ public static class TrashMinigame
             {
                 Prompt(item);
                 Trash.Remove(item);
+                Inventory.Items.Remove(item);
                 Console.WriteLine(">-----------------------------<");
                 Console.WriteLine(">-----------------------------<");
                 Console.WriteLine();
