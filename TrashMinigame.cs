@@ -1,7 +1,24 @@
 /*
-A system for a trash sorting minigame [INSERT DOCUMENTATION HERE]
+--/ Class for the Trash Sorting Minigame \--
 
-- Use the Start() method to start the sorting minigame.
+Overview:
+ In this minigame, players are presented with various trash items 
+ (e.g., "plastic bottle," "banana peel," "glass jar") and must sort 
+ each item into the correct recycling bin category (e.g., organic, plastic, 
+ metal, glass, electronics, rubber, paper, or waste). Players earn reputation 
+ points for correct sorting and lose reputation points for incorrect sorting.
+
+ - Use the Start() method to initiate the sorting minigame.
+
+Key Variables:
+ - Multiplier: Determines how much the reputation points are multiplied by. 
+    This can be adjusted, for example, as part of an upgrade.
+
+ - MaxCount: Sets the maximum number of items that can be sorted at once. 
+    This can be adjusted, for example, as part of an upgrade.
+
+ - EnergyConsumption: Represents the amount of energy consumed during sorting. 
+    This can be adjusted, for example, as part of an upgrade.
 
  */
 
@@ -9,13 +26,13 @@ namespace EcoQuest;
 public static class TrashMinigame
 {
     private static List<Item> Trash = [];
-    private static int Multiplier = 2;
-    private static int MaxCount = 3;
-    private static int EnergyConsumption = 5;
+    public static int Multiplier {get; set;} = 2;
+    public static int MaxCount {get; set;} = 3;  // Not really necessary, but could serve a purpose in the future.
+    public static int EnergyConsumption {get; set;} = 5;
 
     public static void Start(string currentRoomName)
     {
-        // Check energy and room
+        // Check energy and room.
         if (currentRoomName != "Recycling Station")
         {
                 Console.WriteLine(currentRoomName);
@@ -30,7 +47,7 @@ public static class TrashMinigame
         
         Energy.Decrease(EnergyConsumption);
 
-        // (Uncommented code)
+        // Iterate through all items and add items that are trash to the Trash list.
         if (Inventory.Items.Count > 0)
         {
             foreach (Item item in Inventory.Items.ToList())
@@ -59,7 +76,7 @@ public static class TrashMinigame
             Console.WriteLine();
 
 
-            foreach (Item item in Trash.ToList())
+            foreach (Item item in Trash.ToList()) // Iterate through all the trash and prompt the minigame for each item.
             {
                 Prompt(item);
                 Trash.Remove(item);
@@ -137,7 +154,7 @@ public static class TrashMinigame
         }
     }
 
-    private static void Assert(Item item, Item.TrashTypes trashType)
+    private static void Assert(Item item, Item.TrashTypes trashType) // A method used to determine whether the item was sorted correctly.
     {
         if (item.TrashType == trashType)
         {
