@@ -393,7 +393,9 @@ namespace EcoQuest
         private static void PrintWelcome()
         {
             Console.Clear();
-            ColorWriteLine("Welcome to EcoQuest!", ConsoleColor.Blue);
+            ConsoleTesting.Test();
+            ConsoleTesting.Test2();
+            ConsoleTesting.Figlet("Welcome to EcoQuest");
             Console.WriteLine();
 
             Console.WriteLine("You begin on board a research vessel, drifting along calm blue waters under an open sky.\nThe ship gently rocks, its deck bustling with equipment—nets, sonar tools, oxygen tanks, and more—all arranged with precision. \nAs an aspiring marine biologist, you're on your first expedition. The setting is new, thrilling, and a little overwhelming. \nThe crisp salt air and distant cry of seagulls fill you with excitement for the adventure that awaits.\n");
