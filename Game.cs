@@ -93,6 +93,14 @@ namespace EcoQuest
                     case "help":
                         PrintHelp();
                         break;
+
+                    case "map":
+                        if (currentLocation == sriLanka)
+                        {
+                            MapSriLanka.ShowMap(currentRoom);
+                        }
+                        break;
+
                     case "balance":
                         Console.Write($"You currently have");
                         ColorWrite($" {Money.Get()} ", ConsoleColor.Yellow);
