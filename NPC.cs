@@ -1,21 +1,29 @@
 namespace EcoQuest;
+
 public class NPC
 {
-    public List<Dialogue> Dialogues { get; private set; }
-    public string Name { get; private set; }
 
-    private string Greeting;
+    public string Name { get; set; }
+    public string Greeting { get; set; }
+    public Dialogue MainDialogue { get; set; }
 
 
-    public NPC(string name, string greeting, List<Dialogue> dialogues)
+    public NPC(string name, string greeting)
     {
         Name = name;
-        Dialogues = dialogues;
         Greeting = greeting;
+        MainDialogue = new Dialogue(Greeting);
     }
 
-    public void Talk(int dialogueNumber)
+    public void ChangeGreeting(string newGreeting)
     {
-        Dialogues[dialogueNumber].Start(Greeting);
+        Greeting = newGreeting;
     }
+
+    public virtual void Talk()
+    {
+        MainDialogue.Start();
+    }
+
+
 }
