@@ -2,7 +2,7 @@
 {
     public static class Trash
     {
-        public static int amount = 1000000;
+        public static int amount = 10000;
 
 
         public static int Get() { return amount; }
