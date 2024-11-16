@@ -435,13 +435,13 @@ namespace EcoQuest
             Console.WriteLine("Type 'quit' to exit the game.");
         }
 
-        private static void CreateNpcs()
+        private void CreateNpcs()
         {
             //Garry 
             NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_NAME, () => System.Console.WriteLine(NpcReply.GARRY_NAME));
             NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_BACKSTORY, () => System.Console.WriteLine(NpcReply.GARRY_BACKSTORY));
             NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_WHY, () => System.Console.WriteLine(NpcReply.GARRY_WHY));
-            NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_QUEST, () => { System.Console.WriteLine(NpcReply.GARRY_QUEST); Inventory.InventoryCapacity = 5; ColorWriteLine("Your inventory space has been increased to 5!", ConsoleColor.Green); });
+            NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_QUEST, () => { System.Console.WriteLine(NpcReply.GARRY_QUEST); Inventory.InventoryCapacity = 5; ColorWriteLine("Your inventory space has been increased to 5!", ConsoleColor.Green); NPCs.Garry.MainDialogue.RemoveOption(PlayerReply.GARRY_QUEST); });
             NPCs.Garry.MainDialogue.AddOption(PlayerReply.BYE, () => { System.Console.WriteLine(NpcReply.GARRY_BYE); NPCs.Garry.MainDialogue.TriggerDialogue(); });
 
             //Larry
@@ -452,8 +452,8 @@ namespace EcoQuest
 
             //Mayor Lanka
             NPCs.Lanka.MainDialogue.AddOption(PlayerReply.LANKA_PLAYER, () => System.Console.WriteLine(NpcReply.LANKA_PLAYER));
-            NPCs.Lanka.MainDialogue.AddOption(PlayerReply.BYE, () => { System.Console.WriteLine(NpcReply.LANKA_BYE); NPCs.Lanka.MainDialogue.TriggerDialogue(); });
             NPCs.Lanka.MainDialogue.AddOption("Upgrade", () => { Upgrades.Menu(); });
+            NPCs.Lanka.MainDialogue.AddOption(PlayerReply.BYE, () => { System.Console.WriteLine(NpcReply.LANKA_BYE); NPCs.Lanka.MainDialogue.TriggerDialogue(); });
         }
 
         // Temporary console styling methods

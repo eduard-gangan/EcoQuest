@@ -52,7 +52,18 @@ public class Dialogue
             System.Console.WriteLine("Invalid Option.");
         }
     }
+    public void InsertOption(string reply, Action action, int index)
+    {
+        DialogueOptions.Add(reply, action);
+        OptionList.Insert(index, reply);
 
+    }
+    //Key is the PlayerReply
+    public void RemoveOption(string key)
+    {
+        DialogueOptions.Remove(key);
+        OptionList.Remove(key);
+    }
     public void TriggerDialogue()
     {
         if (Active == false)
