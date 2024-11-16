@@ -19,9 +19,15 @@ public class Dialogue
         System.Console.WriteLine(Prompt);
         while (Active)
         {
+
             PrintOptions();
-            int playerChoice = Int32.Parse(Console.ReadLine());
-            HandlePlayerChoice(playerChoice);
+            var consoleInput = Console.ReadLine();
+            if (Int32.TryParse(consoleInput, out int playerChoice))
+            {
+                HandlePlayerChoice(playerChoice);
+                continue;
+            }
+            Game.ColorWriteLine("Please choose a valid option.", ConsoleColor.Red);
 
         }
     }
