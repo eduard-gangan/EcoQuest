@@ -16,6 +16,7 @@ namespace EcoQuest
         public void Play()
         {
             Parser parser = new();
+            CreateNpcs();
 
             sriLanka = new SriLanka("Sri Lanka", "Description for Sri Lanka", 0);
             australia = new Australia("Australia", "Description for Australia", 1000);
@@ -133,7 +134,7 @@ namespace EcoQuest
                         if (currentRoom.RoomName.Contains("Port"))
                         {
                             Energy.Replenish();
-                           Console.WriteLine("You slept and your energy was replenished!");
+                            Console.WriteLine("You slept and your energy was replenished!");
                         }
                         else
                         {
@@ -147,10 +148,10 @@ namespace EcoQuest
                             Console.WriteLine("You are not in the recycling station!");
                         break;
                     case "sort":
-                            TrashMinigame.Start(currentRoom?.RoomName);
+                        TrashMinigame.Start(currentRoom?.RoomName);
                         break;
                     case "talk":
-                        currentRoom?.RoomNPC.Talk(0);
+                        currentRoom?.RoomNPC.Talk();
                         break;
                     case "pick": //At the moment, the system doesnt take upgrades into account
                         if (currentRoom != sriLanka.Rooms["beach"])
@@ -435,7 +436,22 @@ namespace EcoQuest
 
         private static void CreateNpcs()
         {
+            //Garry 
+            NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_NAME, () => System.Console.WriteLine(NpcReply.GARRY_NAME));
+            NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_BACKSTORY, () => System.Console.WriteLine(NpcReply.GARRY_BACKSTORY));
+            NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_WHY, () => System.Console.WriteLine(NpcReply.GARRY_WHY));
+            NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_QUEST, () => { System.Console.WriteLine(NpcReply.GARRY_QUEST); Inventory.InventoryCapacity = 5; ColorWriteLine("Your inventory space has been increased to 5!", ConsoleColor.Green); });
+            NPCs.Garry.MainDialogue.AddOption(PlayerReply.BYE, () => { System.Console.WriteLine(NpcReply.GARRY_BYE); NPCs.Garry.MainDialogue.TriggerDialogue(); });
 
+            //Larry
+            NPCs.Larry.MainDialogue.AddOption(PlayerReply.LARRY_NAME, () => System.Console.WriteLine(NpcReply.LARRY_NAME));
+            NPCs.Larry.MainDialogue.AddOption(PlayerReply.LARRY_BACKSTORY, () => System.Console.WriteLine(NpcReply.LARRY_BACKSTORY));
+            NPCs.Larry.MainDialogue.AddOption(PlayerReply.LARRY_PLAYER, () => System.Console.WriteLine(NpcReply.LARRY_PLAYER));
+            NPCs.Larry.MainDialogue.AddOption(PlayerReply.LARRY_BYE, () => { System.Console.WriteLine(NpcReply.LARRY_BYE); NPCs.Larry.MainDialogue.TriggerDialogue(); });
+
+            //Mayor Lanka
+            NPCs.Lanka.MainDialogue.AddOption(PlayerReply.LANKA_PLAYER, () => System.Console.WriteLine(NpcReply.LANKA_PLAYER));
+            NPCs.Lanka.MainDialogue.AddOption(PlayerReply.BYE, () => { System.Console.WriteLine(NpcReply.LANKA_BYE); NPCs.Lanka.MainDialogue.TriggerDialogue(); });
         }
 
         // Temporary console styling methods

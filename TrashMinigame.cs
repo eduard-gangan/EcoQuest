@@ -26,25 +26,25 @@ namespace EcoQuest;
 public static class TrashMinigame
 {
     private static List<Item> Trash = [];
-    public static int Multiplier {get; set;} = 2;
-    public static int MaxCount {get; set;} = 3;  // Not really necessary, but could serve a purpose in the future.
-    public static int EnergyConsumption {get; set;} = 5;
+    public static int Multiplier { get; set; } = 2;
+    public static int MaxCount { get; set; } = 3;  // Not really necessary, but could serve a purpose in the future.
+    public static int EnergyConsumption { get; set; } = 5;
 
     public static void Start(string currentRoomName)
     {
         // Check energy and room.
         if (currentRoomName != "Recycling Station")
         {
-                Console.WriteLine(currentRoomName);
-                Console.WriteLine("You are not in the recycling station!");
-                return;
+            Console.WriteLine(currentRoomName);
+            Console.WriteLine("You are not in the recycling station!");
+            return;
         }
         if (Energy.Get() < EnergyConsumption)
         {
             Game.ColorWriteLine("You don't have enough energy to sort this trash!", ConsoleColor.Red);
             return;
         }
-        
+
         Energy.Decrease(EnergyConsumption);
 
         // Iterate through all items and add items that are trash to the Trash list.
@@ -109,7 +109,7 @@ public static class TrashMinigame
 
         bool isPlaying = true;
         while (isPlaying)
-        {        
+        {
             string? input = Console.ReadLine();
             switch (input)
             {
