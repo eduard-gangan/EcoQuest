@@ -29,11 +29,11 @@ public static class MapSriLanka{
         {
             map[11,9] = '*';
         }
-        else if(currentRoom.RoomName.Contains("townhall"))
+        else if(currentRoom.RoomName.Contains("Town Hall"))
         {
             map[11,2] = '*';
         }
-        else if(currentRoom.RoomName.Contains("beach"))
+        else if(currentRoom.RoomName.Contains("Beach"))
         {
             map[11,16] = '*';
         }
