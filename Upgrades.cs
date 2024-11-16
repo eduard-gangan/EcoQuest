@@ -34,9 +34,11 @@ namespace EcoQuest
                 if (option < 0 || option > Multipliers.Count)
                 {
                     Console.WriteLine("There's no such option dumbass !");
+                    playing = false;
                 }
                 else if (MultipliersRep[option - 1] > currentRep) {
                     Console.WriteLine("You don't have enough reputation for that !");
+                    playing = false;
                 } 
                 else {
                     Stats.UpgradeM(2);
