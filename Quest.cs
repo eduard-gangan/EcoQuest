@@ -5,14 +5,12 @@ public class Quest
     public string Description { get; private set; }
     public bool Active { get; set; }
     public bool Completed { get; set; }
-    public int Reputation { get; private set; }
     public int RequiredReputation { get; private set; }
-    public Quest(string description, int reputation, int requiredReputation)
+    public Quest(string description, int requiredReputation)
     {
         Description = description;
         Active = false;
         Completed = false;
-        Reputation = reputation;
         RequiredReputation = requiredReputation;
     }
 
@@ -21,7 +19,7 @@ public class Quest
         Active = true;
         while (Active == true)
         {
-            if(Reputation <= RequiredReputation)
+            if(Reputation.Get() <= RequiredReputation)
             {
                 this.start();
             }
@@ -36,10 +34,10 @@ public class Quest
     {
         Completed = true;
         Active = false;
-        Console.WriteLine($"You have reached {RequiredReputation} reputation. Quest is completed and you can move on to Indonesia");
+        Console.WriteLine($"You have reached {RequiredReputation} reputation. Quest is completed and you can move on next location");
     }
 
-    public void getDescription()
+    public void GetDescription()
     {
         Console.WriteLine(Description);
     }
