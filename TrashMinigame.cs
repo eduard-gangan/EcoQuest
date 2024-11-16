@@ -173,7 +173,7 @@ public static class TrashMinigame
             Game.ColorWrite($" [{item.Name}] ", ConsoleColor.Magenta);
             Console.WriteLine($"as {trashType}");
             Console.Write($"Lost");
-            Game.ColorWrite($" {item.Value * Multiplier} ", ConsoleColor.Green);
+            Game.ColorWrite($" {item.Value * Multiplier} ", ConsoleColor.Red);
             Console.WriteLine("reputation!");
             Console.WriteLine();
             Reputation.Decrease(item.Value * Multiplier);
