@@ -169,7 +169,7 @@ namespace EcoQuest
                             else
                             {
                                 int stat = Stats.Get();
-                                for(int i = 0; i < stat; i++)
+                                for (int i = 0; i < stat; i++)
                                 {
                                     Random rnd = new Random();
                                     int random = rnd.Next(1, 10000);
@@ -331,7 +331,7 @@ namespace EcoQuest
                                         Inventory.PickUpItem(item);
                                         ColorWriteLine("You found a Half-full Nutella Jar ! (Godly)", ConsoleColor.Blue);
                                     }
-                                    
+
                                 }
                                 Trash.PickUp();
                                 Console.WriteLine($"\n Your intuition tells you there are {Trash.Get()} pieces of trash left on this beach");
@@ -452,6 +452,7 @@ namespace EcoQuest
             //Mayor Lanka
             NPCs.Lanka.MainDialogue.AddOption(PlayerReply.LANKA_PLAYER, () => System.Console.WriteLine(NpcReply.LANKA_PLAYER));
             NPCs.Lanka.MainDialogue.AddOption(PlayerReply.BYE, () => { System.Console.WriteLine(NpcReply.LANKA_BYE); NPCs.Lanka.MainDialogue.TriggerDialogue(); });
+            NPCs.Lanka.MainDialogue.AddOption("Upgrade", () => { Upgrades.Menu(); });
         }
 
         // Temporary console styling methods

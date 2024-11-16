@@ -12,7 +12,6 @@ public class FancyNPC : NPC
     }
     public override void Talk()
     {
-        System.Console.WriteLine("Fancy");
         if (Reputation.Get() >= ReputationReq)
         {
             MainDialogue.Start();
