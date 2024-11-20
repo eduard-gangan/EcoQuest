@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Formats.Asn1;
+using System.Security.Claims;
 
 namespace EcoQuest
 {
@@ -12,7 +13,7 @@ namespace EcoQuest
         public SriLanka? sriLanka;
         public Australia? australia;
         public Indonesia? indonesia;
-
+        
         public void Play()
         {
             Parser parser = new();
@@ -67,18 +68,27 @@ namespace EcoQuest
                         break;
 
                     case "sail":
-                        if (currentLocation == startingLocation || currentRoom.RoomName.Contains("Port"))
+                        if(QuestSriLanka.Active != true)
                         {
-                            Console.WriteLine("Where do you want to sail?");
-                            Console.WriteLine("(Sri Lanka, Sea)");
-                            Sail(Console.ReadLine());
-                            break;
+                            if (currentLocation == startingLocation || currentRoom.RoomName.Contains("Port"))
+                            {
+                                Console.WriteLine("Where do you want to sail?");
+                                Console.WriteLine("(Sri Lanka, Sea)");
+                                Sail(Console.ReadLine());
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine($"You can't depart from {currentRoom?.RoomName}, go to the port.");
+                                break;
+                            }
                         }
                         else
                         {
-                            Console.WriteLine($"You can't depart from {currentRoom?.RoomName}, go to the port.");
+                            Console.WriteLine("You can't sail while you have active quest");
                             break;
                         }
+
 
                     case "north":
                     case "south":
@@ -441,7 +451,7 @@ namespace EcoQuest
             NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_NAME, () => System.Console.WriteLine(NpcReply.GARRY_NAME));
             NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_BACKSTORY, () => System.Console.WriteLine(NpcReply.GARRY_BACKSTORY));
             NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_WHY, () => System.Console.WriteLine(NpcReply.GARRY_WHY));
-            NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_QUEST, () => { System.Console.WriteLine(NpcReply.GARRY_QUEST); Inventory.InventoryCapacity = 5; ColorWriteLine("Your inventory space has been increased to 5!", ConsoleColor.Green); NPCs.Garry.MainDialogue.RemoveOption(PlayerReply.GARRY_QUEST); });
+            NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_QUEST, () => { System.Console.WriteLine(NpcReply.GARRY_QUEST); Inventory.InventoryCapacity = 5; QuestSriLanka.start(); ColorWriteLine("Your inventory space has been increased to 5!", ConsoleColor.Green); NPCs.Garry.MainDialogue.RemoveOption(PlayerReply.GARRY_QUEST); });
             NPCs.Garry.MainDialogue.AddOption(PlayerReply.BYE, () => { System.Console.WriteLine(NpcReply.GARRY_BYE); NPCs.Garry.MainDialogue.TriggerDialogue(); });
 
             //Larry
