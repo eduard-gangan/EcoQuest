@@ -5,7 +5,7 @@ namespace EcoQuest
         public static List<string> Multipliers = new([
             "Basic Glove Set", 
             "Eco-friendly Net", 
-            "Eco Shoes™", 
+            "Eco Shoes", 
             "Mini Grabber Bot",
             "Advanced Eco Drone",
             "Community Support",
