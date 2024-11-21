@@ -21,6 +21,7 @@ public class Dialogue
         {
 
             PrintOptions();
+            System.Console.Write($"> Choose an option(1-{OptionList.Count}): ");
             var consoleInput = Console.ReadLine();
             if (Int32.TryParse(consoleInput, out int playerChoice))
             {
@@ -37,6 +38,7 @@ public class Dialogue
         for (int i = 0; i < OptionList.Count; i++)
         {
             Console.WriteLine($"{i + 1}. {OptionList[i]}");
+            Thread.Sleep(250);
         }
     }
 
@@ -49,9 +51,12 @@ public class Dialogue
 
     private void HandlePlayerChoice(int index)
     {
+        Console.Clear();
         if (index > 0 && index <= OptionList.Count)
         {
+            System.Console.WriteLine($"> {OptionList[index - 1]}\n");
             DialogueOptions[OptionList[index - 1]].Invoke();
+            System.Console.WriteLine();
         }
         else
         {

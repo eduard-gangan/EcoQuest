@@ -4,7 +4,7 @@ public static class PlayerReply
     //Gary
     public const string GARRY_NAME = "What… who are you?";
     public const string GARRY_BACKSTORY = "What happened here?";
-    public const string GARRY_QUEST = "I’ll help you.";
+    public const string GARRY_QUEST = "I’ll help you. (Start Quest)";
     public const string GARRY_WHY = "Why were you waiting for someone like me?";
 
     //Larry
