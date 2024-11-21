@@ -26,13 +26,13 @@ namespace EcoQuest;
 public static class TrashMinigame
 {
     private static List<Item> Trash = [];
-    public static int Multiplier { get; set; } = 2;
-    public static int MaxCount { get; set; } = 3;  // Not really necessary, but could serve a purpose in the future.
+    public static int Multiplier { get; set; } = 5;
     public static int EnergyConsumption { get; set; } = 5;
+    public static int ReputationRequirement { get; set; } = 500; // Temporary variable
 
     public static void Start(string currentRoomName)
     {
-        // Check energy and room.
+        // Check energy, room and reputation.
         if (currentRoomName != "Recycling Station")
         {
             Console.WriteLine(currentRoomName);
@@ -44,7 +44,11 @@ public static class TrashMinigame
             Game.ColorWriteLine("You don't have enough energy to sort this trash!", ConsoleColor.Red);
             return;
         }
-
+        if (Reputation.Get() <= ReputationRequirement)
+        {
+            Game.ColorWriteLine("I don't know that command.", ConsoleColor.Red);
+            return;
+        }
         Energy.Decrease(EnergyConsumption);
 
         // Iterate through all items and add items that are trash to the Trash list.
@@ -52,7 +56,7 @@ public static class TrashMinigame
         {
             foreach (Item item in Inventory.Items.ToList())
             {
-                if (Trash.Count == MaxCount)
+                if (Trash.Count == 5)
                 {
                     break;
                 }
@@ -114,35 +118,35 @@ public static class TrashMinigame
             switch (input)
             {
                 case "1":
-                    Assert(item, Item.TrashTypes.Organic);
+                    ValidateSorting(item, Item.TrashTypes.Organic);
                     isPlaying = false;
                     break;
                 case "2":
-                    Assert(item, Item.TrashTypes.Plastic);
+                    ValidateSorting(item, Item.TrashTypes.Plastic);
                     isPlaying = false;
                     break;
                 case "3":
-                    Assert(item, Item.TrashTypes.Metal);
+                    ValidateSorting(item, Item.TrashTypes.Metal);
                     isPlaying = false;
                     break;
                 case "4":
-                    Assert(item, Item.TrashTypes.Glass);
+                    ValidateSorting(item, Item.TrashTypes.Glass);
                     isPlaying = false;
                     break;
                 case "5":
-                    Assert(item, Item.TrashTypes.Paper);
+                    ValidateSorting(item, Item.TrashTypes.Paper);
                     isPlaying = false;
                     break;
                 case "6":
-                    Assert(item, Item.TrashTypes.Electronic);
+                    ValidateSorting(item, Item.TrashTypes.Electronic);
                     isPlaying = false;
                     break;
                 case "7":
-                    Assert(item, Item.TrashTypes.Rubber);
+                    ValidateSorting(item, Item.TrashTypes.Rubber);
                     isPlaying = false;
                     break;
                 case "8":
-                    Assert(item, Item.TrashTypes.Waste);
+                    ValidateSorting(item, Item.TrashTypes.Waste);
                     isPlaying = false;
                     break;
                 default:
@@ -154,7 +158,7 @@ public static class TrashMinigame
         }
     }
 
-    private static void Assert(Item item, Item.TrashTypes trashType) // A method used to determine whether the item was sorted correctly.
+    private static void ValidateSorting(Item item, Item.TrashTypes trashType) // A method used to determine whether the item was sorted correctly.
     {
         if (item.TrashType == trashType)
         {

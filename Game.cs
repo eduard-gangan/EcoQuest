@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Formats.Asn1;
+using System.Security.Claims;
 
 namespace EcoQuest
 {
@@ -15,6 +16,7 @@ namespace EcoQuest
 
         public void Play()
         {
+
             Parser parser = new();
             CreateNpcs();
 
@@ -67,18 +69,27 @@ namespace EcoQuest
                         break;
 
                     case "sail":
-                        if (currentLocation == startingLocation || currentRoom.RoomName.Contains("Port"))
+                        if (QuestSriLanka.Active != true)
                         {
-                            Console.WriteLine("Where do you want to sail?");
-                            Console.WriteLine("(Sri Lanka, Sea)");
-                            Sail(Console.ReadLine());
-                            break;
+                            if (currentLocation == startingLocation || currentRoom.RoomName.Contains("Port"))
+                            {
+                                Console.WriteLine("Where do you want to sail?");
+                                Console.WriteLine("(Sri Lanka, Sea)");
+                                Sail(Console.ReadLine());
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine($"You can't depart from {currentRoom?.RoomName}, go to the port.");
+                                break;
+                            }
                         }
                         else
                         {
-                            Console.WriteLine($"You can't depart from {currentRoom?.RoomName}, go to the port.");
+                            Console.WriteLine("You can't sail while you have an active quest");
                             break;
                         }
+
 
                     case "north":
                     case "south":
@@ -93,7 +104,6 @@ namespace EcoQuest
 
                     case "help":
                         PrintHelp();
-                        Upgrades.Menu();
                         break;
 
                     case "map":
@@ -339,7 +349,6 @@ namespace EcoQuest
                         }
                         break;
                     default:
-                        Console.WriteLine("I don't know that command.");
                         break;
                 }
             }
@@ -437,27 +446,28 @@ namespace EcoQuest
             Console.WriteLine("Type 'talk' to talk to an NPC.");
             Console.WriteLine("Type 'help' to print this message again.");
             Console.WriteLine("Type 'quit' to exit the game.");
+
         }
 
         private void CreateNpcs()
         {
             //Garry 
-            NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_NAME, () => System.Console.WriteLine(NpcReply.GARRY_NAME));
-            NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_BACKSTORY, () => System.Console.WriteLine(NpcReply.GARRY_BACKSTORY));
-            NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_WHY, () => System.Console.WriteLine(NpcReply.GARRY_WHY));
-            NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_QUEST, () => { System.Console.WriteLine(NpcReply.GARRY_QUEST); Inventory.InventoryCapacity = 5; ColorWriteLine("Your inventory space has been increased to 5!", ConsoleColor.Green); NPCs.Garry.MainDialogue.RemoveOption(PlayerReply.GARRY_QUEST); });
-            NPCs.Garry.MainDialogue.AddOption(PlayerReply.BYE, () => { System.Console.WriteLine(NpcReply.GARRY_BYE); NPCs.Garry.MainDialogue.TriggerDialogue(); });
+            NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_NAME, () => SlowWrite(NpcReply.GARRY_NAME));
+            NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_BACKSTORY, () => SlowWrite(NpcReply.GARRY_BACKSTORY));
+            NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_WHY, () => SlowWrite(NpcReply.GARRY_WHY));
+            NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_QUEST, () => { SlowWrite(NpcReply.GARRY_QUEST); Inventory.InventoryCapacity = 5; QuestSriLanka.start(); ColorWriteLine("Your inventory space has been increased to 5!", ConsoleColor.Green); NPCs.Garry.MainDialogue.RemoveOption(PlayerReply.GARRY_QUEST); NPCs.Garry.MainDialogue.TriggerDialogue(); });
+            NPCs.Garry.MainDialogue.AddOption(PlayerReply.BYE, () => { SlowWrite(NpcReply.GARRY_BYE); NPCs.Garry.MainDialogue.TriggerDialogue(); });
 
             //Larry
-            NPCs.Larry.MainDialogue.AddOption(PlayerReply.LARRY_NAME, () => System.Console.WriteLine(NpcReply.LARRY_NAME));
-            NPCs.Larry.MainDialogue.AddOption(PlayerReply.LARRY_BACKSTORY, () => System.Console.WriteLine(NpcReply.LARRY_BACKSTORY));
-            NPCs.Larry.MainDialogue.AddOption(PlayerReply.LARRY_PLAYER, () => System.Console.WriteLine(NpcReply.LARRY_PLAYER));
-            NPCs.Larry.MainDialogue.AddOption(PlayerReply.LARRY_BYE, () => { System.Console.WriteLine(NpcReply.LARRY_BYE); NPCs.Larry.MainDialogue.TriggerDialogue(); });
+            NPCs.Larry.MainDialogue.AddOption(PlayerReply.LARRY_NAME, () => SlowWrite(NpcReply.LARRY_NAME));
+            NPCs.Larry.MainDialogue.AddOption(PlayerReply.LARRY_BACKSTORY, () => SlowWrite(NpcReply.LARRY_BACKSTORY));
+            NPCs.Larry.MainDialogue.AddOption(PlayerReply.LARRY_PLAYER, () => SlowWrite(NpcReply.LARRY_PLAYER));
+            NPCs.Larry.MainDialogue.AddOption(PlayerReply.LARRY_BYE, () => { SlowWrite(NpcReply.LARRY_BYE); NPCs.Larry.MainDialogue.TriggerDialogue(); });
 
             //Mayor Lanka
-            NPCs.Lanka.MainDialogue.AddOption(PlayerReply.LANKA_PLAYER, () => System.Console.WriteLine(NpcReply.LANKA_PLAYER));
+            NPCs.Lanka.MainDialogue.AddOption(PlayerReply.LANKA_PLAYER, () => SlowWrite(NpcReply.LANKA_PLAYER));
             NPCs.Lanka.MainDialogue.AddOption("Upgrade", () => { Upgrades.Menu(); });
-            NPCs.Lanka.MainDialogue.AddOption(PlayerReply.BYE, () => { System.Console.WriteLine(NpcReply.LANKA_BYE); NPCs.Lanka.MainDialogue.TriggerDialogue(); });
+            NPCs.Lanka.MainDialogue.AddOption(PlayerReply.BYE, () => { SlowWrite(NpcReply.LANKA_BYE); NPCs.Lanka.MainDialogue.TriggerDialogue(); });
         }
 
         // Temporary console styling methods
@@ -472,6 +482,28 @@ namespace EcoQuest
             Console.ForegroundColor = color;
             System.Console.Write(text);
             Console.ResetColor();
+        }
+
+        public static void SlowWrite(string text)
+        {
+            Random rnd = new Random();
+            bool skipDelay = false;
+            foreach (char c in text)
+            {
+                Console.Write(c);
+
+                if (Console.KeyAvailable)
+                {
+                    Console.ReadKey(true);
+                    skipDelay = true;
+                }
+                if (!skipDelay)
+                {
+                    Thread.Sleep(rnd.Next(30, 50));
+                }
+
+            }
+            Console.WriteLine();
         }
     }
 }
