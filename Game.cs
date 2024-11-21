@@ -411,9 +411,12 @@ namespace EcoQuest
             ColorWriteLine("Welcome to EcoQuest!", ConsoleColor.Blue);
             Console.WriteLine();
 
-            Console.WriteLine("You begin on board a research vessel, drifting along calm blue waters under an open sky.\nThe ship gently rocks, its deck bustling with equipment—nets, sonar tools, oxygen tanks, and more—all arranged with precision. \nAs an aspiring marine biologist, you're on your first expedition. The setting is new, thrilling, and a little overwhelming. \nThe crisp salt air and distant cry of seagulls fill you with excitement for the adventure that awaits.\n");
+            Console.WriteLine("You are aboard a research vessel, drifting along calm blue waters under an open sky.\nThe ship gently rocks, its deck bustling with equipment, nets, sonar tools, oxygen tanks, and more. \nAs an aspiring marine biologist, you're on your first expedition. \nThe salty air and distant cry of seagulls fill you with excitement for the adventure that awaits.\nTo the helm of the ship stands Captain Sylvia Earle, a legendary oceanographer, explorer, and marine biologist with a lifetime of experience beneath the waves.\nHer sharp and thoughtful eyes reflect countless voyage and experience for being at sea.\nHer weathered face and confident stance presents the wisdom of someone who has spent decades charting unknown waters \nand fighting tirelessly to protect marine ecosystems.\nAs her hands rest firmly on the ship's wheel, steadily guiding the vessel, she can't help but notice you staring at her, and decides to approach.\n");
+            Console.WriteLine("Captain Sylvia approaches, her voice, steady adn inspiring:\nWelcome aboard explorer! The ocean faces grave threats.\nPollution, overfishing, warming waters, and habitat destruction, but it's not too late to act.\nI've spent a lifetime beneath the waves, witnessing both devastation and resilience.\nNow, it's your turn. The United Nations calls us to action through Goal 14: Life Below Water, a mission to restore and protect our Ocean.\nEvery action, no matter how small, creates ripples of change. With passion and persistence, we can bring life back to these waters.\nSo, are you ready to dive in and be the hero the ocean needs? Let's make waves for a better future.\n");
             // [Insert more lore about the character here]
-            Console.WriteLine("Type 'sail' to choose your destination.");
+
+            Console.WriteLine("You have learned the command 'sail'.\n");
+            Console.WriteLine("Type 'sail' to choose your destination.\n");
             Console.WriteLine("Type 'help' to see a list of available commands.");
             Console.WriteLine();
         }
