@@ -9,13 +9,13 @@ namespace EcoQuest
         public void CreateRooms()
         {
             Room? srilanka_port = new("Sri Lanka Port",
-            $"You are at the central port. To the east is a very dirty and polluted beach, to the north there is a recycling station, and to the west is the Town Hall. \nThere is a stranger standing in the port. His face lights up when sees you, maybe you should go talk to him.",
+            $"You are at the central port. To the east is a very dirty and polluted beach, to the north there is a recycling station, and to the west is the Town Hall. \nThere is a stranger standing in the port. His face lights up when sees you, maybe you should go talk to him.\nYou can use command 'north', 'west', and 'east' to navigate.\n\nYou have learned command 'talk'\nType 'talk' to talk to NPC.\n",
             NPCs.Garry
 
             );
 
             Room? srilanka_beach = new("Polluted Beach",
-             "You are walking through piles of trash. Supposedly you are on a beach."
+             "You arrived on the beach.\nYou are confused.\nYou are supposed to be on a beach.\nBut, piles and piles of trash is the only thing you can see.\n\nYou can use commands 'pick' on the beach.\nType 'pick' to start picking up trash.\n\nYou have learned command 'inventory'.\nType 'inventory' to check you inventory.\n\nYou have learned command 'energy'.\nType 'energy' to check you energy levels.\n"
                );
 
             Room? srilanka_townhall = new("Town Hall", "You are at the Town Hall, you can see the mayor's office but the door is closed and you're not allowed in, he doesn't speak to no names.", NPCs.Lanka);

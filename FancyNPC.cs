@@ -19,7 +19,7 @@ public class FancyNPC : NPC
         }
         else
         {
-            Game.ColorWriteLine($"You don't have enought reputation to talk to this NPC! You have ({Reputation.Get()} / {ReputationReq}) reputation.", ConsoleColor.Red);
+            Game.ColorWriteLine($"You don't have enough reputation to talk to this NPC! You have ({Reputation.Get()} / {ReputationReq}) reputation.", ConsoleColor.Red);
 
         }
     }

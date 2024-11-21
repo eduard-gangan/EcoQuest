@@ -161,7 +161,7 @@ namespace EcoQuest
                         else
                         {
                             if (Inventory.Items.Count() == Inventory.InventoryCapacity)
-                                Console.WriteLine("Your inventory is full !");
+                                Console.WriteLine("Your inventory is full!\n\nYou can go to Recycling station to dump the trash.\nYou have learned command 'dump'.");
                             else if (Energy.Get() < 5)
                             {
                                 ColorWriteLine("You don't have enough energy to pick up this trash!", ConsoleColor.Red);
@@ -362,8 +362,9 @@ namespace EcoQuest
                     if (currentLocation != sriLanka)
                     {
                         Console.Clear();
-                        Console.WriteLine("You're on your way to Sri Lanka... \n\n\n");
-                        Console.WriteLine("You arrived in Sri Lanka!");
+                        Console.WriteLine("\nYou're on your way to Sri Lanka... \n\n\n");
+                        Console.WriteLine("You arrived in Sri Lanka!\n\n\n");
+                        Console.WriteLine("You have learned command 'look'\nType 'look' to see you what's around you.\n\n");
                         currentLocation = sriLanka;
                         currentRoom = sriLanka?.Rooms["port"];
                     }
