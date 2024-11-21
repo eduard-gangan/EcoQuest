@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Formats.Asn1;
 using System.Security.Claims;
+using System.Transactions;
 
 namespace EcoQuest
 {
@@ -65,7 +66,14 @@ namespace EcoQuest
                         if (previousRoom == null)
                             ColorWriteLine("You can't go back from here!", ConsoleColor.Red);
                         else
+
                             currentRoom = previousRoom;
+                        Console.Write($"[Suggested Commands]: ");
+                        foreach (string commands in currentRoom.AvailableCommands)
+                        {
+                            Console.Write($"{commands} ");
+                        }
+                        System.Console.WriteLine();
                         break;
 
                     case "sail":
@@ -73,6 +81,7 @@ namespace EcoQuest
                         {
                             if (currentLocation == startingLocation || currentRoom.RoomName.Contains("Port"))
                             {
+                                Console.Clear();
                                 Console.WriteLine("Where do you want to sail?");
                                 Console.WriteLine("(Sri Lanka, Sea)");
                                 Sail(Console.ReadLine());
@@ -99,6 +108,7 @@ namespace EcoQuest
                         break;
 
                     case "quit":
+                        Console.Clear();
                         continuePlaying = false;
                         break;
 
@@ -171,7 +181,7 @@ namespace EcoQuest
                         else
                         {
                             if (Inventory.Items.Count() == Inventory.InventoryCapacity)
-                                Console.WriteLine("Your inventory is full!\n\nYou can go to Recycling station to dump the trash.\nYou have learned command 'dump'.");
+                                Console.WriteLine("Your inventory is full!.");
                             else if (Energy.Get() < 5)
                             {
                                 ColorWriteLine("You don't have enough energy to pick up this trash!", ConsoleColor.Red);
@@ -371,9 +381,9 @@ namespace EcoQuest
                     if (currentLocation != sriLanka)
                     {
                         Console.Clear();
-                        Console.WriteLine("\nYou're on your way to Sri Lanka... \n\n\n");
-                        Console.WriteLine("You arrived in Sri Lanka!\n\n\n");
-                        Console.WriteLine("You have learned command 'look'\nType 'look' to see you what's around you.\n\n");
+                        Console.WriteLine("You're on your way to Sri Lanka... \n");
+                        Console.WriteLine("You arrived in Sri Lanka!\n");
+                        Console.WriteLine("Type 'look' to see you what's around you.\n");
                         currentLocation = sriLanka;
                         currentRoom = sriLanka?.Rooms["port"];
                     }
@@ -406,8 +416,15 @@ namespace EcoQuest
         {
             if (currentRoom?.Exits.ContainsKey(direction) == true)
             {
+                Console.Clear();
                 previousRoom = currentRoom;
                 currentRoom = currentRoom?.Exits[direction];
+                Console.Write($"[Suggested Commands]: ");
+                foreach (string command in currentRoom.AvailableCommands)
+                {
+                    Console.Write($"{command} ");
+                }
+                System.Console.WriteLine();
             }
             else
             {
@@ -418,15 +435,11 @@ namespace EcoQuest
         private static void PrintWelcome()
         {
             Console.Clear();
-            ColorWriteLine("Welcome to EcoQuest!", ConsoleColor.Blue);
-            Console.WriteLine();
-
+            ColorWriteLine("Welcome to EcoQuest!\n", ConsoleColor.Blue);
             Console.WriteLine("You are aboard a research vessel, drifting along calm blue waters under an open sky.\nThe ship gently rocks, its deck bustling with equipment, nets, sonar tools, oxygen tanks, and more. \nAs an aspiring marine biologist, you're on your first expedition. \nThe salty air and distant cry of seagulls fill you with excitement for the adventure that awaits.\nTo the helm of the ship stands Captain Sylvia Earle, a legendary oceanographer, explorer, and marine biologist with a lifetime of experience beneath the waves.\nHer sharp and thoughtful eyes reflect countless voyage and experience for being at sea.\nHer weathered face and confident stance presents the wisdom of someone who has spent decades charting unknown waters \nand fighting tirelessly to protect marine ecosystems.\nAs her hands rest firmly on the ship's wheel, steadily guiding the vessel, she can't help but notice you staring at her, and decides to approach.\n");
             Console.WriteLine("Captain Sylvia approaches, her voice, steady adn inspiring:\nWelcome aboard explorer! The ocean faces grave threats.\nPollution, overfishing, warming waters, and habitat destruction, but it's not too late to act.\nI've spent a lifetime beneath the waves, witnessing both devastation and resilience.\nNow, it's your turn. The United Nations calls us to action through Goal 14: Life Below Water, a mission to restore and protect our Ocean.\nEvery action, no matter how small, creates ripples of change. With passion and persistence, we can bring life back to these waters.\nSo, are you ready to dive in and be the hero the ocean needs? Let's make waves for a better future.\n");
-            // [Insert more lore about the character here]
-
-            Console.WriteLine("You have learned the command 'sail'.\n");
-            Console.WriteLine("Type 'sail' to choose your destination.\n");
+            // [Insert more lore about the character here];
+            Console.WriteLine("Type 'sail' to choose your destination.");
             Console.WriteLine("Type 'help' to see a list of available commands.");
             Console.WriteLine();
         }
