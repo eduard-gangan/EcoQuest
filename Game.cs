@@ -86,7 +86,7 @@ namespace EcoQuest
                         }
                         else
                         {
-                            Console.WriteLine("You can't sail while you have active quest");
+                            Console.WriteLine("You can't sail while you have an active quest");
                             break;
                         }
 
@@ -349,7 +349,6 @@ namespace EcoQuest
                         }
                         break;
                     default:
-                        Console.WriteLine("I don't know that command.");
                         break;
                 }
             }
