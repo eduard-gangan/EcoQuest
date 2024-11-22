@@ -6,7 +6,7 @@ public class Item
    public string Description { get; private set; }
    public bool Droppable { get; set; }
    public bool Trash { get; private set; }
-   public enum TrashTypes { Plastic, Glass, Organic, Electronic, Paper, Metal, Rubber, Waste};
+   public enum TrashTypes { Plastic, Glass, Organic, Electronic, Paper, Metal, Rubber, Waste };
    public TrashTypes TrashType { get; private set; }
    public int Value { get; private set; }
    public int NumberOfTimeUsable { get; set; }

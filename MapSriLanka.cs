@@ -1,9 +1,10 @@
 namespace EcoQuest;
 
-public static class MapSriLanka{
-    
-        static char[,] map = new char[,]
-    {
+public static class MapSriLanka
+{
+
+    static char[,] map = new char[,]
+{
         { ' ', ' ', ' ', ' ', ' ', ' ', 'S', 'T', 'A', 'T', 'I', 'O', 'N', ' ', ' ', ' ', ' ', ' ', ' '},
         { ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', '#', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
         { ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -19,27 +20,27 @@ public static class MapSriLanka{
         { '#', ' ', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', ' ', '#'},
         { '#', '#', '#', '#', '#', ' ', ' ', '#', '#', '#', '#', '#', ' ', ' ', '#', '#', '#', '#', '#'},
         { ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'P', 'O', 'R', 'T', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-        
-    };
-    
+
+};
+
 
     public static void ShowMap(Room? currentRoom)
     {
-        if(currentRoom.RoomName.Contains("Port"))
+        if (currentRoom.RoomName.Contains("Port"))
         {
-            map[11,9] = '*';
+            map[11, 9] = '*';
         }
-        else if(currentRoom.RoomName.Contains("Town Hall"))
+        else if (currentRoom.RoomName.Contains("Town Hall"))
         {
-            map[11,2] = '*';
+            map[11, 2] = '*';
         }
-        else if(currentRoom.RoomName.Contains("Beach"))
+        else if (currentRoom.RoomName.Contains("Beach"))
         {
-            map[11,16] = '*';
+            map[11, 16] = '*';
         }
-        else 
+        else
         {
-            map[3,9] = '*';
+            map[3, 9] = '*';
         }
 
         Console.Clear();
@@ -53,10 +54,10 @@ public static class MapSriLanka{
             Console.WriteLine();
         }
 
-        map[11,9] = ' ';
-        map[11,2] = ' ';
-        map[11,16] = ' ';
-        map[3,9] = ' ';
+        map[11, 9] = ' ';
+        map[11, 2] = ' ';
+        map[11, 16] = ' ';
+        map[3, 9] = ' ';
 
     }
 }

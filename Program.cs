@@ -83,7 +83,28 @@ namespace EcoQuest
         public static void Main()
         {
             Game game = new();
-            game.Play();
+            bool startMenu = true;
+            Console.Clear();
+            Game.ColorWriteLine(@"
+                 _____          _____                 _   
+                |  ___|        |  _  |               | |  
+                | |__  ___ ___ | | | |_   _  ___  ___| |_ 
+                |  __|/ __/ _ \| | | | | | |/ _ \/ __| __|
+                | |__| (_| (_) \ \/' / |_| |  __/\__ \ |_ 
+                \____/\___\___/ \_/\_\\__,_|\___||___/\__|", ConsoleColor.Blue);
+            System.Console.WriteLine();
+            System.Console.WriteLine("Press any button to start the game...");
+            while (startMenu)
+            {
+                if (Console.KeyAvailable)
+                {
+                    Console.ReadKey(true);
+                    startMenu = false;
+                    game.Play();
+
+                }
+
+            }
         }
     }
 }
