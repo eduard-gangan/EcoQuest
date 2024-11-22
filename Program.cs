@@ -93,6 +93,7 @@ namespace EcoQuest
                 | |__| (_| (_) \ \/' / |_| |  __/\__ \ |_ 
                 \____/\___\___/ \_/\_\\__,_|\___||___/\__|", ConsoleColor.Blue);
             System.Console.WriteLine("\n");
+            Game.ColorWriteLine("WARNING: For a better command-line experience, please use an external CLI instead of an integrated one", ConsoleColor.Yellow);
             Game.ColorWriteLine("Press any key to start the game...", ConsoleColor.DarkGray);
             while (startMenu)
             {

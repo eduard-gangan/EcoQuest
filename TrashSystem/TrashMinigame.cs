@@ -28,24 +28,24 @@ public static class TrashMinigame
     private static List<Item> Trash = [];
     public static int Multiplier { get; set; } = 5;
     public static int EnergyConsumption { get; set; } = 5;
-    private static readonly int ReputationRequirement = 500; // Temporary variable
+    private static bool Open = false;
 
     public static void Start(string currentRoomName)
     {
-        // Check energy, room and reputation.
+        // Check energy, room and if the recycling station is open.
         if (currentRoomName != "Recycling Station")
         {
-            Console.WriteLine("You are not in the recycling station!");
+            Game.ColorWriteLine("You are not in the recycling station!", ConsoleColor.Red);
+            return;
+        }
+        if (!Open)
+        {
+            Game.ColorWriteLine("The Recycling Station isn't functional yet.", ConsoleColor.DarkGray);
             return;
         }
         if (Energy.Decrease(EnergyConsumption) == false)
         {
             Game.ColorWriteLine("You don't have enough energy to sort this trash!", ConsoleColor.Red);
-            return;
-        }
-        if (Reputation.Get() < ReputationRequirement)
-        {
-            Game.ColorWriteLine("You can't use that command yet.", ConsoleColor.Red);
             return;
         }
 
@@ -181,5 +181,10 @@ public static class TrashMinigame
             Console.WriteLine();
             Reputation.Decrease(item.Value * Multiplier);
         }
+    }
+
+    public static void RepairRecyclingStation()
+    {
+        Open = true;
     }
 }

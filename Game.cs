@@ -229,7 +229,7 @@ namespace EcoQuest
                 Console.Clear();
                 previousRoom = currentRoom;
                 currentRoom = currentRoom?.Exits[direction];
-                
+
                 Console.WriteLine($"[{currentRoom?.RoomName}]");
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.Write($"[Suggested Commands]: ");
@@ -256,7 +256,7 @@ namespace EcoQuest
             Console.Clear();
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            SlowWrite("*Captain Sylvia approaches, her voice, steady and inspiring*\n", 10, 15);
+            SlowWrite("*Captain Sylvia approaches, her voice, steady and inspiring*\n", 25, 35);
             Console.ResetColor();
             SlowWrite("Welcome aboard explorer! The ocean faces grave threats.\nPollution, overfishing, warming waters, and habitat destruction, but it's not too late to act.\nI've spent a lifetime beneath the waves, witnessing both devastation and resilience.\nNow, it's your turn. The United Nations calls us to action through Goal 14: Life Below Water, a mission to restore and protect our Ocean.\nEvery action, no matter how small, creates ripples of change. With passion and persistence, we can bring life back to these waters.\nSo, are you ready to dive in and be the hero the ocean needs? Let's make waves for a better future.\n", 25, 35);
             ColorWriteLine("Press any key to continue...", ConsoleColor.DarkGray);
@@ -305,7 +305,29 @@ namespace EcoQuest
             NPCs.Larry.MainDialogue.AddOption(PlayerReply.LARRY_BYE, () => { SlowWrite(NpcReply.LARRY_BYE); NPCs.Larry.MainDialogue.TriggerDialogue(); });
 
             //Mayor Lanka
-            NPCs.Lanka.MainDialogue.AddOption(PlayerReply.LANKA_PLAYER, () => SlowWrite(NpcReply.LANKA_PLAYER));
+            NPCs.Lanka.MainDialogue.AddOption(PlayerReply.LANKA_PLAYER, () =>
+            {
+                SlowWrite(NpcReply.LANKA_PLAYER); NPCs.Lanka.MainDialogue.InsertOption(PlayerReply.LANKA_STATION, () =>
+            {
+                if (Reputation.Get() >= 0)
+                {
+                    SlowWrite(NpcReply.LANKA_STATION_YES);
+                    TrashMinigame.RepairRecyclingStation();
+                    ColorWriteLine("The Recycling Station is now functional, use command (sort) to sort items while in the Recycling Station", ConsoleColor.DarkGray);
+                    NPCs.Lanka.MainDialogue.RemoveOption(PlayerReply.LANKA_STATION);
+                    NPCs.Lanka.MainDialogue.RemoveOption(PlayerReply.LANKA_PLAYER);
+
+                }
+                else
+                {
+                    SlowWrite(NpcReply.LANKA_STATION_NO);
+                    ColorWriteLine("You need 500 reputation to repair the recycling station", ConsoleColor.DarkGray);
+                }
+            },
+             1
+             );
+            }
+            );
             NPCs.Lanka.MainDialogue.AddOption("Upgrade", () => { Upgrades.Menu(); });
             NPCs.Lanka.MainDialogue.AddOption(PlayerReply.BYE, () => { SlowWrite(NpcReply.LANKA_BYE); NPCs.Lanka.MainDialogue.TriggerDialogue(); });
         }
@@ -324,7 +346,7 @@ namespace EcoQuest
             Console.ResetColor();
         }
 
-        public static void SlowWrite(string text, int min = 30, int max = 50)
+        public static void SlowWrite(string text, int min = 25, int max = 35)
         {
             Random rnd = new Random();
             bool skipDelay = false;
