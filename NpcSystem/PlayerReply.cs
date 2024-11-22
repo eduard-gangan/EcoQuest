@@ -16,6 +16,7 @@ public static class PlayerReply
     //Mayor Lanka
 
     public const string LANKA_PLAYER = "Yes i am, and i want to talk to you about repairing the recycling station. ";
+    public const string LANKA_STATION = "The Recycling Station needs to be repaired as soon as possible.";
 
 
     public const string YES = "Yes";

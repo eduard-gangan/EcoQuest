@@ -13,7 +13,9 @@ public static class NpcReply
 
     public const string LANKA_DESCRIPTION = "The mayor is at the office sitting behind his desk, covered with documents, from the locals’ requests.";
     public const string LANKA_GREETING = ">LANKA: The mayor taps his fingers on the table as you approach. \nLet me guess, you are the marine biologist.";
-    public const string LANKA_PLAYER = ">LANKA: *the mayor sighs and crossed his arms while looking at you*  \n>LANKA: Let me be honest, ive seen a lot of “saviors” who came to this town. Activists, scientists, volunteers, each one promising that they would turn this place around and solve the problems. but in then end each one of them left with a very lasting impact. ";
+    public const string LANKA_PLAYER = ">LANKA: *the mayor sighs and crossed his arms while looking at you*  \n>LANKA: Let me be honest, ive seen a lot of “saviors” who came to this town. Activists, scientists, volunteers, each one promising that they would turn this place around and solve the problems. but in then end each one of them left with a very lasting impact. If you can prove to me that you can make a difference I'll repair the Recycling Station";
+    public const string LANKA_STATION_YES = ">LANKA: Congratulations, you have proven your worth to our city, I will start the repairs on the Recycling Station";
+    public const string LANKA_STATION_NO = ">LANKA: Come back when you have done something useful!";
     public const string LANKA_BYE = ">LANKA: Come back here next time, if you’ve done what i ask you to do.";
 
 

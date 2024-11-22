@@ -6,7 +6,7 @@
         public string RoomDescription { get; private set; }
         public Dictionary<string, Room> Exits { get; private set; } = new();
         public NPC? RoomNPC { get; private set; }
-        public List<string> AvailableCommands { get; private set; } = new ();
+        public List<string> AvailableCommands { get; private set; } = new();
         public Room(string roomName, string roomDescription, List<string> availableCommands)
         {
             RoomName = roomName;

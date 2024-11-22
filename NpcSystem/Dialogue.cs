@@ -16,7 +16,7 @@ public class Dialogue
     public void Start()
     {
         TriggerDialogue();
-        System.Console.WriteLine(Prompt);
+        Game.SlowWrite(Prompt);
         while (Active)
         {
 
@@ -45,8 +45,15 @@ public class Dialogue
 
     public void AddOption(string reply, Action action)
     {
-        OptionList.Add(reply);
-        DialogueOptions.Add(reply, action);
+        if (OptionList.Contains(reply))
+        {
+            return;
+        }
+        else
+        {
+            OptionList.Add(reply);
+            DialogueOptions.Add(reply, action);
+        }
     }
 
 
@@ -66,8 +73,15 @@ public class Dialogue
     }
     public void InsertOption(string reply, Action action, int index)
     {
-        DialogueOptions.Add(reply, action);
-        OptionList.Insert(index, reply);
+        if (OptionList.Contains(reply))
+        {
+            return;
+        }
+        else
+        {
+            DialogueOptions.Add(reply, action);
+            OptionList.Insert(index, reply);
+        }
 
     }
     //Key is the PlayerReply

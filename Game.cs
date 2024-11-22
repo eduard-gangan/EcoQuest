@@ -449,13 +449,13 @@ namespace EcoQuest
         {
             Console.Clear();
             ColorWriteLine("            Welcome to EcoQuest!\n", ConsoleColor.Blue);
-            SlowWrite("You are aboard a research vessel, drifting along calm blue waters under an open sky.\nThe ship gently rocks, its deck bustling with equipment, nets, sonar tools, oxygen tanks, and more. \n\nAs an aspiring marine biologist, you're on your first expedition.\nThe salty air and distant cry of seagulls fill you with excitement for the adventure that awaits.\n\nTo the helm of the ship stands Captain Sylvia Earle, a legendary oceanographer, explorer, and marine biologist\nwith a lifetime of experience beneath the waves.\nHer sharp and thoughtful eyes reflect countless voyage and experience for being at sea.\nHer weathered face and confident stance presents the wisdom of someone who has spent decades charting unknown\nwaters and fighting tirelessly to protect marine ecosystems.\nAs her hands rest firmly on the ship's wheel, steadily guiding the vessel, she can't help but notice you staring\nat her, and decides to approach.\n \n", 1, 1);
+            SlowWrite("You are aboard a research vessel, drifting along calm blue waters under an open sky.\nThe ship gently rocks, its deck bustling with equipment, nets, sonar tools, oxygen tanks, and more. \n\nAs an aspiring marine biologist, you're on your first expedition.\nThe salty air and distant cry of seagulls fill you with excitement for the adventure that awaits.\n\nTo the helm of the ship stands Captain Sylvia Earle, a legendary oceanographer, explorer, and marine biologist\nwith a lifetime of experience beneath the waves.\nHer sharp and thoughtful eyes reflect countless voyage and experience for being at sea.\nHer weathered face and confident stance presents the wisdom of someone who has spent decades charting unknown\nwaters and fighting tirelessly to protect marine ecosystems.\nAs her hands rest firmly on the ship's wheel, steadily guiding the vessel, she can't help but notice you staring\nat her, and decides to approach.\n \n", 15, 25);
             ColorWrite("--------[Press any key to continue]--------", ConsoleColor.DarkGray);
             Console.ReadKey();
             Console.Clear();
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            SlowWrite("*Captain Sylvia approaches, her voice, steady and inspiring*\n", 10, 15);
+            SlowWrite("*Captain Sylvia approaches, her voice, steady and inspiring*\n", 25, 35);
             Console.ResetColor();
             SlowWrite("Welcome aboard explorer! The ocean faces grave threats.\nPollution, overfishing, warming waters, and habitat destruction, but it's not too late to act.\nI've spent a lifetime beneath the waves, witnessing both devastation and resilience.\nNow, it's your turn. The United Nations calls us to action through Goal 14: Life Below Water, a mission to restore and protect our Ocean.\nEvery action, no matter how small, creates ripples of change. With passion and persistence, we can bring life back to these waters.\nSo, are you ready to dive in and be the hero the ocean needs? Let's make waves for a better future.\n", 25, 35);
             ColorWrite("--------[Press any key to continue]--------", ConsoleColor.DarkGray);
@@ -504,7 +504,29 @@ namespace EcoQuest
             NPCs.Larry.MainDialogue.AddOption(PlayerReply.LARRY_BYE, () => { SlowWrite(NpcReply.LARRY_BYE); NPCs.Larry.MainDialogue.TriggerDialogue(); });
 
             //Mayor Lanka
-            NPCs.Lanka.MainDialogue.AddOption(PlayerReply.LANKA_PLAYER, () => SlowWrite(NpcReply.LANKA_PLAYER));
+            NPCs.Lanka.MainDialogue.AddOption(PlayerReply.LANKA_PLAYER, () =>
+            {
+                SlowWrite(NpcReply.LANKA_PLAYER); NPCs.Lanka.MainDialogue.InsertOption(PlayerReply.LANKA_STATION, () =>
+            {
+                if (Reputation.Get() >= 0)
+                {
+                    SlowWrite(NpcReply.LANKA_STATION_YES);
+                    TrashMinigame.RepairRecyclingStation();
+                    ColorWriteLine("The Recycling Station is now functional, use command (sort) to sort items while in the Recycling Station", ConsoleColor.DarkGray);
+                    NPCs.Lanka.MainDialogue.RemoveOption(PlayerReply.LANKA_STATION);
+                    NPCs.Lanka.MainDialogue.RemoveOption(PlayerReply.LANKA_PLAYER);
+
+                }
+                else
+                {
+                    SlowWrite(NpcReply.LANKA_STATION_NO);
+                    ColorWriteLine("You need 500 reputation to repair the recycling station", ConsoleColor.DarkGray);
+                }
+            },
+             1
+             );
+            }
+            );
             NPCs.Lanka.MainDialogue.AddOption("Upgrade", () => { Upgrades.Menu(); });
             NPCs.Lanka.MainDialogue.AddOption(PlayerReply.BYE, () => { SlowWrite(NpcReply.LANKA_BYE); NPCs.Lanka.MainDialogue.TriggerDialogue(); });
         }
@@ -523,7 +545,7 @@ namespace EcoQuest
             Console.ResetColor();
         }
 
-        public static void SlowWrite(string text, int min = 30, int max = 50)
+        public static void SlowWrite(string text, int min = 25, int max = 35)
         {
             Random rnd = new Random();
             bool skipDelay = false;

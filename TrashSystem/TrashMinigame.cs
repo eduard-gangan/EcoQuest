@@ -29,6 +29,7 @@ public static class TrashMinigame
     public static int Multiplier { get; set; } = 5;
     public static int EnergyConsumption { get; set; } = 5;
     private static readonly int ReputationRequirement = 500; // Temporary variable
+    private static bool Open = false;
 
     public static void Start(string currentRoomName)
     {
@@ -38,60 +39,63 @@ public static class TrashMinigame
             Console.WriteLine("You are not in the recycling station!");
             return;
         }
-        if (Energy.Get() < EnergyConsumption)
+        else if (Open)
         {
-            Game.ColorWriteLine("You don't have enough energy to sort this trash!", ConsoleColor.Red);
-            return;
-        }
-        if (Reputation.Get() < ReputationRequirement)
-        {
-            Game.ColorWriteLine("You can't use that command yet.", ConsoleColor.Red);
-            return;
-        }
-        Energy.Decrease(EnergyConsumption);
-
-        // Iterate through all items and add items that are trash to the Trash list.
-        if (Inventory.Items.Count > 0)
-        {
-            foreach (Item item in Inventory.Items.ToList())
+            if (Energy.Get() < EnergyConsumption)
             {
-                if (Trash.Count == 5)
+                Game.ColorWriteLine("You don't have enough energy to sort this trash!", ConsoleColor.Red);
+                return;
+            }
+
+            Energy.Decrease(EnergyConsumption);
+
+            // Iterate through all items and add items that are trash to the Trash list.
+            if (Inventory.Items.Count > 0)
+            {
+                foreach (Item item in Inventory.Items.ToList())
                 {
-                    break;
-                }
-                if (item.Trash == true)
-                {
-                    Trash.Add(item);
+                    if (Trash.Count == 5)
+                    {
+                        break;
+                    }
+                    if (item.Trash == true)
+                    {
+                        Trash.Add(item);
+                    }
                 }
             }
-        }
 
-        if (Trash.Count > 0)
-        {
-            Console.WriteLine();
-            Console.WriteLine(">-----------------------------<");
-            Console.WriteLine("     Trash Sorting Minigame");
-            Console.WriteLine(">-----------------------------<");
-            Console.WriteLine("Select either of the options by");
-            Console.WriteLine("typing the corresponding number");
-            Console.WriteLine("       [1] through [8]         ");
-            Console.WriteLine(">-----------------------------<");
-            Console.WriteLine();
-
-
-            foreach (Item item in Trash.ToList()) // Iterate through all the trash and prompt the minigame for each item.
+            if (Trash.Count > 0)
             {
-                Prompt(item);
-                Trash.Remove(item);
-                Inventory.Items.Remove(item);
+                Console.WriteLine();
                 Console.WriteLine(">-----------------------------<");
+                Console.WriteLine("     Trash Sorting Minigame");
+                Console.WriteLine(">-----------------------------<");
+                Console.WriteLine("Select either of the options by");
+                Console.WriteLine("typing the corresponding number");
+                Console.WriteLine("       [1] through [8]         ");
                 Console.WriteLine(">-----------------------------<");
                 Console.WriteLine();
+
+
+                foreach (Item item in Trash.ToList()) // Iterate through all the trash and prompt the minigame for each item.
+                {
+                    Prompt(item);
+                    Trash.Remove(item);
+                    Inventory.Items.Remove(item);
+                    Console.WriteLine(">-----------------------------<");
+                    Console.WriteLine(">-----------------------------<");
+                    Console.WriteLine();
+                }
+            }
+            else
+            {
+                Console.WriteLine("You don't have any trash in your inventory!");
             }
         }
         else
         {
-            Console.WriteLine("You don't have any trash in your inventory!");
+            Game.ColorWriteLine("The Recycling Station isn't functional yet...", ConsoleColor.DarkGray);
         }
     }
     private static void Prompt(Item item)
@@ -182,5 +186,10 @@ public static class TrashMinigame
             Console.WriteLine();
             Reputation.Decrease(item.Value * Multiplier);
         }
+    }
+
+    public static void RepairRecyclingStation()
+    {
+        Open = true;
     }
 }
