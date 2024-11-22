@@ -33,15 +33,13 @@ public static class TrashDump
                 Reputation.Add(item.Value);
                 Trash.Remove(item);
                 Console.Write($"Threw away {item.Name}, gained ");
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write(item.Value);
-                Console.ResetColor();
+                Game.ColorWrite($"{item.Value}", ConsoleColor.Green);
                 Console.WriteLine(" reputation!");
             }
         }
         else
         {
-            Console.WriteLine("You don't have any trash in your inventory!");
+            Game.ColorWriteLine("You don't have any trash in your inventory!", ConsoleColor.Red);
         }
     }
 }

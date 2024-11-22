@@ -33,10 +33,8 @@ namespace EcoQuest
             bool continuePlaying = true;
             while (continuePlaying)
             {
-                if (currentRoom?.RoomName == null)
-                    System.Console.WriteLine("[Boat]");
-                else
-                    Console.WriteLine($"[{currentRoom?.RoomName}]");
+               // if (currentRoom?.RoomName == null)
+               //     Console.WriteLine("\n[Boat]");
 
                 Console.Write("> ");
 
@@ -63,19 +61,24 @@ namespace EcoQuest
                         break;
 
                     case "back":
+                        Console.WriteLine(previousRoom);
                         if (previousRoom == null)
-                            ColorWriteLine("You can't go back from here!", ConsoleColor.Red);
-                        else
-
-                            currentRoom = previousRoom;
-                        Console.Write($"[Suggested Commands]: ");
-                        foreach (string commands in currentRoom.AvailableCommands)
                         {
-                            Console.Write($"{commands} ");
+                            ColorWriteLine("You can't go back from here!", ConsoleColor.Red);
                         }
-                        System.Console.WriteLine();
+                        else
+                        {
+                            Console.Clear();
+                            foreach (KeyValuePair<string, Room> exit in currentRoom.Exits)
+                            {
+                                if (exit.Value == previousRoom)
+                                {
+                                    Move(exit.Key);
+                                }
+                            }
+                            //currentRoom = previousRoom;
+                        }
                         break;
-
                     case "sail":
                         if (QuestSriLanka.Active != true)
                         {
@@ -181,7 +184,7 @@ namespace EcoQuest
                         else
                         {
                             if (Inventory.Items.Count() == Inventory.InventoryCapacity)
-                                Console.WriteLine("Your inventory is full!.");
+                                ColorWriteLine("Your inventory is full!", ConsoleColor.Red);
                             else if (Energy.Get() < 5)
                             {
                                 ColorWriteLine("You don't have enough energy to pick up this trash!", ConsoleColor.Red);
@@ -354,7 +357,7 @@ namespace EcoQuest
 
                                 }
                                 Trash.PickUp();
-                                Console.WriteLine($"\n Your intuition tells you there are {Trash.Get()} pieces of trash left on this beach");
+                                ColorWriteLine($"Your intuition tells you there are {Trash.Get()} pieces of trash left on this beach", ConsoleColor.DarkGray);
                             }
                         }
                         break;
@@ -382,8 +385,11 @@ namespace EcoQuest
                     {
                         Console.Clear();
                         Console.WriteLine("You're on your way to Sri Lanka... \n");
-                        Console.WriteLine("You arrived in Sri Lanka!\n");
-                        Console.WriteLine("Type 'look' to see you what's around you.\n");
+                        RecursiveWrite("...", 5);
+                        Console.Clear();
+                        Console.WriteLine("You arrived in Sri Lanka!");
+                        ColorWriteLine("Type 'look' to see you what's around you.", ConsoleColor.DarkGray);
+                        ColorWriteLine("Navigate by typing 'north', 'south', 'east', or 'west'.\n", ConsoleColor.DarkGray);
                         currentLocation = sriLanka;
                         currentRoom = sriLanka?.Rooms["port"];
                     }
@@ -398,7 +404,10 @@ namespace EcoQuest
                     {
                         currentRoom = null;
                         Console.Clear();
-                        Console.WriteLine("You're travelling back to the big blue sea...");
+                        Console.WriteLine("You're travelling back to the big blue sea... \n");
+                        RecursiveWrite("...", 5);
+                        Console.Clear();
+                        Console.WriteLine("You are at sea!");
                         currentLocation = startingLocation;
                     }
                     else
@@ -419,12 +428,16 @@ namespace EcoQuest
                 Console.Clear();
                 previousRoom = currentRoom;
                 currentRoom = currentRoom?.Exits[direction];
+                
+                Console.WriteLine($"[{currentRoom?.RoomName}]");
+                Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.Write($"[Suggested Commands]: ");
-                foreach (string command in currentRoom.AvailableCommands)
+                foreach (string commands in currentRoom.AvailableCommands)
                 {
-                    Console.Write($"{command} ");
+                    Console.Write($"{commands} ");
                 }
-                System.Console.WriteLine();
+                Console.WriteLine();
+                Console.ResetColor();
             }
             else
             {
@@ -435,34 +448,44 @@ namespace EcoQuest
         private static void PrintWelcome()
         {
             Console.Clear();
-            ColorWriteLine("Welcome to EcoQuest!\n", ConsoleColor.Blue);
-            Console.WriteLine("You are aboard a research vessel, drifting along calm blue waters under an open sky.\nThe ship gently rocks, its deck bustling with equipment, nets, sonar tools, oxygen tanks, and more. \nAs an aspiring marine biologist, you're on your first expedition. \nThe salty air and distant cry of seagulls fill you with excitement for the adventure that awaits.\nTo the helm of the ship stands Captain Sylvia Earle, a legendary oceanographer, explorer, and marine biologist with a lifetime of experience beneath the waves.\nHer sharp and thoughtful eyes reflect countless voyage and experience for being at sea.\nHer weathered face and confident stance presents the wisdom of someone who has spent decades charting unknown waters \nand fighting tirelessly to protect marine ecosystems.\nAs her hands rest firmly on the ship's wheel, steadily guiding the vessel, she can't help but notice you staring at her, and decides to approach.\n");
-            Thread.Sleep(1000);
-            Console.WriteLine("Captain Sylvia approaches, her voice, steady and inspiring:\n\n[Captain Sylvia]: ");
-            Thread.Sleep(1000);
-            SlowWrite("Welcome aboard explorer! The ocean faces grave threats.\nPollution, overfishing, warming waters, and habitat destruction, but it's not too late to act.\nI've spent a lifetime beneath the waves, witnessing both devastation and resilience.\nNow, it's your turn. The United Nations calls us to action through Goal 14: Life Below Water, a mission to restore and protect our Ocean.\nEvery action, no matter how small, creates ripples of change. With passion and persistence, we can bring life back to these waters.\nSo, are you ready to dive in and be the hero the ocean needs? Let's make waves for a better future.\n");
-            // [Insert more lore about the character here];
+            ColorWriteLine("            Welcome to EcoQuest!\n", ConsoleColor.Blue);
+            SlowWrite("You are aboard a research vessel, drifting along calm blue waters under an open sky.\nThe ship gently rocks, its deck bustling with equipment, nets, sonar tools, oxygen tanks, and more. \n\nAs an aspiring marine biologist, you're on your first expedition.\nThe salty air and distant cry of seagulls fill you with excitement for the adventure that awaits.\n\nTo the helm of the ship stands Captain Sylvia Earle, a legendary oceanographer, explorer, and marine biologist\nwith a lifetime of experience beneath the waves.\nHer sharp and thoughtful eyes reflect countless voyage and experience for being at sea.\nHer weathered face and confident stance presents the wisdom of someone who has spent decades charting unknown\nwaters and fighting tirelessly to protect marine ecosystems.\nAs her hands rest firmly on the ship's wheel, steadily guiding the vessel, she can't help but notice you staring\nat her, and decides to approach.\n \n", 1, 1);
+            ColorWrite("--------[Press any key to continue]--------", ConsoleColor.DarkGray);
+            Console.ReadKey();
+            Console.Clear();
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            SlowWrite("*Captain Sylvia approaches, her voice, steady and inspiring*\n", 10, 15);
+            Console.ResetColor();
+            SlowWrite("Welcome aboard explorer! The ocean faces grave threats.\nPollution, overfishing, warming waters, and habitat destruction, but it's not too late to act.\nI've spent a lifetime beneath the waves, witnessing both devastation and resilience.\nNow, it's your turn. The United Nations calls us to action through Goal 14: Life Below Water, a mission to restore and protect our Ocean.\nEvery action, no matter how small, creates ripples of change. With passion and persistence, we can bring life back to these waters.\nSo, are you ready to dive in and be the hero the ocean needs? Let's make waves for a better future.\n", 25, 35);
+            ColorWrite("--------[Press any key to continue]--------", ConsoleColor.DarkGray);
+            Console.ReadKey();
+            Console.Clear();
+
             Console.WriteLine("Type 'sail' to choose your destination.");
-            Console.WriteLine("Type 'help' to see a list of available commands.");
+            ColorWriteLine("Type 'help' to see a list of available commands.", ConsoleColor.DarkGray);
             Console.WriteLine();
         }
 
         private static void PrintHelp()
         {
-            Console.WriteLine("Navigate by typing 'north', 'south', 'east', or 'west'.");
-            Console.WriteLine("Type 'sail' to go to another destination.");
-            Console.WriteLine("Type 'look' for more details.");
-            Console.WriteLine("Type 'back' to go to the previous room.");
-            Console.WriteLine("Type 'balance' to see how many EcoCoins you have.");
-            Console.WriteLine("Type 'reputation' to see your reputation.");
-            Console.WriteLine("Type 'energy' to see your energy levels.");
-            Console.WriteLine("Type 'inventory' to see your inventory.");
-            Console.WriteLine("Type 'dump' to dump your trash.");
-            Console.WriteLine("Type 'sort' to sort your trash.");
-            Console.WriteLine("Type 'talk' to talk to an NPC.");
-            Console.WriteLine("Type 'help' to print this message again.");
-            Console.WriteLine("Type 'quit' to exit the game.");
-
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("|------------------------------------------------------------|");
+            Console.WriteLine("  Navigate by typing 'north', 'south', 'east', or 'west'.");
+            Console.WriteLine("  Type 'sail' to go to another destination.");
+            Console.WriteLine("  Type 'look' for more details.");
+            Console.WriteLine("  Type 'back' to go to the previous room.");
+            Console.WriteLine("  Type 'balance' to see how many EcoCoins you have.");
+            Console.WriteLine("  Type 'reputation' to see your reputation.");
+            Console.WriteLine("  Type 'energy' to see your energy levels.");
+            Console.WriteLine("  Type 'inventory' to see your inventory.");
+            Console.WriteLine("  Type 'dump' to dump your trash.");
+            Console.WriteLine("  Type 'sort' to sort your trash.");
+            Console.WriteLine("  Type 'talk' to talk to an NPC.");
+            Console.WriteLine("  Type 'help' to print this message again.");
+            Console.WriteLine("  Type 'quit' to exit the game.");
+            Console.WriteLine("|------------------------------------------------------------|");
+            Console.ResetColor();
         }
 
         private void CreateNpcs()
@@ -500,7 +523,7 @@ namespace EcoQuest
             Console.ResetColor();
         }
 
-        public static void SlowWrite(string text)
+        public static void SlowWrite(string text, int min = 30, int max = 50)
         {
             Random rnd = new Random();
             bool skipDelay = false;
@@ -515,11 +538,24 @@ namespace EcoQuest
                 }
                 if (!skipDelay)
                 {
-                    Thread.Sleep(rnd.Next(30, 50));
+                    Thread.Sleep(rnd.Next(min, max));
                 }
 
             }
             Console.WriteLine();
+        }
+
+        public static void RecursiveWrite(string text, int loops)
+        {
+            for (int i = 0; i < loops; i++)
+            {
+                SlowWrite(text, 150, 250);
+                Console.SetCursorPosition(0, Console.CursorTop - 1);
+                int currentLineCursor = Console.CursorTop;
+                Console.SetCursorPosition(0, Console.CursorTop);
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(0, currentLineCursor);
+            }
         }
     }
 }

@@ -45,14 +45,21 @@ public static class MapSriLanka
 
         Console.Clear();
 
+        Console.WriteLine("\n|-------Map--------|");
+
         for (int y = 0; y < map.GetLength(0); y++)
         {
             for (int x = 0; x < map.GetLength(1); x++)
             {
-                Console.Write(map[y, x]);
+                if(map[y, x] == '*')
+                    Game.ColorWrite($"{map[y, x]}", ConsoleColor.DarkRed);
+                else
+                    Console.Write(map[y, x]);
             }
             Console.WriteLine();
         }
+
+        Console.WriteLine("|------------------|\n\n");
 
         map[11, 9] = ' ';
         map[11, 2] = ' ';

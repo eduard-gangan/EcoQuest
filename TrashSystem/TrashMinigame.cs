@@ -14,11 +14,11 @@ Key Variables:
  - Multiplier: Determines how much the reputation points are multiplied by. 
     This can be adjusted, for example, as part of an upgrade.
 
- - MaxCount: Sets the maximum number of items that can be sorted at once. 
-    This can be adjusted, for example, as part of an upgrade.
-
  - EnergyConsumption: Represents the amount of energy consumed during sorting. 
     This can be adjusted, for example, as part of an upgrade.
+
+ - ReputationRequirement: Represents the amount of reputation required to access the 'sort' command. 
+    This can't be adjusted, since there is no need.
 
  */
 
@@ -28,14 +28,13 @@ public static class TrashMinigame
     private static List<Item> Trash = [];
     public static int Multiplier { get; set; } = 5;
     public static int EnergyConsumption { get; set; } = 5;
-    public static int ReputationRequirement { get; set; } = 500; // Temporary variable
+    private static readonly int ReputationRequirement = 500; // Temporary variable
 
     public static void Start(string currentRoomName)
     {
         // Check energy, room and reputation.
         if (currentRoomName != "Recycling Station")
         {
-            Console.WriteLine(currentRoomName);
             Console.WriteLine("You are not in the recycling station!");
             return;
         }
@@ -44,9 +43,9 @@ public static class TrashMinigame
             Game.ColorWriteLine("You don't have enough energy to sort this trash!", ConsoleColor.Red);
             return;
         }
-        if (Reputation.Get() <= ReputationRequirement)
+        if (Reputation.Get() < ReputationRequirement)
         {
-            Game.ColorWriteLine("I don't know that command.", ConsoleColor.Red);
+            Game.ColorWriteLine("You can't use that command yet.", ConsoleColor.Red);
             return;
         }
         Energy.Decrease(EnergyConsumption);
@@ -152,6 +151,7 @@ public static class TrashMinigame
                 default:
                     Console.WriteLine("Type the corresponding number");
                     Console.WriteLine("      [1] through [8]        ");
+                    Console.Write("> ");
                     break;
 
             }
