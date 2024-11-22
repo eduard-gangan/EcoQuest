@@ -43,8 +43,6 @@ public static class MapSriLanka
             map[3, 9] = '*';
         }
 
-        Console.Clear();
-
         Console.WriteLine("\n|-------Map--------|");
 
         for (int y = 0; y < map.GetLength(0); y++)
