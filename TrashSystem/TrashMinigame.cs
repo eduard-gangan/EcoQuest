@@ -90,7 +90,7 @@ public static class TrashMinigame
         }
         else
         {
-            Console.WriteLine("You don't have any trash in your inventory!");
+            Game.ColorWriteLine("You don't have any trash in your inventory!", ConsoleColor.Red);
         }
     }
     private static void Prompt(Item item)
