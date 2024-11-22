@@ -25,6 +25,7 @@ public class Dialogue
             var consoleInput = Console.ReadLine();
             if (Int32.TryParse(consoleInput, out int playerChoice))
             {
+                Console.Beep();
                 HandlePlayerChoice(playerChoice);
                 continue;
             }

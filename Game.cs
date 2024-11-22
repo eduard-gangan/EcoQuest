@@ -33,8 +33,8 @@ namespace EcoQuest
             bool continuePlaying = true;
             while (continuePlaying)
             {
-               // if (currentRoom?.RoomName == null)
-               //     Console.WriteLine("\n[Boat]");
+                // if (currentRoom?.RoomName == null)
+                //     Console.WriteLine("\n[Boat]");
 
                 Console.Write("> ");
 
@@ -428,7 +428,7 @@ namespace EcoQuest
                 Console.Clear();
                 previousRoom = currentRoom;
                 currentRoom = currentRoom?.Exits[direction];
-                
+
                 Console.WriteLine($"[{currentRoom?.RoomName}]");
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.Write($"[Suggested Commands]: ");
