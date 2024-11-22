@@ -24,7 +24,7 @@ namespace EcoQuest
             sriLanka = new SriLanka("Sri Lanka", "Description for Sri Lanka", 0);
             australia = new Australia("Australia", "Description for Australia", 1000);
             indonesia = new Indonesia("Indonesia", "Description for Indonesia", 2000);
-            startingLocation = new Start("Somewhere at sea", "Description for starting location", 0, sriLanka, australia, indonesia);
+            startingLocation = new Start("Ship", "Somewhere at sea..", 0, sriLanka, australia, indonesia);
 
             currentLocation = startingLocation;
 
@@ -113,9 +113,7 @@ namespace EcoQuest
                         break;
                     case "map":
                         if (currentLocation == sriLanka)
-                        {
                             MapSriLanka.ShowMap(currentRoom);
-                        }
                         break;
                     case "balance":
                         Console.Write($"You currently have");
@@ -148,13 +146,10 @@ namespace EcoQuest
                         Energy.Replenish(currentRoom);
                         break;
                     case "dump":
-                        if (currentRoom?.RoomName == "Recycling Station")
-                            TrashDump.Dump();
-                        else
-                            Console.WriteLine("You are not in the recycling station!");
+                    TrashDump.Dump(currentRoom);
                         break;
                     case "sort":
-                        TrashMinigame.Start(currentRoom?.RoomName);
+                        TrashMinigame.Start(currentRoom);
                         break;
                     case "talk":
                         currentRoom?.RoomNPC.Talk();

@@ -12,14 +12,20 @@ namespace EcoQuest;
 public static class TrashDump
 {
     private static List<Item> Trash = [];
-    public static void Dump()
+    public static void Dump(Room currentRoom)
     {
+        if (currentRoom?.RoomName != "Recycling Station")
+        {
+            Game.ColorWriteLine("You are not in the recycling station!", ConsoleColor.Red);
+            return;
+        }
+
         if (Energy.Decrease(5) == false)
         {
             Game.ColorWriteLine("You don't have enough energy to dump your trash!", ConsoleColor.Red);
             return;
         }
-        
+
         if (Inventory.Items.Count > 0)
         {
             foreach (Item item in Inventory.Items.ToList())

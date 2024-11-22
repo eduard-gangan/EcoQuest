@@ -30,17 +30,17 @@ public static class TrashMinigame
     public static int EnergyConsumption { get; set; } = 5;
     private static bool Open = false;
 
-    public static void Start(string currentRoomName)
+    public static void Start(Room currentRoom)
     {
         // Check energy, room and if the recycling station is open.
-        if (currentRoomName != "Recycling Station")
+        if (currentRoom.RoomName != "Recycling Station")
         {
             Game.ColorWriteLine("You are not in the recycling station!", ConsoleColor.Red);
             return;
         }
         if (!Open)
         {
-            Game.ColorWriteLine("The Recycling Station isn't functional yet.", ConsoleColor.DarkGray);
+            Game.ColorWriteLine("The Recycling Station isn't functional yet.", ConsoleColor.Red);
             return;
         }
         if (Energy.Decrease(EnergyConsumption) == false)
