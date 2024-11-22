@@ -14,6 +14,12 @@ public static class TrashDump
     private static List<Item> Trash = [];
     public static void Dump()
     {
+        if (Energy.Decrease(5) == false)
+        {
+            Game.ColorWriteLine("You don't have enough energy to dump your trash!", ConsoleColor.Red);
+            return;
+        }
+        
         if (Inventory.Items.Count > 0)
         {
             foreach (Item item in Inventory.Items.ToList())

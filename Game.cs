@@ -33,8 +33,6 @@ namespace EcoQuest
             bool continuePlaying = true;
             while (continuePlaying)
             {
-               // if (currentRoom?.RoomName == null)
-               //     Console.WriteLine("\n[Boat]");
 
                 Console.Write("> ");
 
@@ -76,7 +74,6 @@ namespace EcoQuest
                                     Move(exit.Key);
                                 }
                             }
-                            //currentRoom = previousRoom;
                         }
                         break;
                     case "sail":
@@ -101,31 +98,25 @@ namespace EcoQuest
                             Console.WriteLine("You can't sail while you have an active quest");
                             break;
                         }
-
-
                     case "north":
                     case "south":
                     case "east":
                     case "west":
                         Move(command.Name);
                         break;
-
                     case "quit":
                         Console.Clear();
                         continuePlaying = false;
                         break;
-
                     case "help":
                         PrintHelp();
                         break;
-
                     case "map":
                         if (currentLocation == sriLanka)
                         {
                             MapSriLanka.ShowMap(currentRoom);
                         }
                         break;
-
                     case "balance":
                         Console.Write($"You currently have");
                         ColorWrite($" {Money.Get()} ", ConsoleColor.Yellow);
@@ -137,7 +128,7 @@ namespace EcoQuest
                         Console.WriteLine("reputation!");
                         break;
                     case "energy":
-                        if (Energy.Get() <= 1)
+                        if (Energy.Get() <= 5)
                         {
                             Console.Write("You need to sleep, you have");
                             ColorWrite($" {Energy.Get()} ", ConsoleColor.Cyan);
@@ -154,15 +145,7 @@ namespace EcoQuest
                         Inventory.DisplayInventory();
                         break;
                     case "sleep":
-                        if (currentRoom.RoomName.Contains("Port"))
-                        {
-                            Energy.Replenish();
-                            Console.WriteLine("You slept and your energy was replenished!");
-                        }
-                        else
-                        {
-                            Console.WriteLine("You can't sleep here, dumbass...");
-                        }
+                        Energy.Replenish(currentRoom);
                         break;
                     case "dump":
                         if (currentRoom?.RoomName == "Recycling Station")
@@ -177,196 +160,14 @@ namespace EcoQuest
                         currentRoom?.RoomNPC.Talk();
                         break;
                     case "pick": //At the moment, the system doesnt take upgrades into account
-                        if (currentRoom != sriLanka.Rooms["beach"])
-                        {
-                            Console.WriteLine("What are you picking up dumbass ?");
-                        }
-                        else
-                        {
-                            if (Inventory.Items.Count() == Inventory.InventoryCapacity)
-                                ColorWriteLine("Your inventory is full!", ConsoleColor.Red);
-                            else if (Energy.Get() < 5)
-                            {
-                                ColorWriteLine("You don't have enough energy to pick up this trash!", ConsoleColor.Red);
-                            }
-                            else
-                            {
-                                int stat = Stats.Get();
-                                for (int i = 0; i < stat; i++)
-                                {
-                                    Random rnd = new Random();
-                                    int random = rnd.Next(1, 10000);
-                                    Item item;
-
-                                    if (random <= 1500)
-                                    {
-                                        item = new("Plastic Bottle", "Common", true, true, Item.TrashTypes.Plastic, 1, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found a Plastic Bottle ! (Common)", ConsoleColor.Gray);
-                                    }
-                                    else if (random <= 3000)
-                                    {
-                                        item = new("Candy Wrapper", "Common", true, true, Item.TrashTypes.Plastic, 1, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found a Candy Wrapper ! (Common)", ConsoleColor.Gray);
-                                    }
-                                    else if (random <= 4500)
-                                    {
-                                        item = new("Soda Can", "Common", true, true, Item.TrashTypes.Metal, 2, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found a Soda Can ! (Common)", ConsoleColor.Gray);
-                                    }
-                                    else if (random <= 6000)
-                                    {
-                                        item = new("Paper Cup", "Common", true, true, Item.TrashTypes.Paper, 1, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found a Paper Cup ! (Common)", ConsoleColor.Gray);
-                                    }
-                                    else if (random <= 6500)
-                                    {
-                                        item = new("Glass Bottle", "Uncommon", true, true, Item.TrashTypes.Glass, 5, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found a Glass Bottle ! (Uncommon)", ConsoleColor.Green);
-                                    }
-                                    else if (random <= 7000)
-                                    {
-                                        item = new("Cardboard Box", "Uncommon", true, true, Item.TrashTypes.Paper, 5, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found a Cardboard Box ! (Uncommon)", ConsoleColor.Green);
-                                    }
-                                    else if (random <= 7500)
-                                    {
-                                        item = new("Bottle Cap", "Uncommon", true, true, Item.TrashTypes.Metal, 5, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found a Bottle Cap ! (Uncommon)", ConsoleColor.Green);
-                                    }
-                                    else if (random <= 8000)
-                                    {
-                                        item = new("Old Newspaper", "Uncommon", true, true, Item.TrashTypes.Paper, 5, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found an Old Newspaper ! (Uncommon)", ConsoleColor.Green);
-                                    }
-                                    else if (random <= 8250)
-                                    {
-                                        item = new("Old Book", "Rare", true, true, Item.TrashTypes.Paper, 15, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found an Old Book ! (Rare)", ConsoleColor.Cyan);
-                                    }
-                                    else if (random <= 8500)
-                                    {
-                                        item = new("Bicycle Wheel", "Rare", true, true, Item.TrashTypes.Rubber, 15, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found a Bicycle Wheel ! (Rare)", ConsoleColor.Cyan);
-                                    }
-                                    else if (random <= 8750)
-                                    {
-                                        item = new("Old Magazine", "Rare", true, true, Item.TrashTypes.Paper, 15, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found an Old Magazine ! (Rare)", ConsoleColor.Cyan);
-                                    }
-                                    else if (random <= 9000)
-                                    {
-                                        item = new("Shopping Cart", "Rare", true, true, Item.TrashTypes.Metal, 20, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found a Shopping Cart ! (Rare)", ConsoleColor.Cyan);
-                                    }
-                                    else if (random <= 9100)
-                                    {
-                                        item = new("Used Condom", "Rare", true, true, Item.TrashTypes.Rubber, 15, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found a Used Condom ! (Rare)", ConsoleColor.Cyan);
-                                    }
-                                    else if (random <= 9200)
-                                    {
-                                        item = new("iPhone 6S", "Legendary", true, true, Item.TrashTypes.Electronic, 50, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found an iPhone 6S ! (Legendary)", ConsoleColor.Yellow);
-                                    }
-                                    else if (random <= 9300)
-                                    {
-                                        item = new("Antique Coin", "Legendary", true, true, Item.TrashTypes.Metal, 60, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found an Antique Coin ! (Legendary)", ConsoleColor.Yellow);
-                                    }
-                                    else if (random <= 9400)
-                                    {
-                                        item = new("Lenovo Laptop", "Legendary", true, true, Item.TrashTypes.Electronic, 50, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found a Lenovo Laptop ! (Legendary)", ConsoleColor.Yellow);
-                                    }
-                                    else if (random <= 9500)
-                                    {
-                                        item = new("Vintage Vinyl Record", "Legendary", true, true, Item.TrashTypes.Plastic, 50, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found a Vintage Vinyl Record ! (Legendary)", ConsoleColor.Yellow);
-                                    }
-                                    else if (random <= 9600)
-                                    {
-                                        item = new("Used Airforce Shoe", "Legendary", true, true, Item.TrashTypes.Waste, 50, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found a Used Airforce Shoe ! (Legendary)", ConsoleColor.Yellow);
-                                    }
-                                    else if (random <= 9700)
-                                    {
-                                        item = new("Gold Ring", "Legendary", true, true, Item.TrashTypes.Metal, 60, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found a Gold Ring ! (Legendary)", ConsoleColor.Yellow);
-                                    }
-                                    else if (random <= 9750)
-                                    {
-                                        item = new("Ancient Artifact", "Mythical", true, true, Item.TrashTypes.Glass, 150, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found an Ancient Artifact ! (Mythical)", ConsoleColor.Magenta);
-                                    }
-                                    else if (random <= 9800)
-                                    {
-                                        item = new("Signed Celebrity Photo", "Mythical", true, true, Item.TrashTypes.Paper, 150, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found a Signed Celebrity Photo ! (Mythical)", ConsoleColor.Magenta);
-                                    }
-                                    else if (random <= 9850)
-                                    {
-                                        item = new("Deeds to Land in Congo", "Mythical", true, true, Item.TrashTypes.Paper, 200, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found Deeds to Land in Congo ! (Mythical)", ConsoleColor.Magenta);
-                                    }
-                                    else if (random <= 9900)
-                                    {
-                                        item = new("Treasure Map", "Mythical", true, true, Item.TrashTypes.Paper, 150, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found a Treasure Map ! (Mythical)", ConsoleColor.Magenta);
-                                    }
-                                    else if (random <= 9950)
-                                    {
-                                        item = new("Ancient Sandwich", "Mythical", true, true, Item.TrashTypes.Organic, 200, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found an Ancient Sandwich ! (Mythical)", ConsoleColor.Magenta);
-                                    }
-                                    else if (random <= 9998)
-                                    {
-                                        item = new("Smelly Cheese", "Mythical", true, true, Item.TrashTypes.Organic, 150, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found Smelly Cheese! (Mythical)", ConsoleColor.Magenta);
-                                    }
-                                    else if (random == 9999)
-                                    {
-                                        item = new("Half-full Nutella Jar", "Godly", true, true, Item.TrashTypes.Glass, 500, 0);
-                                        Inventory.PickUpItem(item);
-                                        ColorWriteLine("You found a Half-full Nutella Jar ! (Godly)", ConsoleColor.Blue);
-                                    }
-
-                                }
-                                Trash.PickUp();
-                                ColorWriteLine($"Your intuition tells you there are {Trash.Get()} pieces of trash left on this beach", ConsoleColor.DarkGray);
-                            }
-                        }
+                        Trash.Pick(currentRoom, sriLanka);
                         break;
                     default:
                         break;
                 }
             }
             Console.ResetColor();
-            Console.WriteLine("Thank you for playing EcoQuest");
+            ColorWriteLine("Thank you for playing EcoQuest!", ConsoleColor.Blue);
         }
 
         private void Sail(string destination) // Use the Sail method to move between locations
@@ -450,7 +251,7 @@ namespace EcoQuest
             Console.Clear();
             ColorWriteLine("            Welcome to EcoQuest!\n", ConsoleColor.Blue);
             SlowWrite("You are aboard a research vessel, drifting along calm blue waters under an open sky.\nThe ship gently rocks, its deck bustling with equipment, nets, sonar tools, oxygen tanks, and more. \n\nAs an aspiring marine biologist, you're on your first expedition.\nThe salty air and distant cry of seagulls fill you with excitement for the adventure that awaits.\n\nTo the helm of the ship stands Captain Sylvia Earle, a legendary oceanographer, explorer, and marine biologist\nwith a lifetime of experience beneath the waves.\nHer sharp and thoughtful eyes reflect countless voyage and experience for being at sea.\nHer weathered face and confident stance presents the wisdom of someone who has spent decades charting unknown\nwaters and fighting tirelessly to protect marine ecosystems.\nAs her hands rest firmly on the ship's wheel, steadily guiding the vessel, she can't help but notice you staring\nat her, and decides to approach.\n \n", 1, 1);
-            ColorWrite("--------[Press any key to continue]--------", ConsoleColor.DarkGray);
+            ColorWriteLine("Press any key to continue...", ConsoleColor.DarkGray);
             Console.ReadKey();
             Console.Clear();
 
@@ -458,7 +259,7 @@ namespace EcoQuest
             SlowWrite("*Captain Sylvia approaches, her voice, steady and inspiring*\n", 10, 15);
             Console.ResetColor();
             SlowWrite("Welcome aboard explorer! The ocean faces grave threats.\nPollution, overfishing, warming waters, and habitat destruction, but it's not too late to act.\nI've spent a lifetime beneath the waves, witnessing both devastation and resilience.\nNow, it's your turn. The United Nations calls us to action through Goal 14: Life Below Water, a mission to restore and protect our Ocean.\nEvery action, no matter how small, creates ripples of change. With passion and persistence, we can bring life back to these waters.\nSo, are you ready to dive in and be the hero the ocean needs? Let's make waves for a better future.\n", 25, 35);
-            ColorWrite("--------[Press any key to continue]--------", ConsoleColor.DarkGray);
+            ColorWriteLine("Press any key to continue...", ConsoleColor.DarkGray);
             Console.ReadKey();
             Console.Clear();
 

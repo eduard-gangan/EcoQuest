@@ -13,7 +13,10 @@ ex. Energy.Replenish() will replenish energy to maximum capacity.
 3. Decreasing energy
 Use the Energy.Decrease() method for decreasing energy anywhere in the code by passing it the amount
 you want to decrease the energy by. You cannot decrease it lower than 0.
+If you try to decrease energy below 0 if will return false, which should be used as a way to know if a
+certain action can be used.
 ex. Energy.Decrease(30) will decrease it by 30.
+ex. 2 Energy.Decrease(30) (when energy is 10) will return false and now decrease the energy.
 
 4. Increasing capacity
 Use the Energy.IncreaseCapacity() method to increase the maximum capacity the energy level can be replenished to.
@@ -29,20 +32,29 @@ namespace EcoQuest
 
         public static int Get() { return energy; }
 
-        public static void Replenish()
+        public static void Replenish(Room currentRoom)
         {
-            energy = maxCapacity;
+            if (currentRoom.RoomName.Contains("Port"))
+            {
+                energy = maxCapacity;
+                Console.WriteLine("You slept and your energy was replenished!");
+            }
+            else
+            {
+                Console.WriteLine("You can't sleep here, dumbass...");
+            }
         }
 
-        public static void Decrease(int amount)
+        public static bool Decrease(int amount)
         {
             if (energy - amount >= 0)
             {
                 energy -= amount;
+                return true;
             }
             else
             {
-                energy = 0;
+                return false;
             }
         }
 

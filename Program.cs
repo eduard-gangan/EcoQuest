@@ -92,8 +92,8 @@ namespace EcoQuest
                 |  __|/ __/ _ \| | | | | | |/ _ \/ __| __|
                 | |__| (_| (_) \ \/' / |_| |  __/\__ \ |_ 
                 \____/\___\___/ \_/\_\\__,_|\___||___/\__|", ConsoleColor.Blue);
-            System.Console.WriteLine();
-            System.Console.WriteLine("Press any button to start the game...");
+            System.Console.WriteLine("\n");
+            Game.ColorWriteLine("Press any key to start the game...", ConsoleColor.DarkGray);
             while (startMenu)
             {
                 if (Console.KeyAvailable)

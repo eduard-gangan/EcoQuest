@@ -38,7 +38,7 @@ public static class TrashMinigame
             Console.WriteLine("You are not in the recycling station!");
             return;
         }
-        if (Energy.Get() < EnergyConsumption)
+        if (Energy.Decrease(EnergyConsumption) == false)
         {
             Game.ColorWriteLine("You don't have enough energy to sort this trash!", ConsoleColor.Red);
             return;
@@ -48,7 +48,6 @@ public static class TrashMinigame
             Game.ColorWriteLine("You can't use that command yet.", ConsoleColor.Red);
             return;
         }
-        Energy.Decrease(EnergyConsumption);
 
         // Iterate through all items and add items that are trash to the Trash list.
         if (Inventory.Items.Count > 0)
