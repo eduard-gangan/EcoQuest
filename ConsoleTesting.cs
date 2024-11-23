@@ -27,6 +27,40 @@ public class ConsoleTesting
         Console.ReadKey(true);
     }
 
+    public static void Test3(){
+        // Load an image
+        var image = new CanvasImage("test.png");
+
+        // Set the max width of the image.
+        // If no max width is set, the image will take
+        // up as much space as there is available.
+        //image.MaxWidth();
+
+        // Render the image to the console
+        AnsiConsole.Write(image);
+    }
+    public static void Test4(){
+        // Create the layout
+        var layout = new Layout("Root")
+            .SplitColumns(
+                new Layout("Left"),
+                new Layout("Right")
+                    .SplitRows(
+                        new Layout("Top"),
+                        new Layout("Bottom")));
+
+        // Update the left column
+        layout["Left"].Update(
+            new Panel(
+                Align.Center(
+                    new Markup("Hello [blue]World![/]"),
+                    VerticalAlignment.Middle))
+                .Expand());
+
+        // Render the layout
+        AnsiConsole.Write(layout);
+    }
+
     public static void Figlet(string text){
         AnsiConsole.Write(
         new FigletText(text)
@@ -34,6 +68,7 @@ public class ConsoleTesting
             .Color(Color.Blue));
     }
 
+    
 
 
 

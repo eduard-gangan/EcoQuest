@@ -392,9 +392,8 @@ namespace EcoQuest
 
         private static void PrintWelcome()
         {
-            Console.Clear();
-            ConsoleTesting.Test();
             ConsoleTesting.Test2();
+            Console.Clear();
             ConsoleTesting.Figlet("Welcome to EcoQuest");
             Console.WriteLine();
 
