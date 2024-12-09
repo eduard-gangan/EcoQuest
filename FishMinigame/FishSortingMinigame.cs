@@ -30,21 +30,21 @@ public class FishSortingMinigame
         int correctAnswers = 0;
         for (int i = 0; i < 10; i++)
         {
-            int first = rnd.Next(1,11);
-            int second = rnd.Next(1,11);
+            int first = rnd.Next(0,10);
+            int second = rnd.Next(0,10);
             while(first == second)
             {
-                second = rnd.Next(1,11);
+                second = rnd.Next(0,10);
             }
-            int third = rnd.Next(1,11);
+            int third = rnd.Next(0,10);
             while(third == first || third == second)
             {
-                third = rnd.Next(1,11);
+                third = rnd.Next(0,10);
             }
-            int fourth = rnd.Next(1,11);
+            int fourth = rnd.Next(0,10);
             while(fourth == first || fourth == second || fourth == third)
             {
-                fourth = rnd.Next(1,11);
+                fourth = rnd.Next(0,10);
             }
 
             var answer = AnsiConsole.Prompt(
