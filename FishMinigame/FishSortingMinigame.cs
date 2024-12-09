@@ -32,8 +32,20 @@ public class FishSortingMinigame
             int correctAnswers = 0;
             int first = rnd.Next(1,11);
             int second = rnd.Next(1,11);
+            while(first == second)
+            {
+                second = rnd.Next(1,11);
+            }
             int third = rnd.Next(1,11);
+            while(third == first || third == second)
+            {
+                third = rnd.Next(1,11);
+            }
             int fourth = rnd.Next(1,11);
+            while(fourth == first || fourth == second || fourth == third)
+            {
+                fourth = rnd.Next(1,11);
+            }
 
             var answer = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
