@@ -27,9 +27,9 @@ public class FishSortingMinigame
         //randomly 10 times picking 4 fishes and then player is choosing the most endangered species from 4 options through spectre console
         //but it is returning answer as a string (name of the fish which player picked)
         Random rnd = new Random();
+        int correctAnswers = 0;
         for (int i = 0; i < 10; i++)
         {
-            int correctAnswers = 0;
             int first = rnd.Next(1,11);
             int second = rnd.Next(1,11);
             while(first == second)
@@ -99,9 +99,9 @@ public class FishSortingMinigame
                             "Next",
                         ]));
             }
-
-            //checking if the player had enough correct answers for completing the quest if not he needs to do quiz again
-            if(!QuestIndonesia.CheckQuest(correctAnswers))
+        }
+        //checking if the player had enough correct answers for completing the quest if not he needs to do quiz again
+        if(!QuestIndonesia.CheckQuest(correctAnswers))
             {
                 AnsiConsole.Prompt(
                      new SelectionPrompt<string>()
@@ -112,8 +112,6 @@ public class FishSortingMinigame
                         ]));
                 Play();
             }
-        }
-
     }
 }
 
