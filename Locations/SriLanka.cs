@@ -15,7 +15,7 @@ namespace EcoQuest
             );
 
             Room? srilanka_beach = new("Polluted Beach",
-             "You arrived on the beach.\nSupposedly you are on the beach.\nCurrently walking on trash",
+             "You arrived on the beach, or what used to be a beach... \nThere is more trash than sand here...",
              new List<string> { "look", "talk", "pick", "inventory", "energy" },
              null
             );

@@ -19,7 +19,7 @@ public class FishSortingMinigame
         FishSpieces.Add(new Fish(7, " ", "Fish 7"));
         FishSpieces.Add(new Fish(8, " ", "Fish 8"));
         FishSpieces.Add(new Fish(9, " ", "Fish 9"));
-        FishSpieces.Add(new Fish(10, " ", "Fish 10"));     
+        FishSpieces.Add(new Fish(10, " ", "Fish 10"));
     }
 
     public void Play()
@@ -30,21 +30,21 @@ public class FishSortingMinigame
         int correctAnswers = 0;
         for (int i = 0; i < 10; i++)
         {
-            int first = rnd.Next(0,10);
-            int second = rnd.Next(0,10);
-            while(first == second)
+            int first = rnd.Next(0, 10);
+            int second = rnd.Next(0, 10);
+            while (first == second)
             {
-                second = rnd.Next(0,10);
+                second = rnd.Next(0, 10);
             }
-            int third = rnd.Next(0,10);
-            while(third == first || third == second)
+            int third = rnd.Next(0, 10);
+            while (third == first || third == second)
             {
-                third = rnd.Next(0,10);
+                third = rnd.Next(0, 10);
             }
-            int fourth = rnd.Next(0,10);
-            while(fourth == first || fourth == second || fourth == third)
+            int fourth = rnd.Next(0, 10);
+            while (fourth == first || fourth == second || fourth == third)
             {
-                fourth = rnd.Next(0,10);
+                fourth = rnd.Next(0, 10);
             }
 
             var answer = AnsiConsole.Prompt(
@@ -52,15 +52,15 @@ public class FishSortingMinigame
                     .Title("What's the most [red]endangered species[/]?")
                     .PageSize(15)
                     .AddChoices(new[] {
-                        $"{FishSpieces[first].Name}", $"{FishSpieces[second].Name}",  
-                        $"{FishSpieces[third].Name}", $"{FishSpieces[fourth].Name}", 
+                        $"{FishSpieces[first].Name}", $"{FishSpieces[second].Name}",
+                        $"{FishSpieces[third].Name}", $"{FishSpieces[fourth].Name}",
                     }));
 
             //converting answer from string to Fish
-            Fish ?fish = null;
-            foreach(var k in FishSpieces)
+            Fish? fish = null;
+            foreach (var k in FishSpieces)
             {
-                if(k.Name == answer)
+                if (k.Name == answer)
                 {
                     fish = k;
                 }
@@ -68,7 +68,7 @@ public class FishSortingMinigame
 
             //checking if the answer was right
             //checking if the rarity of the fish was highest from the options
-            if(fish.Rarity == Math.Max(FishSpieces[first].Rarity, Math.Max(FishSpieces[second].Rarity,
+            if (fish.Rarity == Math.Max(FishSpieces[first].Rarity, Math.Max(FishSpieces[second].Rarity,
              Math.Max(FishSpieces[third].Rarity, FishSpieces[fourth].Rarity))))
             {
                 correctAnswers++;
@@ -101,17 +101,17 @@ public class FishSortingMinigame
             }
         }
         //checking if the player had enough correct answers for completing the quest if not he needs to do quiz again
-        if(!QuestIndonesia.CheckQuest(correctAnswers))
-            {
-                AnsiConsole.Prompt(
-                     new SelectionPrompt<string>()
-                        .Title($"You had {correctAnswers} correct answers, it is not enpught. Try it again.")
-                        .PageSize(15)
-                        .AddChoices([
-                            "Try again",
-                        ]));
-                Play();
-            }
+        if (!QuestIndonesia.CheckQuest(correctAnswers))
+        {
+            AnsiConsole.Prompt(
+                 new SelectionPrompt<string>()
+                    .Title($"You had {correctAnswers} correct answers, it is not enpught. Try it again.")
+                    .PageSize(15)
+                    .AddChoices([
+                        "Try again",
+                    ]));
+            Play();
+        }
     }
 }
 

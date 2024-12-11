@@ -2,6 +2,8 @@
 using System.Formats.Asn1;
 using System.Security.Claims;
 using System.Transactions;
+using Spectre.Console;
+using Spectre.Console.Cli;
 
 namespace EcoQuest
 {
@@ -17,14 +19,20 @@ namespace EcoQuest
 
         public void Play()
         {
-
             Parser parser = new();
             CreateNpcs();
 
             sriLanka = new SriLanka("Sri Lanka", "Description for Sri Lanka", 0);
             australia = new Australia("Australia", "Description for Australia", 1000);
             indonesia = new Indonesia("Indonesia", "Description for Indonesia", 2000);
-            startingLocation = new Start("Ship", "Somewhere at sea..", 0, sriLanka, australia, indonesia);
+            startingLocation = new Start(
+                "Ship",
+                "Somewhere at sea..",
+                0,
+                sriLanka,
+                australia,
+                indonesia
+            );
 
             currentLocation = startingLocation;
 
@@ -33,7 +41,6 @@ namespace EcoQuest
             bool continuePlaying = true;
             while (continuePlaying)
             {
-
                 Console.Write("> ");
 
                 string? input = Console.ReadLine();
@@ -77,27 +84,38 @@ namespace EcoQuest
                         }
                         break;
                     case "sail":
-                        if (QuestSriLanka.Active != true)
+                        if (!QuestSriLanka.Active)
                         {
-                            if (currentLocation == startingLocation || currentRoom.RoomName.Contains("Port"))
+                            if (
+                                currentLocation == startingLocation
+                                || (currentRoom?.RoomName?.Contains("Port") ?? false)
+                            )
                             {
                                 Console.Clear();
-                                Console.WriteLine("Where do you want to sail?");
-                                Console.WriteLine("(Sri Lanka, Sea)");
-                                Sail(Console.ReadLine());
-                                break;
+                                var choice = AnsiConsole.Prompt(
+                                    new SelectionPrompt<string>()
+                                        .Title("Where do you want to sail?")
+                                        .PageSize(10)
+                                        .MoreChoicesText(
+                                            "[grey](Move up and down to reveal more options)[/]"
+                                        )
+                                        .AddChoices(new[] { "Sri Lanka", "Indonesia" })
+                                );
+                                Sail(choice);
                             }
                             else
                             {
-                                Console.WriteLine($"You can't depart from {currentRoom?.RoomName}, go to the port.");
-                                break;
+                                Console.WriteLine(
+                                    $"You can't depart from {currentRoom?.RoomName}, go to the port."
+                                );
                             }
                         }
                         else
                         {
-                            Console.WriteLine("You can't sail while you have an active quest");
-                            break;
+                            Console.WriteLine("You can't sail while you have an active quest.");
                         }
+                        break;
+
                     case "north":
                     case "south":
                     case "east":
@@ -146,7 +164,7 @@ namespace EcoQuest
                         Energy.Replenish(currentRoom);
                         break;
                     case "dump":
-                    TrashDump.Dump(currentRoom);
+                        TrashDump.Dump(currentRoom);
                         break;
                     case "sort":
                         TrashMinigame.Start(currentRoom);
@@ -167,53 +185,61 @@ namespace EcoQuest
 
         private void Sail(string destination) // Use the Sail method to move between locations
         {
-            switch (destination)
+            if (currentLocation.LocationName != destination)
             {
-                case "Sri":
-                case "sri":
-                case "Sri Lanka":
-                case "sri lanka":
-                case "Srilanka":
-                case "srilanka":
-                case "Lanka":
-                case "lanka":
-                    if (currentLocation != sriLanka)
-                    {
-                        Console.Clear();
-                        Console.WriteLine("You're on your way to Sri Lanka... \n");
-                        RecursiveWrite("...", 5);
-                        Console.Clear();
-                        Console.WriteLine("You arrived in Sri Lanka!");
-                        ColorWriteLine("Type 'look' to see you what's around you.", ConsoleColor.DarkGray);
-                        ColorWriteLine("Navigate by typing 'north', 'south', 'east', or 'west'.\n", ConsoleColor.DarkGray);
-                        currentLocation = sriLanka;
-                        currentRoom = sriLanka?.Rooms["port"];
-                    }
-                    else
-                    {
-                        Console.WriteLine("You're already in Sri Lanka!");
-                    }
-                    break;
-                case "Sea":
-                case "sea":
-                    if (currentLocation != startingLocation)
-                    {
-                        currentRoom = null;
-                        Console.Clear();
-                        Console.WriteLine("You're travelling back to the big blue sea... \n");
-                        RecursiveWrite("...", 5);
-                        Console.Clear();
-                        Console.WriteLine("You are at sea!");
-                        currentLocation = startingLocation;
-                    }
-                    else
-                    {
-                        Console.WriteLine("You're already at sea!");
-                    }
-                    break;
-                default:
-                    Console.WriteLine("You sure that place exists?");
-                    break;
+                switch (destination)
+                {
+                    case "Sri Lanka":
+
+                        if (currentLocation != sriLanka)
+                        {
+
+                            currentLocation = sriLanka;
+                            currentRoom = sriLanka?.Rooms["port"];
+                        }
+                        else
+                        {
+                            Console.WriteLine("You're already in Sri Lanka!");
+                        }
+                        break;
+                    // case "Sea":
+                    //     if (currentLocation != startingLocation)
+                    //     {
+                    //         currentRoom = null;
+                    //         Console.Clear();
+                    //         Console.WriteLine("You're travelling back to the big blue sea... \n");
+                    //         RecursiveWrite("...", 5);
+                    //         Console.Clear();
+                    //         Console.WriteLine("You are at sea!");
+                    //         currentLocation = startingLocation;
+                    //     }
+                    //     else
+                    //     {
+                    //         Console.WriteLine("You're already at sea!");
+                    //     }
+                    //     break;
+                    case "Indonesia":
+                        currentLocation = indonesia;
+                        break;
+                }
+
+                Console.Clear();
+                Console.WriteLine($"You're on your way to {currentLocation.LocationName} \n");
+                RecursiveWrite("...", 5);
+                Console.Clear();
+                Console.WriteLine($"You arrived in {currentLocation.LocationName}!");
+                ColorWriteLine(
+                    "Type 'look' to see you what's around you.",
+                    ConsoleColor.DarkGray
+                );
+                ColorWriteLine(
+                    "Navigate by typing 'north', 'south', 'east', or 'west'.\n",
+                    ConsoleColor.DarkGray
+                );
+            }
+            else
+            {
+                System.Console.WriteLine($"You are already in {currentLocation.LocationName}!");
             }
         }
 
@@ -226,6 +252,7 @@ namespace EcoQuest
                 currentRoom = currentRoom?.Exits[direction];
 
                 Console.WriteLine($"[{currentRoom?.RoomName}]");
+                Console.WriteLine(currentRoom.RoomDescription);
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.Write($"[Suggested Commands]: ");
                 foreach (string commands in currentRoom.AvailableCommands)
@@ -245,7 +272,11 @@ namespace EcoQuest
         {
             Console.Clear();
             ColorWriteLine("            Welcome to EcoQuest!\n", ConsoleColor.Blue);
-            SlowWrite("You are aboard a research vessel, drifting along calm blue waters under an open sky.\nThe ship gently rocks, its deck bustling with equipment, nets, sonar tools, oxygen tanks, and more. \n\nAs an aspiring marine biologist, you're on your first expedition.\nThe salty air and distant cry of seagulls fill you with excitement for the adventure that awaits.\n\nTo the helm of the ship stands Captain Sylvia Earle, a legendary oceanographer, explorer, and marine biologist\nwith a lifetime of experience beneath the waves.\nHer sharp and thoughtful eyes reflect countless voyage and experience for being at sea.\nHer weathered face and confident stance presents the wisdom of someone who has spent decades charting unknown\nwaters and fighting tirelessly to protect marine ecosystems.\nAs her hands rest firmly on the ship's wheel, steadily guiding the vessel, she can't help but notice you staring\nat her, and decides to approach.\n \n", 1, 1);
+            SlowWrite(
+                "You are aboard a research vessel, drifting along calm blue waters under an open sky.\nThe ship gently rocks, its deck bustling with equipment, nets, sonar tools, oxygen tanks, and more. \n\nAs an aspiring marine biologist, you're on your first expedition.\nThe salty air and distant cry of seagulls fill you with excitement for the adventure that awaits.\n\nTo the helm of the ship stands Captain Sylvia Earle, a legendary oceanographer, explorer, and marine biologist\nwith a lifetime of experience beneath the waves.\nHer sharp and thoughtful eyes reflect countless voyage and experience for being at sea.\nHer weathered face and confident stance presents the wisdom of someone who has spent decades charting unknown\nwaters and fighting tirelessly to protect marine ecosystems.\nAs her hands rest firmly on the ship's wheel, steadily guiding the vessel, she can't help but notice you staring\nat her, and decides to approach.\n \n",
+                1,
+                1
+            );
             ColorWriteLine("Press any key to continue...", ConsoleColor.DarkGray);
             Console.ReadKey();
             Console.Clear();
@@ -253,13 +284,20 @@ namespace EcoQuest
             Console.ForegroundColor = ConsoleColor.DarkGray;
             SlowWrite("*Captain Sylvia approaches, her voice, steady and inspiring*\n", 25, 35);
             Console.ResetColor();
-            SlowWrite("Welcome aboard explorer! The ocean faces grave threats.\nPollution, overfishing, warming waters, and habitat destruction, but it's not too late to act.\nI've spent a lifetime beneath the waves, witnessing both devastation and resilience.\nNow, it's your turn. The United Nations calls us to action through Goal 14: Life Below Water, a mission to restore and protect our Ocean.\nEvery action, no matter how small, creates ripples of change. With passion and persistence, we can bring life back to these waters.\nSo, are you ready to dive in and be the hero the ocean needs? Let's make waves for a better future.\n", 25, 35);
+            SlowWrite(
+                "Welcome aboard explorer! The ocean faces grave threats.\nPollution, overfishing, warming waters, and habitat destruction, but it's not too late to act.\nI've spent a lifetime beneath the waves, witnessing both devastation and resilience.\nNow, it's your turn. The United Nations calls us to action through Goal 14: Life Below Water, a mission to restore and protect our Ocean.\nEvery action, no matter how small, creates ripples of change. With passion and persistence, we can bring life back to these waters.\nSo, are you ready to dive in and be the hero the ocean needs? Let's make waves for a better future.\n",
+                25,
+                35
+            );
             ColorWriteLine("Press any key to continue...", ConsoleColor.DarkGray);
             Console.ReadKey();
             Console.Clear();
 
             Console.WriteLine("Type 'sail' to choose your destination.");
-            ColorWriteLine("Type 'help' to see a list of available commands.", ConsoleColor.DarkGray);
+            ColorWriteLine(
+                "Type 'help' to see a list of available commands.",
+                ConsoleColor.DarkGray
+            );
             Console.WriteLine();
         }
 
@@ -286,45 +324,114 @@ namespace EcoQuest
 
         private void CreateNpcs()
         {
-            //Garry 
-            NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_NAME, () => SlowWrite(NpcReply.GARRY_NAME));
-            NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_BACKSTORY, () => SlowWrite(NpcReply.GARRY_BACKSTORY));
-            NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_WHY, () => SlowWrite(NpcReply.GARRY_WHY));
-            NPCs.Garry.MainDialogue.AddOption(PlayerReply.GARRY_QUEST, () => { SlowWrite(NpcReply.GARRY_QUEST); Inventory.InventoryCapacity = 5; QuestSriLanka.start(); ColorWriteLine("Your inventory space has been increased to 5!", ConsoleColor.Green); NPCs.Garry.MainDialogue.RemoveOption(PlayerReply.GARRY_QUEST); NPCs.Garry.MainDialogue.TriggerDialogue(); });
-            NPCs.Garry.MainDialogue.AddOption(PlayerReply.BYE, () => { SlowWrite(NpcReply.GARRY_BYE); NPCs.Garry.MainDialogue.TriggerDialogue(); });
+            //Garry
+            NPCs.Garry.MainDialogue.AddOption(
+                PlayerReply.GARRY_NAME,
+                () => SlowWrite(NpcReply.GARRY_NAME)
+            );
+            NPCs.Garry.MainDialogue.AddOption(
+                PlayerReply.GARRY_BACKSTORY,
+                () => SlowWrite(NpcReply.GARRY_BACKSTORY)
+            );
+            NPCs.Garry.MainDialogue.AddOption(
+                PlayerReply.GARRY_WHY,
+                () => SlowWrite(NpcReply.GARRY_WHY)
+            );
+            NPCs.Garry.MainDialogue.AddOption(
+                PlayerReply.GARRY_QUEST,
+                () =>
+                {
+                    SlowWrite(NpcReply.GARRY_QUEST);
+                    Inventory.InventoryCapacity = 5;
+                    QuestSriLanka.start();
+                    ColorWriteLine(
+                        "Your inventory space has been increased to 5!",
+                        ConsoleColor.Green
+                    );
+                    NPCs.Garry.MainDialogue.RemoveOption(PlayerReply.GARRY_QUEST);
+                    NPCs.Garry.MainDialogue.TriggerDialogue();
+                }
+            );
+            NPCs.Garry.MainDialogue.AddOption(
+                PlayerReply.BYE,
+                () =>
+                {
+                    SlowWrite(NpcReply.GARRY_BYE);
+                    NPCs.Garry.MainDialogue.TriggerDialogue();
+                }
+            );
 
             //Larry
-            NPCs.Larry.MainDialogue.AddOption(PlayerReply.LARRY_NAME, () => SlowWrite(NpcReply.LARRY_NAME));
-            NPCs.Larry.MainDialogue.AddOption(PlayerReply.LARRY_BACKSTORY, () => SlowWrite(NpcReply.LARRY_BACKSTORY));
-            NPCs.Larry.MainDialogue.AddOption(PlayerReply.LARRY_PLAYER, () => SlowWrite(NpcReply.LARRY_PLAYER));
-            NPCs.Larry.MainDialogue.AddOption(PlayerReply.LARRY_BYE, () => { SlowWrite(NpcReply.LARRY_BYE); NPCs.Larry.MainDialogue.TriggerDialogue(); });
+            NPCs.Larry.MainDialogue.AddOption(
+                PlayerReply.LARRY_NAME,
+                () => SlowWrite(NpcReply.LARRY_NAME)
+            );
+            NPCs.Larry.MainDialogue.AddOption(
+                PlayerReply.LARRY_BACKSTORY,
+                () => SlowWrite(NpcReply.LARRY_BACKSTORY)
+            );
+            NPCs.Larry.MainDialogue.AddOption(
+                PlayerReply.LARRY_PLAYER,
+                () => SlowWrite(NpcReply.LARRY_PLAYER)
+            );
+            NPCs.Larry.MainDialogue.AddOption(
+                PlayerReply.LARRY_BYE,
+                () =>
+                {
+                    SlowWrite(NpcReply.LARRY_BYE);
+                    NPCs.Larry.MainDialogue.TriggerDialogue();
+                }
+            );
 
             //Mayor Lanka
-            NPCs.Lanka.MainDialogue.AddOption(PlayerReply.LANKA_PLAYER, () =>
-            {
-                SlowWrite(NpcReply.LANKA_PLAYER); NPCs.Lanka.MainDialogue.InsertOption(PlayerReply.LANKA_STATION, () =>
-            {
-                if (Reputation.Get() >= 0)
+            NPCs.Lanka.MainDialogue.AddOption(
+                PlayerReply.LANKA_PLAYER,
+                () =>
                 {
-                    SlowWrite(NpcReply.LANKA_STATION_YES);
-                    TrashMinigame.RepairRecyclingStation();
-                    ColorWriteLine("The Recycling Station is now functional, use command (sort) to sort items while in the Recycling Station", ConsoleColor.DarkGray);
-                    NPCs.Lanka.MainDialogue.RemoveOption(PlayerReply.LANKA_STATION);
-                    NPCs.Lanka.MainDialogue.RemoveOption(PlayerReply.LANKA_PLAYER);
-
+                    SlowWrite(NpcReply.LANKA_PLAYER);
+                    NPCs.Lanka.MainDialogue.InsertOption(
+                        PlayerReply.LANKA_STATION,
+                        () =>
+                        {
+                            if (Reputation.Get() >= 0)
+                            {
+                                SlowWrite(NpcReply.LANKA_STATION_YES);
+                                TrashMinigame.RepairRecyclingStation();
+                                ColorWriteLine(
+                                    "The Recycling Station is now functional, use command (sort) to sort items while in the Recycling Station",
+                                    ConsoleColor.DarkGray
+                                );
+                                NPCs.Lanka.MainDialogue.RemoveOption(PlayerReply.LANKA_STATION);
+                                NPCs.Lanka.MainDialogue.RemoveOption(PlayerReply.LANKA_PLAYER);
+                            }
+                            else
+                            {
+                                SlowWrite(NpcReply.LANKA_STATION_NO);
+                                ColorWriteLine(
+                                    "You need 500 reputation to repair the recycling station",
+                                    ConsoleColor.DarkGray
+                                );
+                            }
+                        },
+                        1
+                    );
                 }
-                else
-                {
-                    SlowWrite(NpcReply.LANKA_STATION_NO);
-                    ColorWriteLine("You need 500 reputation to repair the recycling station", ConsoleColor.DarkGray);
-                }
-            },
-             1
-             );
-            }
             );
-            NPCs.Lanka.MainDialogue.AddOption("Upgrade", () => { Upgrades.Menu(); });
-            NPCs.Lanka.MainDialogue.AddOption(PlayerReply.BYE, () => { SlowWrite(NpcReply.LANKA_BYE); NPCs.Lanka.MainDialogue.TriggerDialogue(); });
+            NPCs.Lanka.MainDialogue.AddOption(
+                "Upgrade",
+                () =>
+                {
+                    Upgrades.Menu();
+                }
+            );
+            NPCs.Lanka.MainDialogue.AddOption(
+                PlayerReply.BYE,
+                () =>
+                {
+                    SlowWrite(NpcReply.LANKA_BYE);
+                    NPCs.Lanka.MainDialogue.TriggerDialogue();
+                }
+            );
         }
 
         // Temporary console styling methods
@@ -334,6 +441,7 @@ namespace EcoQuest
             System.Console.WriteLine(text);
             Console.ResetColor();
         }
+
         public static void ColorWrite(string text, ConsoleColor color)
         {
             Console.ForegroundColor = color;
@@ -358,7 +466,6 @@ namespace EcoQuest
                 {
                     Thread.Sleep(rnd.Next(min, max));
                 }
-
             }
             Console.WriteLine();
         }
