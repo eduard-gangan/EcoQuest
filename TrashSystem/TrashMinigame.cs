@@ -28,7 +28,7 @@ public static class TrashMinigame
     private static List<Item> Trash = [];
     public static int Multiplier { get; set; } = 5;
     public static int EnergyConsumption { get; set; } = 5;
-    private static bool Open = false;
+    private static bool Open = true;
 
     public static void Start(Room currentRoom)
     {
@@ -174,7 +174,7 @@ public static class TrashMinigame
         {
             Console.Write("Incorrectly sorted");
             Game.ColorWrite($" [{item.Name}] ", ConsoleColor.Magenta);
-            Console.WriteLine($"as {trashType}");
+            Console.WriteLine($"as {trashType}, the correct answer was {item.TrashType}.");
             Console.Write($"Lost");
             Game.ColorWrite($" {item.Value * Multiplier} ", ConsoleColor.Red);
             Console.WriteLine("reputation!");
