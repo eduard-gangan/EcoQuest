@@ -5,22 +5,42 @@
         public static int amount = 10000;
         private static int Get() { return amount; }
 
+        private static bool[] milestones = [false, false, false, false];
+
         private static void PickUp()
         {
             if (amount - Stats.Get() > 0)
             {
                 amount -= Stats.Get();
+                if (amount < 9500 && !milestones[0]){
+                    Game.ColorWriteLine("\nYou have cleared 500 pieces of trash !\n", ConsoleColor.Green);
+                    Game.ColorWriteLine("As the beach clears of trash, the water becomes clearer, and small fish cautiously return to the shore.\n", ConsoleColor.Green);
+                    milestones[0] = true;
+                } else if (amount < 8000 && !milestones[1]){
+                    Game.ColorWriteLine("\nYou have cleared 2000 pieces of trash !\n", ConsoleColor.Green);
+                    Game.ColorWriteLine("With continued cleanup, vibrant corals begin to bloom, and coastal plants take root, slowly breathing life into the shore.\n", ConsoleColor.Green);
+                    milestones[1] = true;
+                } else if (amount < 5000 && !milestones[2]){
+                    Game.ColorWriteLine("\nYou have cleared 5000 pieces of trash !\n", ConsoleColor.Green);
+                    Game.ColorWriteLine("Seabirds start visiting the beach again, and a sea turtle nest appears — a hopeful sign of the ecosystem’s revival.\n", ConsoleColor.Green);
+                    milestones[2] = true;
+                } else if (amount == 0 && !milestones[3]){
+                    Game.ColorWriteLine("\nYou have cleared all the trash !\n", ConsoleColor.Green);
+                    Game.ColorWriteLine("The beach thrives with life! Dolphins leap in the distance, the reef buzzes with activity, and nature’s beauty is fully restored.\n", ConsoleColor.Green);
+                    milestones[3] = true;
+                }
             }
             else
-            {
-                Console.WriteLine("There is no more trash !");
+            {   
+                amount = 0;
+                Console.WriteLine("The beach thrives with life! Dolphins leap in the distance, the reef buzzes with activity, and nature’s beauty is fully restored. \n There is no more trash !");
             }
         }
         public static void Pick(Room currentRoom, SriLanka sriLanka)
         {
             if (currentRoom != sriLanka.Rooms["beach"])
             {
-                Game.ColorWriteLine("There is no trash here!", ConsoleColor.Red);
+                Game.ColorWriteLine("Go to the beach to pick up trash !", ConsoleColor.Red);
             }
             else
             {

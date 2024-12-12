@@ -24,7 +24,7 @@ public static class QuestSriLanka
     {
         Completed = true;
         Active = false;
-        Console.WriteLine($"You have reached {RequiredReputation} reputation. Quest is completed and you can move on next location");
+        Console.WriteLine($"You have reached {RequiredReputation} reputation. Quest is completed and you can move onto the next location, or continue to help the locals clean the beach further");
     }
 
     public static void GetDescription()
