@@ -76,7 +76,7 @@ public class FishSortingMinigame
                      new SelectionPrompt<string>()
                         .Title($"""
                             Your Answer was right.
-                            {fish.Desription}
+                            {fish.Description}
                             You have {correctAnswers} correct answers.                           
                         """)
                         .PageSize(15)
@@ -90,7 +90,7 @@ public class FishSortingMinigame
                      new SelectionPrompt<string>()
                         .Title($"""
                             Your Answer was'n right.
-                            {fish.Desription}
+                            {fish.Description}
                             Remember it for later.
                             You have {correctAnswers} correct answers.                           
                         """)

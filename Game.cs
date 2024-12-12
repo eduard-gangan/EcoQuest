@@ -170,7 +170,14 @@ namespace EcoQuest
                         TrashMinigame.Start(currentRoom);
                         break;
                     case "talk":
-                        currentRoom?.RoomNPC.Talk();
+                        if (currentRoom?.RoomNPC != null)
+                        {
+                            currentRoom?.RoomNPC.Talk();
+                        }
+                        else
+                        {
+                            System.Console.WriteLine("There is no one here...");
+                        }
                         break;
                     case "pick": //At the moment, the system doesnt take upgrades into account
                         Trash.Pick(currentRoom, sriLanka);
@@ -220,6 +227,7 @@ namespace EcoQuest
                     //     break;
                     case "Indonesia":
                         currentLocation = indonesia;
+                        currentRoom = indonesia.Rooms["port"];
                         break;
                 }
 
@@ -432,6 +440,9 @@ namespace EcoQuest
                     NPCs.Lanka.MainDialogue.TriggerDialogue();
                 }
             );
+            //Indonesia NPC
+            NPCs.IndonesiaNPC.MainDialogue.AddOption("start the fucking game", () => { System.Console.WriteLine("starting bro."); });
+            NPCs.IndonesiaNPC.MainDialogue.AddOption("bye", () => { System.Console.WriteLine("bye bro."); NPCs.IndonesiaNPC.MainDialogue.TriggerDialogue(); });
         }
 
         // Temporary console styling methods

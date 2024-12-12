@@ -8,7 +8,11 @@ namespace EcoQuest
         }
         public void CreateRooms()
         {
-            //Awaiting discussion
+            Room? indonesia_port = new("Indonesia Port",
+            $"You are at the central port.",
+            ["look", "talk"], NPCs.IndonesiaNPC
+            );
+            Rooms["port"] = indonesia_port;
         }
     }
 }
