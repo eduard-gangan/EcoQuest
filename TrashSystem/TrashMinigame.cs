@@ -22,13 +22,17 @@ Key Variables:
 
  */
 
+using System.Runtime.InteropServices;
+using Spectre.Console;
+
+
 namespace EcoQuest;
 public static class TrashMinigame
 {
     private static List<Item> Trash = [];
     public static int Multiplier { get; set; } = 5;
     public static int EnergyConsumption { get; set; } = 5;
-    private static bool Open = true;
+    private static bool Open = false;
 
     public static void Start(Room currentRoom)
     {
@@ -68,13 +72,14 @@ public static class TrashMinigame
         if (Trash.Count > 0)
         {
             Console.WriteLine();
-            Console.WriteLine(">-----------------------------<");
-            Console.WriteLine("     Trash Sorting Minigame");
-            Console.WriteLine(">-----------------------------<");
-            Console.WriteLine("Select either of the options by");
-            Console.WriteLine("typing the corresponding number");
-            Console.WriteLine("       [1] through [8]         ");
-            Console.WriteLine(">-----------------------------<");
+            Console.WriteLine(">-------------------------------<");
+            Console.WriteLine("      Trash Sorting Minigame");
+            Console.WriteLine(">-------------------------------<");
+            Console.WriteLine("      Select the correct bin");
+            Console.WriteLine("Gain reputation by selecting the");
+            Console.WriteLine("correct bin and lose reputation");
+            Console.WriteLine("    by selecting the wrong one");
+            Console.WriteLine(">-------------------------------<");
             Console.WriteLine();
 
 
@@ -83,8 +88,8 @@ public static class TrashMinigame
                 Prompt(item);
                 Trash.Remove(item);
                 Inventory.Items.Remove(item);
-                Console.WriteLine(">-----------------------------<");
-                Console.WriteLine(">-----------------------------<");
+                Console.WriteLine(">-------------------------------<");
+                Console.WriteLine(">-------------------------------<");
                 Console.WriteLine();
             }
         }
@@ -95,66 +100,14 @@ public static class TrashMinigame
     }
     private static void Prompt(Item item)
     {
-        Console.Write("Sort");
-        Game.ColorWrite($" [{item.Name}] ", ConsoleColor.Magenta);
-        Console.WriteLine("to the corresponding bin");
-        Console.WriteLine("1. >   Organic  <");
-        Console.WriteLine("2. >   Plastic  <");
-        Console.WriteLine("3. >    Metal   <");
-        Console.WriteLine("4. >    Glass   <");
-        Console.WriteLine("5. >    Paper   <");
-        Console.WriteLine("6. > Electronic <");
-        Console.WriteLine("7. >    Rubber  <");
-        Console.WriteLine("8. >    Waste   <");
-        Console.WriteLine();
-        Console.Write("> ");
-
-        bool isPlaying = true;
-        while (isPlaying)
-        {
-            string? input = Console.ReadLine();
-            switch (input)
-            {
-                case "1":
-                    ValidateSorting(item, Item.TrashTypes.Organic);
-                    isPlaying = false;
-                    break;
-                case "2":
-                    ValidateSorting(item, Item.TrashTypes.Plastic);
-                    isPlaying = false;
-                    break;
-                case "3":
-                    ValidateSorting(item, Item.TrashTypes.Metal);
-                    isPlaying = false;
-                    break;
-                case "4":
-                    ValidateSorting(item, Item.TrashTypes.Glass);
-                    isPlaying = false;
-                    break;
-                case "5":
-                    ValidateSorting(item, Item.TrashTypes.Paper);
-                    isPlaying = false;
-                    break;
-                case "6":
-                    ValidateSorting(item, Item.TrashTypes.Electronic);
-                    isPlaying = false;
-                    break;
-                case "7":
-                    ValidateSorting(item, Item.TrashTypes.Rubber);
-                    isPlaying = false;
-                    break;
-                case "8":
-                    ValidateSorting(item, Item.TrashTypes.Waste);
-                    isPlaying = false;
-                    break;
-                default:
-                    Console.WriteLine("Type the corresponding number");
-                    Console.WriteLine("      [1] through [8]        ");
-                    Console.Write("> ");
-                    break;
-
-            }
-        }
+        var choice = AnsiConsole.Prompt(
+                                    new SelectionPrompt<string>()
+                                        .Title($"Sort [magenta][[{item.Name}]][/] to the corresponding bin.")
+                                        .PageSize(8)
+                                        .AddChoices(new[] { "Organic", "Plastic", "Metal", "Glass", "Paper", "Electronic", 
+                                        "Rubber", "Waste"})
+                                );
+        ValidateSorting(item, (Item.TrashTypes)Enum.Parse(typeof(Item.TrashTypes), choice));
     }
 
     private static void ValidateSorting(Item item, Item.TrashTypes trashType) // A method used to determine whether the item was sorted correctly.
