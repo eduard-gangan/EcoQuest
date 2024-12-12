@@ -226,8 +226,12 @@ namespace EcoQuest
                     //     }
                     //     break;
                     case "Indonesia":
-                        currentLocation = indonesia;
-                        currentRoom = indonesia.Rooms["port"];
+                        if (currentLocation != indonesia){
+                            currentLocation = indonesia;
+                            currentRoom = indonesia?.Rooms["port"];
+                        } else {
+                            System.Console.WriteLine("You're already in Indonesia !");
+                        }
                         break;
                 }
 
