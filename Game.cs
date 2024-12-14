@@ -209,27 +209,14 @@ namespace EcoQuest
                             Console.WriteLine("You're already in Sri Lanka!");
                         }
                         break;
-                    // case "Sea":
-                    //     if (currentLocation != startingLocation)
-                    //     {
-                    //         currentRoom = null;
-                    //         Console.Clear();
-                    //         Console.WriteLine("You're travelling back to the big blue sea... \n");
-                    //         RecursiveWrite("...", 5);
-                    //         Console.Clear();
-                    //         Console.WriteLine("You are at sea!");
-                    //         currentLocation = startingLocation;
-                    //     }
-                    //     else
-                    //     {
-                    //         Console.WriteLine("You're already at sea!");
-                    //     }
-                    //     break;
                     case "Indonesia":
-                        if (currentLocation != indonesia){
+                        if (currentLocation != indonesia)
+                        {
                             currentLocation = indonesia;
                             currentRoom = indonesia?.Rooms["port"];
-                        } else {
+                        }
+                        else
+                        {
                             System.Console.WriteLine("You're already in Indonesia !");
                         }
                         break;

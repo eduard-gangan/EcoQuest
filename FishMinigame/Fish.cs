@@ -1,16 +1,20 @@
 namespace EcoQuest;
-
 public class Fish
 {
-    public int Rarity { get; set; }
+    public bool Endangered { get; private set; }
     public string? Description { get; set; }
     public string? Name { get; set; }
+    public bool Found { get; set; }
+    public string ImagePath { get; set; }
+    public string ID { get; set; }
 
-    public Fish(int rarity, string description, string name)
+    public Fish(bool endangered, string description, string name, string imagePath, string id)
     {
-        Rarity = rarity;
+        Endangered = endangered;
         Description = description;
         Name = name;
+        ImagePath = imagePath;
+        ID = id;
     }
 
 }
