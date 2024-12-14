@@ -19,6 +19,7 @@ namespace EcoQuest
 
         public void Play()
         {
+
             Parser parser = new();
             CreateNpcs();
 
@@ -226,12 +227,8 @@ namespace EcoQuest
                     //     }
                     //     break;
                     case "Indonesia":
-                        if (currentLocation != indonesia){
-                            currentLocation = indonesia;
-                            currentRoom = indonesia?.Rooms["port"];
-                        } else {
-                            System.Console.WriteLine("You're already in Indonesia !");
-                        }
+                        currentLocation = indonesia;
+                        currentRoom = indonesia.Rooms["port"];
                         break;
                 }
 
@@ -339,37 +336,54 @@ namespace EcoQuest
             //Garry
             NPCs.Garry.MainDialogue.AddOption(
                 PlayerReply.GARRY_NAME,
-                () => SlowWrite(NpcReply.GARRY_NAME)
+                new SlowWriteAction(NpcReply.GARRY_NAME)
             );
             NPCs.Garry.MainDialogue.AddOption(
                 PlayerReply.GARRY_BACKSTORY,
-                () => SlowWrite(NpcReply.GARRY_BACKSTORY)
+                new SlowWriteAction(NpcReply.GARRY_BACKSTORY)
             );
             NPCs.Garry.MainDialogue.AddOption(
                 PlayerReply.GARRY_WHY,
-                () => SlowWrite(NpcReply.GARRY_WHY)
+                new SlowWriteAction(NpcReply.GARRY_WHY)
             );
             NPCs.Garry.MainDialogue.AddOption(
                 PlayerReply.GARRY_QUEST,
-                () =>
-                {
-                    SlowWrite(NpcReply.GARRY_QUEST);
-                    Inventory.InventoryCapacity = 5;
-                    QuestSriLanka.start();
-                    ColorWriteLine(
-                        "Your inventory space has been increased to 5!",
-                        ConsoleColor.Green
-                    );
-                    NPCs.Garry.MainDialogue.RemoveOption(PlayerReply.GARRY_QUEST);
-                    NPCs.Garry.MainDialogue.TriggerDialogue();
-                }
+                CompositeAction.from([
+                    new SlowWriteAction(NpcReply.GARRY_QUEST),
+                    new SetInventoryAction(5),
+                    new GenericAction(() => {
+                        QuestSriLanka.start();
+                        ColorWriteLine(
+                            "Your inventory space has been increased to 5!",
+                            ConsoleColor.Green
+                        );
+                    }),
+                    new RemoveOptionAction(NPCs.Garry.MainDialogue, PlayerReply.GARRY_QUEST),
+                    new GenericAction(() => {
+                        NPCs.Garry.MainDialogue.ToggleDialogue();
+                    })
+                ])
             );
+
+            // () =>
+            // {
+            //     SlowWrite(NpcReply.GARRY_QUEST);
+            //     Inventory.InventoryCapacity = 5;
+            //     QuestSriLanka.start();
+            //     ColorWriteLine(
+            //         "Your inventory space has been increased to 5!",
+            //         ConsoleColor.Green
+            //     );
+            //     NPCs.Garry.MainDialogue.RemoveOption(PlayerReply.GARRY_QUEST);
+            //     NPCs.Garry.MainDialogue.TriggerDialogue();
+            // }
+
             NPCs.Garry.MainDialogue.AddOption(
                 PlayerReply.BYE,
                 () =>
                 {
                     SlowWrite(NpcReply.GARRY_BYE);
-                    NPCs.Garry.MainDialogue.TriggerDialogue();
+                    NPCs.Garry.MainDialogue.ToggleDialogue();
                 }
             );
 
@@ -391,7 +405,7 @@ namespace EcoQuest
                 () =>
                 {
                     SlowWrite(NpcReply.LARRY_BYE);
-                    NPCs.Larry.MainDialogue.TriggerDialogue();
+                    NPCs.Larry.MainDialogue.ToggleDialogue();
                 }
             );
 
@@ -441,12 +455,12 @@ namespace EcoQuest
                 () =>
                 {
                     SlowWrite(NpcReply.LANKA_BYE);
-                    NPCs.Lanka.MainDialogue.TriggerDialogue();
+                    NPCs.Lanka.MainDialogue.ToggleDialogue();
                 }
             );
             //Indonesia NPC
             NPCs.IndonesiaNPC.MainDialogue.AddOption("start the fucking game", () => { System.Console.WriteLine("starting bro."); });
-            NPCs.IndonesiaNPC.MainDialogue.AddOption("bye", () => { System.Console.WriteLine("bye bro."); NPCs.IndonesiaNPC.MainDialogue.TriggerDialogue(); });
+            NPCs.IndonesiaNPC.MainDialogue.AddOption("bye", () => { System.Console.WriteLine("bye bro."); NPCs.IndonesiaNPC.MainDialogue.ToggleDialogue(); });
         }
 
         // Temporary console styling methods

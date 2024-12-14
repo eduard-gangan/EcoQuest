@@ -1,13 +1,17 @@
 namespace EcoQuest;
 using Spectre.Console;
 using Spectre.Console.Cli;
+using System.Linq;
 
 public class Dialogue
 {
     public string Prompt { get; set; }
-    public Dictionary<string, Action> DialogueOptions { get; set; } = new Dictionary<string, Action>();
+    // public Dictionary<string, Action> DialogueOptions { get; set; } = new Dictionary<string, Action>();
 
-    public List<string> OptionList { get; set; } = new List<string>();
+    // public List<string> OptionList { get; set; } = new List<string>();
+
+    private List<Option> optionList = new List<Option>();
+
     private bool Active;
 
 
@@ -15,94 +19,81 @@ public class Dialogue
     {
         Prompt = prompt;
     }
+
     public void Start()
     {
-        TriggerDialogue();
+        ToggleDialogue();
         Game.SlowWrite(Prompt);
         while (Active)
         {
             var playerChoice = AnsiConsole.Prompt(
         new SelectionPrompt<string>()
-        .Title(null)
-        .PageSize(10)
-        .MoreChoicesText("[grey](Move up and down to reveal more options)[/]")
-        .AddChoices(OptionList));
+            .Title(null)
+            .PageSize(10)
+            .MoreChoicesText("[grey](Move up and down to reveal more options)[/]")
+            .AddChoices(getOptionNames()));
             HandlePlayerChoice(playerChoice);
-
-            // PrintOptions();
-            // System.Console.Write($"> Choose an option(1-{OptionList.Count}): ");
-            // var consoleInput = Console.ReadLine();
-            // if (Int32.TryParse(consoleInput, out int playerChoice))
-            // {
-            //     Console.Beep();
-            //     HandlePlayerChoice(playerChoice);
-            //     continue;
-            // }
-            // Game.ColorWriteLine("Please choose a valid option.", ConsoleColor.Red);
-
         }
     }
 
-    private void PrintOptions()
+    public void AddOption(string reply, CustomAction action)
     {
-        for (int i = 0; i < OptionList.Count; i++)
-        {
-            Console.WriteLine($"{i + 1}. {OptionList[i]}");
-            Thread.Sleep(250);
-        }
+        AddOption(new Option(reply, action));
     }
 
     public void AddOption(string reply, Action action)
     {
-        if (OptionList.Contains(reply))
+        AddOption(new Option(reply, new GenericAction(action)));
+    }
+
+    public void AddOption(Option option)
+    {
+        if (optionList.Any((item) => item.Name == option.Name))
         {
             return;
         }
         else
         {
-            OptionList.Add(reply);
-            DialogueOptions.Add(reply, action);
+            optionList.Add(option);
         }
     }
-
 
     private void HandlePlayerChoice(string choice)
     {
 
         Console.Clear();
-        DialogueOptions[choice].Invoke();
+        Option? chosenOption = optionList.Find((option) => option.Name == choice);
+        if (chosenOption == null)
+        {
+            throw new Exception("Non-existent option");
+        }
+
+        chosenOption.Action.Invoke();
+
         System.Console.WriteLine();
-        // if (index > 0 && index <= OptionList.Count)
-        // {
-        //     System.Console.WriteLine($"> {OptionList[index - 1]}\n");
-        //     DialogueOptions[OptionList[index - 1]].Invoke();
-        //     System.Console.WriteLine();
-        // }
-        // else
-        // {
-        //     System.Console.WriteLine("Invalid Option.");
-        // }
     }
+
     public void InsertOption(string reply, Action action, int index)
     {
-        if (OptionList.Contains(reply))
+        if (optionList.Any((option) => option.Name == reply))
         {
             return;
         }
         else
         {
-            DialogueOptions.Add(reply, action);
-            OptionList.Insert(index, reply);
+            optionList.Insert(index, new Option(reply, new GenericAction(action)));
         }
 
     }
     //Key is the PlayerReply
     public void RemoveOption(string key)
     {
-        DialogueOptions.Remove(key);
-        OptionList.Remove(key);
+        int removedOptionIndex = optionList.FindIndex((option) => option.Name == key);
+
+        optionList.RemoveAt(removedOptionIndex);
     }
-    public void TriggerDialogue()
+
+    public void ToggleDialogue()
     {
         if (Active == false)
         {
@@ -112,5 +103,10 @@ public class Dialogue
         {
             Active = false;
         }
+    }
+
+    private List<string> getOptionNames()
+    {
+        return optionList.Select((option) => option.Name).ToList();
     }
 }
