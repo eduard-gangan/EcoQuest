@@ -46,10 +46,6 @@
             {
                 if (Inventory.Items.Count() == Inventory.InventoryCapacity)
                     Game.ColorWriteLine("Your inventory is full!", ConsoleColor.Red);
-                else if (Energy.Decrease(5) == false)
-                {
-                    Game.ColorWriteLine("You don't have enough energy to pick up this trash!", ConsoleColor.Red);
-                }
                 else
                 {
                     int stat = Stats.Get();

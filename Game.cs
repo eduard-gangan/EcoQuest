@@ -133,35 +133,13 @@ namespace EcoQuest
                         if (currentLocation == sriLanka)
                             MapSriLanka.ShowMap(currentRoom);
                         break;
-                    case "balance":
-                        Console.Write($"You currently have");
-                        ColorWrite($" {Money.Get()} ", ConsoleColor.Yellow);
-                        Console.WriteLine("EcoCoins in your wallet!");
-                        break;
                     case "reputation":
                         Console.Write($"You currently have");
                         ColorWrite($" {Reputation.Get()} ", ConsoleColor.Green);
                         Console.WriteLine("reputation!");
                         break;
-                    case "energy":
-                        if (Energy.Get() <= 5)
-                        {
-                            Console.Write("You need to sleep, you have");
-                            ColorWrite($" {Energy.Get()} ", ConsoleColor.Cyan);
-                            Console.WriteLine("energy!");
-                        }
-                        else
-                        {
-                            Console.Write($"You currently have");
-                            ColorWrite($" {Energy.Get()} ", ConsoleColor.Cyan);
-                            Console.WriteLine("energy!");
-                        }
-                        break;
                     case "inventory":
                         Inventory.DisplayInventory();
-                        break;
-                    case "sleep":
-                        Energy.Replenish(currentRoom);
                         break;
                     case "dump":
                         TrashDump.Dump(currentRoom);
@@ -308,9 +286,7 @@ namespace EcoQuest
             Console.WriteLine("  Type 'sail' to go to another destination.");
             Console.WriteLine("  Type 'look' for more details.");
             Console.WriteLine("  Type 'back' to go to the previous room.");
-            Console.WriteLine("  Type 'balance' to see how many EcoCoins you have.");
             Console.WriteLine("  Type 'reputation' to see your reputation.");
-            Console.WriteLine("  Type 'energy' to see your energy levels.");
             Console.WriteLine("  Type 'inventory' to see your inventory.");
             Console.WriteLine("  Type 'dump' to dump your trash.");
             Console.WriteLine("  Type 'sort' to sort your trash.");
