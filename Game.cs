@@ -19,6 +19,7 @@ namespace EcoQuest
 
         public void Play()
         {
+            FishAnalyzer.Play();
             Parser parser = new();
             CreateNpcs();
 

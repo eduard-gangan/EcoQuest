@@ -6,55 +6,98 @@ public static class FishAnalyzer
     public static List<Fish> FishSpecies =
     [
         //First fish selection
-        new Fish(false, "this species needs to be tracked", "Winter skate", "./FishMinigame/images/winterskate.png", "Species #001"),
-        new Fish(true, "this species needs to be tracked", "Shark", "./FishMinigame/images/shark.png", "Species #002"),
-        new Fish(false, "this species needs to be tracked", "Orange fish", "./FishMinigame/images/orangefish.png", "Species #003"),
-        new Fish(false, "this species needs to be tracked", "Eel", "./FishMinigame/images/eel.png", "Species #004"),
+        new Fish(false, FishStrings.YellowfinTuna, "Yellow Fin Tuna", "./FishMinigame/images/yellow_fin_tuna.png", "Species #001"),
+        new Fish(true, FishStrings.Shark , "Shark", "./FishMinigame/images/shark.png", "Species #002"),
+        new Fish(false, FishStrings.Goldfish, "Goldfish", "./FishMinigame/images/goldfish.png", "Species #003"),
+        new Fish(false, FishStrings.Jellyfish, "Jellyfish", "./FishMinigame/images/jellyfish.png", "Species #004"),
         //Second fish selection
-        new Fish(false, "this species needs to be tracked", "Grouper", "./FishMinigame/images/grouper.png", "Species #005"),
-        new Fish(true, "this species needs to be tracked", "Blue Whale", "./FishMinigame/images/bluewhale.png", "Species #006"),
-        new Fish(false, "this species needs to be tracked", "Conch", "./FishMinigame/images/conch.png", "Species #007"),
-        new Fish(false, "this species needs to be tracked", "Tuna", "./FishMinigame/images/tuna.png", "Species #008")
-
+        new Fish(false, FishStrings.Pufferfish, "Pufferfish", "./FishMinigame/images/pufferfish.png", "Species #005"),
+        new Fish(true, FishStrings.BlueWhale, "Blue Whale", "./FishMinigame/images/bluewhale.png", "Species #006"),
+        new Fish(false, FishStrings.DoryFish, "Dory Fish (Regal Tang)", "./FishMinigame/images/dory.png", "Species #007"),
+        new Fish(false, FishStrings.Sardines, "Sardines", "./FishMinigame/images/sardines.png", "Species #008"),
+        // Third fish selection
+        new Fish(false, FishStrings.Shrimp, "Shrimp", "./FishMinigame/images/shrimp.png", "Species #009"),
+        new Fish(false, FishStrings.Clams, "Clam", "./FishMinigame/images/clam.png", "Species #010"),
+        new Fish(true, FishStrings.SeaTurtle, "Sea Turtle", "./FishMinigame/images/turtle.png", "Species #011"),
+        new Fish(false, FishStrings.Seahorse, "Sea Horse", "./FishMinigame/images/seahorse.png", "Species #012"),
+        //Forth fish selection
+        new Fish(false, FishStrings.MantaRays, "Manta Ray", "./FishMinigame/images/mantaray.png", "Species #013"),
+        new Fish(false, FishStrings.GreenMorayEel, "Green Moray Eel", "./FishMinigame/images/eel.png", "Species #014"),
+        new Fish(false, FishStrings.SlenderGrouper, "Slender Grouper", "./FishMinigame/images/grouper.png", "Species #015"),
+        new Fish(true, FishStrings.BluefinTuna, "Blue Fin Tuna", "./FishMinigame/images/blue_fin_tuna.png", "Species #016")
     ];
 
     public static void Play()
     {
         AnsiConsole.Clear();
 
-        AnsiConsole.Write(
-    new FigletText("Fish Analyzer 9000")
-        .LeftJustified()
-        .Color(Color.Cyan1));
+        Welcome();
 
+        //Fish selection
         Fish first = FishSelection(FishSpecies[0], FishSpecies[1], FishSpecies[2], FishSpecies[3]);
         Fish second = FishSelection(FishSpecies[4], FishSpecies[5], FishSpecies[6], FishSpecies[7]);
-        Fish third = FishSelection(FishSpecies[0], FishSpecies[1], FishSpecies[2], FishSpecies[3]);
-        Fish fourth = FishSelection(FishSpecies[0], FishSpecies[1], FishSpecies[2], FishSpecies[3]);
+        Fish third = FishSelection(FishSpecies[8], FishSpecies[9], FishSpecies[10], FishSpecies[11]);
+        Fish fourth = FishSelection(FishSpecies[12], FishSpecies[13], FishSpecies[14], FishSpecies[15]);
 
+        //Mini game ending
         AnsiConsole.Write(
             new FigletText("Congrats!")
                 .LeftJustified()
                 .Color(Color.Cyan1));
         System.Console.WriteLine();
-        AnsiConsole.Write(new Markup("You have found and tagged all endagered species!\n"));
-        Table table = new Table();
+        var table_congrats = new Table();
+        table_congrats.AddColumn("You have found and tagged all endagered species!\n");
+        var table_endangered_species = new Table();
 
-        table.AddColumn(first.Name);
-        table.AddColumn(second.Name);
-        table.AddColumn(third.Name);
-        table.AddColumn(fourth.Name);
+        table_endangered_species.AddColumn(first.Name);
+        table_endangered_species.AddColumn(second.Name);
+        table_endangered_species.AddColumn(third.Name);
+        table_endangered_species.AddColumn(fourth.Name);
 
-        var firstImage = new CanvasImage(first.ImagePath);
-        var secondImage = new CanvasImage(second.ImagePath);
-        var thirdImage = new CanvasImage(third.ImagePath);
-        var fourthImage = new CanvasImage(fourth.ImagePath);
 
-        table.AddRow(firstImage, secondImage, thirdImage, fourthImage);
+        table_endangered_species.AddRow(first.Image, second.Image, third.Image, fourth.Image);
+        AnsiConsole.Write(table_congrats);
 
-        AnsiConsole.Write(table);
+        AnsiConsole.Write(table_endangered_species);
+        System.Console.WriteLine();
+        AnsiConsole.Prompt(
+                         new SelectionPrompt<string>()
+                            .Title("")
+                            .PageSize(15)
+                            .AddChoices([
+                                "[green]Continue [/]",
+                            ]));
     }
+    public static void Welcome()
+    {
+        AnsiConsole.Clear();
+        AnsiConsole.Write(
+                 new FigletText("<Life-form Analyzer>")
+                 .LeftJustified()
+                 .Color(Color.Cyan1));
+        var table = new Table();
+        table.AddColumn("This is the Life-form Analyzer machine.\nYou will be presented with a few species of underwater creatures.\nYou are tasked with identifying the endangered species and tag them in order to track their movements in order to protect them from the threats they are facing.");
+        AnsiConsole.Write(table);
+        AnsiConsole.Write(
+                new FigletText("Instructions:")
+                .LeftJustified()
+                .Color(Color.Cyan1));
+        var table2 = new Table();
+        table2.AddColumn("Use arrow keys to scroll through the menu.\nPress ENTER to select the species you think needs to be tracked.");
+        AnsiConsole.Write(table2);
+        AnsiConsole.WriteLine();
 
+        AnsiConsole.Prompt(
+        new SelectionPrompt<string>()
+            .Title("")
+            .PageSize(30)
+            .AddChoices(new[] {
+                        "Continue"
+
+            }));
+        AnsiConsole.Clear();
+
+    }
     public static Fish FishSelection(Fish first, Fish second, Fish third, Fish fourth)
     {
         var firstImage = new CanvasImage(first.ImagePath);
@@ -66,6 +109,10 @@ public static class FishAnalyzer
 
         while (true)
         {
+            AnsiConsole.Write(
+                 new FigletText("<Life-form Analyzer>")
+                 .LeftJustified()
+                 .Color(Color.Cyan1));
 
             var table = new Table();
 
@@ -99,7 +146,7 @@ public static class FishAnalyzer
                 System.Console.WriteLine();
                 AnsiConsole.Prompt(
                                  new SelectionPrompt<string>()
-                                    .Title($"[green]Correct! [/] \n {selectedFish.Description}")
+                                    .Title($"[green]Correct! Successfully tagged. [/] \n {selectedFish.Description}")
                                     .PageSize(15)
                                     .AddChoices([
                                         "[green]Continue [/]",

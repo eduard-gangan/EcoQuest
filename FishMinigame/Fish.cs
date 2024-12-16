@@ -1,3 +1,5 @@
+using Spectre.Console;
+
 namespace EcoQuest;
 public class Fish
 {
@@ -7,6 +9,7 @@ public class Fish
     public bool Found { get; set; }
     public string ImagePath { get; set; }
     public string ID { get; set; }
+    public CanvasImage Image { get; set; }
 
     public Fish(bool endangered, string description, string name, string imagePath, string id)
     {
@@ -15,6 +18,7 @@ public class Fish
         Name = name;
         ImagePath = imagePath;
         ID = id;
+        Image = new CanvasImage(ImagePath);
     }
 
 }
