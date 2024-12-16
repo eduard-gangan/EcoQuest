@@ -147,6 +147,12 @@ namespace EcoQuest
                     case "sort":
                         TrashMinigame.Start(currentRoom);
                         break;
+                    case "fishsort":
+                        FishAnalyzer.Play();
+                        break;
+                    case "showcase":
+                        Reputation.Add(1000000000);
+                        break;
                     case "talk":
                         if (currentRoom?.RoomNPC != null)
                         {
