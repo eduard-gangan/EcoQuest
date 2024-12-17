@@ -23,23 +23,11 @@ public class Dialogue
         {
             var playerChoice = AnsiConsole.Prompt(
         new SelectionPrompt<string>()
-        .Title(null)
+        .Title("")
         .PageSize(10)
         .MoreChoicesText("[grey](Move up and down to reveal more options)[/]")
         .AddChoices(OptionList));
             HandlePlayerChoice(playerChoice);
-
-            // PrintOptions();
-            // System.Console.Write($"> Choose an option(1-{OptionList.Count}): ");
-            // var consoleInput = Console.ReadLine();
-            // if (Int32.TryParse(consoleInput, out int playerChoice))
-            // {
-            //     Console.Beep();
-            //     HandlePlayerChoice(playerChoice);
-            //     continue;
-            // }
-            // Game.ColorWriteLine("Please choose a valid option.", ConsoleColor.Red);
-
         }
     }
 
@@ -68,20 +56,9 @@ public class Dialogue
 
     private void HandlePlayerChoice(string choice)
     {
-
         Console.Clear();
         DialogueOptions[choice].Invoke();
         System.Console.WriteLine();
-        // if (index > 0 && index <= OptionList.Count)
-        // {
-        //     System.Console.WriteLine($"> {OptionList[index - 1]}\n");
-        //     DialogueOptions[OptionList[index - 1]].Invoke();
-        //     System.Console.WriteLine();
-        // }
-        // else
-        // {
-        //     System.Console.WriteLine("Invalid Option.");
-        // }
     }
     public void InsertOption(string reply, Action action, int index)
     {
@@ -101,6 +78,11 @@ public class Dialogue
     {
         DialogueOptions.Remove(key);
         OptionList.Remove(key);
+    }
+    public void RemoveOptionAt(int index)
+    {
+        DialogueOptions.Remove(OptionList[index]);
+        OptionList.RemoveAt(index);
     }
     public void TriggerDialogue()
     {

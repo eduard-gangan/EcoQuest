@@ -18,6 +18,11 @@ public static class PlayerReply
     public const string LANKA_PLAYER = "Yes i am, and i want to talk to you about repairing the recycling station. ";
     public const string LANKA_STATION = "The Recycling Station needs to be repaired as soon as possible.";
 
+    //Andrew from Indonesia
+    public const string ANDREW_1 = "Yes, I’m here to help monitor the fish populations.";
+    public const string ANDREW_2 = "So, what can we do to help them?";
+    public const string ANDREW_3 = "I want to help.";
+
 
     public const string YES = "Yes";
     public const string NO = "No";

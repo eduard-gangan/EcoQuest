@@ -83,6 +83,53 @@ namespace EcoQuest
                             }
                         }
                         break;
+                    case "descend":
+                        if (currentRoom == indonesia.Rooms["submarinedock"])
+                        {
+                            currentRoom = indonesia.Rooms["submarine"];
+                            previousRoom = null;
+                            System.Console.WriteLine(currentRoom.RoomDescription);
+                            Console.Write($"[Suggested Commands]: ");
+                            foreach (string commands in currentRoom.AvailableCommands)
+                            {
+                                Console.Write($"{commands} ");
+                            }
+                            System.Console.WriteLine();
+
+                        }
+                        else
+                        {
+                            System.Console.WriteLine("You can not use this command here. Go to the Submarine Dock.");
+                        }
+                        break;
+                    case "ascend":
+                        if (currentRoom == indonesia.Rooms["submarine"])
+                        {
+                            currentRoom = indonesia.Rooms["submarinedock"];
+                            previousRoom = null;
+                            System.Console.WriteLine(currentRoom.RoomDescription);
+                            Console.Write($"[Suggested Commands]: ");
+                            foreach (string commands in currentRoom.AvailableCommands)
+                            {
+                                Console.Write($"{commands} ");
+                            }
+                            System.Console.WriteLine();
+                        }
+                        else
+                        {
+                            System.Console.WriteLine("You can not use this command here. You have to be in the Submarine.");
+                        }
+                        break;
+                    case "analyze":
+                        if (currentRoom == indonesia.Rooms["submarine"])
+                        {
+                            FishAnalyzer.Play();
+                        }
+                        else
+                        {
+                            System.Console.WriteLine("You can not use this command here. You have to be in the Submarine.");
+                        }
+                        break;
                     case "sail":
                         if (!QuestSriLanka.Active)
                         {
@@ -151,7 +198,7 @@ namespace EcoQuest
                         FishAnalyzer.Play();
                         break;
                     case "showcase":
-                        Reputation.Add(1000000000);
+                        Reputation.Add(1000000);
                         break;
                     case "talk":
                         if (currentRoom?.RoomNPC != null)
@@ -414,8 +461,34 @@ namespace EcoQuest
                 }
             );
             //Indonesia NPC
-            NPCs.IndonesiaNPC.MainDialogue.AddOption("start the fucking game", () => { System.Console.WriteLine("starting bro."); });
-            NPCs.IndonesiaNPC.MainDialogue.AddOption("bye", () => { System.Console.WriteLine("bye bro."); NPCs.IndonesiaNPC.MainDialogue.TriggerDialogue(); });
+            NPCs.Andrew.MainDialogue.AddOption(PlayerReply.ANDREW_1, () =>
+            {
+                SlowWrite(NpcReply.ANDREW_11);
+                SlowWrite(NpcReply.ANDREW_12);
+                NPCs.Andrew.MainDialogue.RemoveOptionAt(0);
+                NPCs.Andrew.MainDialogue.AddOption(PlayerReply.ANDREW_2, () =>
+                {
+                    SlowWrite(NpcReply.ANDREW_21);
+                    SlowWrite(NpcReply.ANDREW_22);
+                    SlowWrite(NpcReply.ANDREW_23);
+                    NPCs.Andrew.MainDialogue.RemoveOptionAt(0);
+                    NPCs.Andrew.MainDialogue.AddOption(PlayerReply.ANDREW_3, () =>
+                    {
+                        SlowWrite(NpcReply.ANDREW_3);
+                        NPCs.Andrew.MainDialogue.RemoveOptionAt(0);
+                        NPCs.Andrew.MainDialogue.AddOption(PlayerReply.BYE, () =>
+                    {
+                        SlowWrite(NpcReply.ANDREW_BYE);
+                        NPCs.Andrew.MainDialogue.TriggerDialogue();
+                        ColorWriteLine("Head North to the Submarine Dock and use command 'descend' to enter the Research Submarine and descend into the Ocean.", ConsoleColor.Gray);
+                    });
+
+                    });
+
+
+                });
+
+            });
         }
 
         // Temporary console styling methods
