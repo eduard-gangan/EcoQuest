@@ -5,7 +5,8 @@ using static Questions;
 
 public static class Quiz
 {
-    public static List<Question> questionList = QuestionList;
+    private static List<Question> questionList = List;
+
     public static void Play(/*Room currentRoom*/)
     {
         // Check if the room is correct
@@ -18,18 +19,40 @@ public static class Quiz
         */
 
         // Reset Available Questions
-        questionList = QuestionList;
+        questionList = List;
 
-        // 
+        // Prompt with a number of questions
         for(int i = 1; i <= 3; i++)
         {
             bool Continue = Prompt();
             if (!Continue)
                 break;
         }
+
+        // If you answer everything correctly then..
+            // The captain writes some encouraging words.
+        AnsiConsole.WriteLine();
+        AnsiConsole.MarkupLine("[bold white]You did it champ![/]");
+
+        //AnsiConsole.MarkupLine("[dim gray]Press any key to end the game...[/]");
+        Game.ColorWriteLine("Press any key to end the game...", ConsoleColor.DarkGray);
+        
+        bool end = false;
+        while (!end)
+        {
+            if (Console.KeyAvailable)
+            {
+                Console.ReadKey(true);
+                end = true;
+                Console.Clear();
+            }
+
+        }
+
+        // Trigger the game ending.
     }
 
-    public static bool Prompt()
+    private static bool Prompt()
     {
         // Random question
         Random rnd = new Random();
@@ -42,8 +65,7 @@ public static class Quiz
         string choice = AnsiConsole.Prompt(
                             new SelectionPrompt<string>()
                                 .Title(question.QuestionName)
-                                .PageSize(8)
-                                .AddChoices(question.Options)
+                                .AddChoices(question.Choices)
         );
         
         // Validate answer
