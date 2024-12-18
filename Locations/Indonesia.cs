@@ -20,7 +20,7 @@ namespace EcoQuest
             Room? indonesia_submarine = new("Research Submarine", "You are inside the Submarine Research Station. There's lots of buttons, wonder what they might do.", new List<string> { "look", "analyze", "ascend" }, null);
 
             indonesia_port.SetExit("north", indonesia_submarinedock);
-            indonesia_submarine.SetExit("south", indonesia_port);
+            indonesia_submarinedock.SetExit("south", indonesia_port);
 
             Rooms["port"] = indonesia_port;
             Rooms["submarinedock"] = indonesia_submarinedock;

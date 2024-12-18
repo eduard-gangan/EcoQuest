@@ -34,8 +34,7 @@ public static class Quiz
         AnsiConsole.WriteLine();
         AnsiConsole.MarkupLine("[bold white]You did it champ![/]");
 
-        //AnsiConsole.MarkupLine("[dim gray]Press any key to end the game...[/]");
-        Game.ColorWriteLine("Press any key to end the game...", ConsoleColor.DarkGray);
+        AnsiConsole.MarkupLine("[grey37]Press any key to end the game...[/]");
         
         bool end = false;
         while (!end)
@@ -77,7 +76,7 @@ public static class Quiz
         else
         {
             AnsiConsole.MarkupLine("[bold red]Incorrect![/]");
-            AnsiConsole.MarkupLine("[dim gray]Do some more reading in the library.[/]");
+            AnsiConsole.MarkupLine("[grey37]Do some more reading in the library.[/]");
             return false;
         }
     }

@@ -1,3 +1,5 @@
+using Spectre.Console;
+
 namespace EcoQuest;
 
 public static class MapSriLanka
@@ -50,7 +52,7 @@ public static class MapSriLanka
             for (int x = 0; x < map.GetLength(1); x++)
             {
                 if (map[y, x] == '*')
-                    Game.ColorWrite($"{map[y, x]}", ConsoleColor.DarkRed);
+                    AnsiConsole.Markup($"[rapidblink red]{map[y, x]}[/]");
                 else
                     Console.Write(map[y, x]);
             }

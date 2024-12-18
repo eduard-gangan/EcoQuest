@@ -1,3 +1,5 @@
+using Spectre.Console;
+
 namespace EcoQuest;
 
 public class FancyNPC : NPC
@@ -19,8 +21,7 @@ public class FancyNPC : NPC
         }
         else
         {
-            Game.ColorWriteLine($"You don't have enough reputation to talk to this NPC! You have ({Reputation.Get()} / {ReputationReq}) reputation.", ConsoleColor.Red);
-
+            AnsiConsole.WriteLine($"[red]You don't have enough reputation to talk to this NPC! You have ({Reputation.Get()} / {ReputationReq}) reputation.[/]");
         }
     }
 }

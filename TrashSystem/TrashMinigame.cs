@@ -35,12 +35,12 @@ public static class TrashMinigame
         // Checm room and if the recycling station is open.
         if (currentRoom.RoomName != "Recycling Station")
         {
-            Game.ColorWriteLine("You are not in the recycling station!", ConsoleColor.Red);
+            AnsiConsole.MarkupLine("[bold red]You are not in the recycling station![/]");
             return;
         }
         if (!Open)
         {
-            Game.ColorWriteLine("The Recycling Station isn't functional yet.", ConsoleColor.Red);
+            AnsiConsole.MarkupLine("[bold red]The Recycling Station isn't functional yet.[/]");
             return;
         }
 
@@ -86,7 +86,7 @@ public static class TrashMinigame
         }
         else
         {
-            Game.ColorWriteLine("You don't have any trash in your inventory!", ConsoleColor.Red);
+            AnsiConsole.MarkupLine("[bold red]You don't have any trash in your inventory![/]");
         }
     }
     private static void Prompt(Item item)
@@ -105,24 +105,14 @@ public static class TrashMinigame
     {
         if (item.TrashType == trashType)
         {
-            Console.Write("Correctly sorted");
-            Game.ColorWrite($" [{item.Name}] ", ConsoleColor.Magenta);
-            Console.WriteLine($"as {trashType}");
-            Console.Write($"Earned");
-            Game.ColorWrite($" {item.Value * Multiplier} ", ConsoleColor.Green);
-            Console.WriteLine("reputation!");
-            Console.WriteLine();
+            AnsiConsole.MarkupLine($"Correctly sorted[bold magenta] [[{item.Name}]][/] as {trashType}");
+            AnsiConsole.MarkupLine($"Earned [bold green] {item.Value * Multiplier}[/] reputation!\n");
             Reputation.Add(item.Value * Multiplier);
         }
         else
         {
-            Console.Write("Incorrectly sorted");
-            Game.ColorWrite($" [{item.Name}] ", ConsoleColor.Magenta);
-            Console.WriteLine($"as {trashType}, the correct answer was {item.TrashType}.");
-            Console.Write($"Lost");
-            Game.ColorWrite($" {item.Value * Multiplier} ", ConsoleColor.Red);
-            Console.WriteLine("reputation!");
-            Console.WriteLine();
+            AnsiConsole.MarkupLine($"Incorrectly sorted[bold magenta] [[{item.Name}]][/] as {trashType}, the correct answer was {item.TrashType}.");
+            AnsiConsole.MarkupLine($"Lost [bold red] {item.Value * Multiplier}[/] reputation!\n");
             Reputation.Decrease(item.Value * Multiplier);
         }
     }

@@ -76,46 +76,37 @@ to maintain modularity, extensibility, and maintainability.
 */
 
 
-namespace EcoQuest
+namespace EcoQuest;
+using Spectre.Console;
+
+public class Program
 {
-    public class Program
+    public static void Main()
     {
-        public static void Main()
-        {
-            Game game = new();
-            bool startMenu = true;
-            Console.Clear();
-            Game.ColorWriteLine(@"
+        Game game = new();
+        bool startMenu = true;
+        Console.Clear();
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine(@"
                  _____          _____                 _   
                 |  ___|        |  _  |               | |  
                 | |__  ___ ___ | | | |_   _  ___  ___| |_ 
                 |  __|/ __/ _ \| | | | | | |/ _ \/ __| __|
                 | |__| (_| (_) \ \/' / |_| |  __/\__ \ |_ 
-                \____/\___\___/ \_/\_\\__,_|\___||___/\__|", ConsoleColor.Blue);
-            System.Console.WriteLine("\n");
-            Game.ColorWriteLine("WARNING: For a better command-line experience, please use an external CLI instead of an integrated one", ConsoleColor.Yellow);
-            Game.ColorWriteLine("Press any key to start the game...", ConsoleColor.DarkGray);
-            while (startMenu)
+                \____/\___\___/ \_/\_\\__,_|\___||___/\__|");
+        Console.ResetColor();
+        Console.WriteLine("\n");
+        AnsiConsole.MarkupLine("[bold yellow]WARNING: For a better command-line experience, please use an external CLI instead of an integrated one[/]");
+        AnsiConsole.MarkupLine("[grey37]Press any key to continue...[/]");
+        while (startMenu)
+        {
+            if (Console.KeyAvailable)
             {
-                if (Console.KeyAvailable)
-                {
-                    Console.ReadKey(true);
-                    startMenu = false;
-<<<<<<< Updated upstream
-                    //game.Play();
-                    
-                    Console.Clear();
-                    Read.Start();
-                    Quiz.Play();
-=======
-                    Console.Clear();
-                    // Quiz.Play();
-                    game.Play();
-
->>>>>>> Stashed changes
-                }
-
+                Console.ReadKey(true);
+                startMenu = false;
+                game.Play();
             }
+
         }
     }
 }

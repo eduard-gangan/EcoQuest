@@ -8,6 +8,8 @@ each item's value.
  */
 
 
+using Spectre.Console;
+
 namespace EcoQuest;
 public static class TrashDump
 {
@@ -16,7 +18,7 @@ public static class TrashDump
     {
         if (currentRoom?.RoomName != "Recycling Station")
         {
-            Game.ColorWriteLine("You are not in the recycling station!", ConsoleColor.Red);
+            AnsiConsole.MarkupLine("[bold red]You are not in the recycling station![/]");
             return;
         }
 
@@ -38,14 +40,12 @@ public static class TrashDump
             {
                 Reputation.Add(item.Value);
                 Trash.Remove(item);
-                Console.Write($"Threw away {item.Name}, gained ");
-                Game.ColorWrite($"{item.Value}", ConsoleColor.Green);
-                Console.WriteLine(" reputation!");
+                AnsiConsole.MarkupLine($"Threw away {item.Name}, gained [bold green]{item.Value}[/] reputation!");
             }
         }
         else
         {
-            Game.ColorWriteLine("You don't have any trash in your inventory!", ConsoleColor.Red);
+            AnsiConsole.MarkupLine("[bold red]You don't have any trash in your inventory![/]");
         }
     }
 }
