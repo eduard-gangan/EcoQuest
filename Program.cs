@@ -101,7 +101,9 @@ namespace EcoQuest
                 {
                     Console.ReadKey(true);
                     startMenu = false;
-                    game.Play();
+                    Console.Clear();
+                    Quiz.Play();
+                    //game.Play();
 
                 }
 
