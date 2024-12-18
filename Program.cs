@@ -101,11 +101,18 @@ namespace EcoQuest
                 {
                     Console.ReadKey(true);
                     startMenu = false;
+<<<<<<< Updated upstream
                     //game.Play();
                     
                     Console.Clear();
                     Read.Start();
                     Quiz.Play();
+=======
+                    Console.Clear();
+                    // Quiz.Play();
+                    game.Play();
+
+>>>>>>> Stashed changes
                 }
 
             }

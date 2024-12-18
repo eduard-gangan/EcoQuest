@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Spectre.Console;
 namespace EcoQuest;
 
@@ -40,10 +41,45 @@ public static class FishAnalyzer
         Fish fourth = FishSelection(FishSpecies[12], FishSpecies[13], FishSpecies[14], FishSpecies[15]);
 
         //Mini game ending
+        End(first, second, third, fourth);
+
+        //Call, you get a call congratulating and thanking you
+        Call();
+    }
+    private static void Call()
+    {
+        AnsiConsole.Status()
+  .Spinner(Spinner.Known.Toggle4)
+  .Start("Your Phone is ringing...", ctx =>
+        {
+            AnsiConsole.Markup("[gray underline] Press any key to answer the phone. [/]");
+            System.Console.WriteLine();
+            while (true)
+            {
+                // Ask for the user's favorite fruit
+                Console.Beep();
+                Thread.Sleep(200);
+                if (Console.KeyAvailable)
+                {
+                    Console.ReadKey(true);
+
+
+                    break;
+
+                }
+            }
+        });
+        Game.SlowWrite(">ANDREW: Hey there! I've heard the news.");
+        Game.SlowWrite(">ANDREW: The data you’ve collected is invaluable. You’re a true ally of the ocean! Me and my team will head back to the lab and upload the tracking data. Next, we’ll analyze water samples to assess the health of the reefs.");
+        Game.SlowWrite(">ANDREW: Well done! Thanks to your careful choices, we’ve made excellent progress in our mission to protect the ocean’s biodiversity. Each fish you tagged contributes valuable data that scientists can use to safeguard these species and their habitats.");
+
+    }
+    private static void End(Fish first, Fish second, Fish third, Fish fourth)
+    {
         AnsiConsole.Write(
-            new FigletText("Congrats!")
-                .LeftJustified()
-                .Color(Color.Cyan1));
+                    new FigletText("Congrats!")
+                        .LeftJustified()
+                        .Color(Color.Cyan1));
         System.Console.WriteLine();
         var table_congrats = new Table();
         table_congrats.AddColumn("You have found and tagged all endagered species!\n");
@@ -68,7 +104,7 @@ public static class FishAnalyzer
                                 "[green]Continue [/]",
                             ]));
     }
-    public static void Welcome()
+    private static void Welcome()
     {
         AnsiConsole.Clear();
         AnsiConsole.Write(
@@ -98,7 +134,7 @@ public static class FishAnalyzer
         AnsiConsole.Clear();
 
     }
-    public static Fish FishSelection(Fish first, Fish second, Fish third, Fish fourth)
+    private static Fish FishSelection(Fish first, Fish second, Fish third, Fish fourth)
     {
         var firstImage = new CanvasImage(first.ImagePath);
         var secondImage = new CanvasImage(second.ImagePath);
