@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Transactions;
 using Spectre.Console;
 using Spectre.Console.Cli;
+using Spectre.Console.Rendering;
 
 namespace EcoQuest
 {
@@ -260,7 +261,7 @@ namespace EcoQuest
             }
             else
             {
-                
+
                 Console.WriteLine($"You are already in {currentLocation.LocationName}!");
             }
         }
@@ -269,20 +270,9 @@ namespace EcoQuest
         {
             if (currentRoom?.Exits.ContainsKey(direction) == true)
             {
-                Console.Clear();
                 previousRoom = currentRoom;
                 currentRoom = currentRoom?.Exits[direction];
-
-                Console.WriteLine($"[{currentRoom?.RoomName}]");
-                Console.WriteLine(currentRoom.RoomDescription);
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.Write($"[Suggested Commands]: ");
-                foreach (string commands in currentRoom.AvailableCommands)
-                {
-                    Console.Write($"{commands} ");
-                }
-                Console.WriteLine();
-                Console.ResetColor();
+                DisplayRoomInformation(currentRoom);
             }
             else
             {
@@ -290,6 +280,22 @@ namespace EcoQuest
             }
         }
 
+        public static void DisplayRoomInformation(Room currentRoom)
+        {
+            Console.Clear();
+
+            Console.WriteLine($"[{currentRoom?.RoomName}]");
+            Console.WriteLine(currentRoom?.RoomDescription);
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write($"[Suggested Commands]: ");
+            foreach (string commands in currentRoom.AvailableCommands)
+            {
+                Console.Write($"{commands} ");
+            }
+
+            Console.WriteLine();
+            Console.ResetColor();
+        }
         private static void PrintWelcome()
         {
             Console.Clear();

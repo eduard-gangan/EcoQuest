@@ -1,3 +1,18 @@
+/*
+--/ Class for the Quiz Minigame \--
+
+Overview:
+ In this minigame, players receive a series of random questions that they have to answer.
+ If they answer incorrectly, they are forced out of the minigame and have to start over.
+
+
+ - Use the Play() method to initiate the quiz minigame.
+
+Key Variables:
+ - questionList: A list of possible questions. This list is used to remove questions from the list
+ so that they would not appear multiple times.
+
+ */
 namespace EcoQuest;
 using Spectre.Console;
 using static Questions;
@@ -7,16 +22,14 @@ public static class Quiz
 {
     private static List<Question> questionList = List;
 
-    public static void Play(/*Room currentRoom*/)
+    public static void Play(Room currentRoom)
     {
         // Check if the room is correct
-        /*
-        if (currentRoom.RoomName != "")
+        if (currentRoom.RoomName.Contains("Port"))
         {
-            Game.ColorWriteLine("You are not in ", ConsoleColor.Red);
+            AnsiConsole.MarkupLine("[bald red]You are not in the Port![/]");
             return;
         }
-        */
 
         // Reset Available Questions
         questionList = List;
@@ -26,7 +39,7 @@ public static class Quiz
         {
             bool Continue = Prompt();
             if (!Continue)
-                break;
+                return;
         }
 
         // If you answer everything correctly then..

@@ -1,3 +1,14 @@
+/*
+--/ Class for storing books \--
+
+Overview:
+ This class is used solely for storing books. 
+
+Use the following format:
+    new Book("Book title", "Contents of the book"),
+
+ */
+
 namespace EcoQuest;
 
 public static class Books
