@@ -76,15 +76,37 @@ to maintain modularity, extensibility, and maintainability.
 */
 
 
-namespace EcoQuest
+namespace EcoQuest;
+using Spectre.Console;
+
+public class Program
 {
-    public class Program
+    public static void Main()
     {
-        public static void Main()
+        Game game = new();
+        bool startMenu = true;
+        Console.Clear();
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine(@"
+                 _____          _____                 _   
+                |  ___|        |  _  |               | |  
+                | |__  ___ ___ | | | |_   _  ___  ___| |_ 
+                |  __|/ __/ _ \| | | | | | |/ _ \/ __| __|
+                | |__| (_| (_) \ \/' / |_| |  __/\__ \ |_ 
+                \____/\___\___/ \_/\_\\__,_|\___||___/\__|");
+        Console.ResetColor();
+        Console.WriteLine("\n");
+        AnsiConsole.MarkupLine("[bold yellow]WARNING: For a better command-line experience, please use an external CLI instead of an integrated one[/]");
+        AnsiConsole.MarkupLine("[grey37]Press any key to continue...[/]");
+        while (startMenu)
         {
-            Game game = new();
-            game.Play();
+            if (Console.KeyAvailable)
+            {
+                Console.ReadKey(true);
+                startMenu = false;
+                game.Play();
+            }
+
         }
     }
 }
-

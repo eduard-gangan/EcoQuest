@@ -25,6 +25,7 @@ namespace EcoQuest
         public static void Add(int amount)
         {
             reputation += amount;
+            QuestSriLanka.CheckQuest();
         }
 
         public static void Decrease(int amount)

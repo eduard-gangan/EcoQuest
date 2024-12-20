@@ -8,12 +8,20 @@ each item's value.
  */
 
 
+using Spectre.Console;
+
 namespace EcoQuest;
 public static class TrashDump
 {
     private static List<Item> Trash = [];
-    public static void Dump()
+    public static void Dump(Room currentRoom)
     {
+        if (currentRoom?.RoomName != "Recycling Station")
+        {
+            AnsiConsole.MarkupLine("[bold red]You are not in the recycling station![/]");
+            return;
+        }
+
         if (Inventory.Items.Count > 0)
         {
             foreach (Item item in Inventory.Items.ToList())
@@ -32,16 +40,12 @@ public static class TrashDump
             {
                 Reputation.Add(item.Value);
                 Trash.Remove(item);
-                Console.Write($"Threw away {item.Name}, gained ");
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write(item.Value);
-                Console.ResetColor();
-                Console.WriteLine(" reputation!");
+                AnsiConsole.MarkupLine($"Threw away {item.Name}, gained [bold green]{item.Value}[/] reputation!");
             }
         }
         else
         {
-            Console.WriteLine("You don't have any trash in your inventory!");
+            AnsiConsole.MarkupLine("[bold red]You don't have any trash in your inventory![/]");
         }
     }
 }
