@@ -132,7 +132,7 @@ namespace EcoQuest
                         }
                         break;
                     case "sail":
-                        if (!QuestSriLanka.Active)
+                        if (!QuestSriLanka.Active || !QuestIndonesia.Active)
                         {
                             if (
                                 currentLocation == startingLocation
@@ -180,6 +180,8 @@ namespace EcoQuest
                     case "map":
                         if (currentLocation == sriLanka)
                             MapSriLanka.ShowMap(currentRoom);
+                        else if (currentLocation == indonesia);
+                            MapIndonesia.ShowMap(currentRoom);
                         break;
                     case "reputation":
                         AnsiConsole.MarkupLine($"You currently have [bold green]{Reputation.Get()}[/] reputation!");
