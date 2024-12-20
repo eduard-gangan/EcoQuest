@@ -7,6 +7,9 @@ Overview:
 Use the following format:
     new Book("Book title", "Contents of the book"),
 
+When adding a new book:
+    Add a cover image to the LibrarySystem/Covers folder.
+    NOTE: It must match the title of the book!
  */
 
 namespace EcoQuest;

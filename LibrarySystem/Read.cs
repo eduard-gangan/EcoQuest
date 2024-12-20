@@ -10,7 +10,6 @@ Overview:
 Key Variables:
  - Choices: A list of possible book titles. Used to store title choices,
   also to add the additional choice to stop reading.
-
  */
 namespace EcoQuest;
 using static Books;
@@ -62,12 +61,13 @@ public static class Read
 
         // Print the book
         if (chosenBook != null)
-            {
-                var panel = new Panel(chosenBook.Contents);
-                panel.Header = new PanelHeader($"[bold white]{chosenBook.Title}[/]");
-                panel.Border = BoxBorder.Double;
-                panel.Padding = new Padding(1, 1, 1, 1);
-                AnsiConsole.Write(panel);
+            {   
+                var bookTable = new Table().ShowRowSeparators();
+                bookTable.Border = TableBorder.Double;
+                bookTable.AddColumn($"[bold white]{chosenBook.Title}[/]");
+                bookTable.AddRow(new CanvasImage($"./LibrarySystem/Covers/{chosenBook.Title}.png").MaxWidth(16));
+                bookTable.AddRow(chosenBook.Contents);
+                AnsiConsole.Write(bookTable);
                 return true;
             }
         return false;

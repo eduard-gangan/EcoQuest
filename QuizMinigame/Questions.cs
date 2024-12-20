@@ -8,7 +8,7 @@ Use the following format:
     new Question("Question name", ["Choice_1", "Choice_2", "Choice_3"], "Choice_1"),
 
 The second argument is a list of possible choices, the choices can be any string.
-The last arugment is the answer of the question, i.e. an identical string as the choice.
+The last argument is the answer of the question, i.e. an identical string as the choice.
 
  */
 namespace EcoQuest;

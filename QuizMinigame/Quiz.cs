@@ -25,6 +25,7 @@ public static class Quiz
     public static void Play(Room currentRoom)
     {
         // Check if the room is correct
+        
         if (currentRoom.RoomName.Contains("Port"))
         {
             AnsiConsole.MarkupLine("[bald red]You are not in the Port![/]");
@@ -37,7 +38,7 @@ public static class Quiz
         // Prompt with a number of questions
         for(int i = 1; i <= 3; i++)
         {
-            bool Continue = Prompt();
+            bool Continue = Prompt(i);
             if (!Continue)
                 return;
         }
@@ -64,7 +65,7 @@ public static class Quiz
         // Trigger the game ending.
     }
 
-    private static bool Prompt()
+    private static bool Prompt(int streak)
     {
         // Random question
         Random rnd = new Random();
@@ -83,7 +84,7 @@ public static class Quiz
         // Validate answer
         if (choice == question.Answer)
         {
-            AnsiConsole.MarkupLine("[bold green]Correct![/]");
+            AnsiConsole.MarkupLine($"[bold green]Correct! [/][bold grey37][[{streak}/8]][/]");
             return true;
         }
         else
