@@ -180,8 +180,8 @@ namespace EcoQuest
                     case "map":
                         if (currentLocation == sriLanka)
                             MapSriLanka.ShowMap(currentRoom);
-                        else if (currentLocation == indonesia);
-                            MapIndonesia.ShowMap(currentRoom);
+                        else if (currentLocation == indonesia) ;
+                        MapIndonesia.ShowMap(currentRoom);
                         break;
                     case "reputation":
                         AnsiConsole.MarkupLine($"You currently have [bold green]{Reputation.Get()}[/] reputation!");
@@ -253,10 +253,13 @@ namespace EcoQuest
                         }
                         break;
                     case "Australia":
-                        if (currentLocation != australia) {
+                        if (currentLocation != australia)
+                        {
                             currentLocation = australia;
                             currentRoom = australia?.Rooms["port"];
-                        } else {
+                        }
+                        else
+                        {
                             AnsiConsole.WriteLine("[bold red]You're already in Australia !");
                         }
                         break;
@@ -484,6 +487,23 @@ namespace EcoQuest
 
                 });
 
+            });
+            // Captain Sylvia
+            NPCs.Captain.MainDialogue.AddOption(PlayerReply.CAPTAIN_WHAT, () =>
+            {
+                ConsoleMethods.SlowWrite(NpcReply.CAPTAIN_WHAT);
+            });
+            NPCs.Captain.MainDialogue.AddOption(PlayerReply.CAPTAIN_WHY, () =>
+            {
+                ConsoleMethods.SlowWrite(NpcReply.CAPTAIN_WHY);
+                NPCs.Captain.MainDialogue.InsertOption("Start Quiz", () =>
+                {
+                    //Insert Start Quiz here
+                }, NPCs.Captain.MainDialogue.OptionList.Count - 1);
+            });
+            NPCs.Captain.MainDialogue.AddOption(PlayerReply.BYE, () =>
+            {
+                NPCs.Captain.MainDialogue.TriggerDialogue();
             });
         }
     }

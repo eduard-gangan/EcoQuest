@@ -23,6 +23,13 @@ public static class PlayerReply
     public const string ANDREW_2 = "So, what can we do to help them?";
     public const string ANDREW_3 = "I want to help.";
 
+    // Captain Sylvia
+    // Please do this
+    public const string CAPTAIN_WHAT = "wtf are you doing here b";
+    public const string CAPTAIN_WHY = "why do you wanna retire and why should i be the one doing YOUR job";
+    public const string CAPTAIN_TEST = "ok then ill do it";
+
+
 
     public const string YES = "Yes";
     public const string NO = "No";

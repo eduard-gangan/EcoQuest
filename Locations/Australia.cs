@@ -10,11 +10,11 @@ namespace EcoQuest
         {
             Room? australia_port = new("Australia Port",
             $"You are at the central port. You're not sure how, but you just feel there's a library to the north",
-            ["look", "map"], null
+            ["look", "map"], NPCs.Captain
             );
             Room? australia_library = new("Library",
              "You're at the local library. You look around a bit, and locate the 'Marine Life' section",
-             new List<string> { "look", "map" }, //Add the quiz command here
+             new List<string> { "look", "map", "talk" },
              null
             );
 

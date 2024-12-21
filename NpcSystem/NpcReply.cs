@@ -38,6 +38,13 @@ public static class NpcReply
     public const string ANDREW_3 = ">ANDREW: If you really want to help, you should go to the Submarine Dock and descend into the Ocean with our Underwater Research Submarine which has the Life Form Analyzer Machine inside.";
     public const string ANDREW_BYE = ">ANDREW: Goodbye, I hope to hear of your deeds.";
 
+    //Captain Sylvia
+
+    public const string CAPTAIN_GREETING = ">CAPTAIN SYLVIA: ..."; // Please do this
+    public const string CAPTAIN_WHAT = ">CAPTAIN SYLVIA: i wanna retire type shit";
+    public const string CAPTAIN_WHY = ">CAPTAIN SYLVIA: im tired fr and i think you're goated";
+    public const string CAPTAIN_TEST = ">CAPTAIN SYLVIA: i gotta test you tho";
+
 }
 
 

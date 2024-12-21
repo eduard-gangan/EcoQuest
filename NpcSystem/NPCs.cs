@@ -8,5 +8,7 @@ public static class NPCs
 
     public static readonly NPC Andrew = new("Andrew", NpcReply.ANDREW_GREETING);
 
+    public static readonly NPC Captain = new("Captain Sylvia", NpcReply.CAPTAIN_GREETING);
+
 
 }
