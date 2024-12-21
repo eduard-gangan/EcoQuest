@@ -24,15 +24,15 @@ namespace EcoQuest
             CreateNpcs();
 
             sriLanka = new SriLanka("Sri Lanka", "Description for Sri Lanka", 0);
-            australia = new Australia("Australia", "Description for Australia", 1000);
-            indonesia = new Indonesia("Indonesia", "Description for Indonesia", 2000);
+            indonesia = new Indonesia("Indonesia", "Description for Indonesia", 1000);
+            australia = new Australia("Australia", "Description for Australia", 2000);
             startingLocation = new Start(
                 "Ship",
                 "Somewhere at sea..",
                 0,
                 sriLanka,
-                australia,
-                indonesia
+                indonesia,
+                australia
             );
 
             currentLocation = startingLocation;
@@ -147,7 +147,7 @@ namespace EcoQuest
                                         .MoreChoicesText(
                                             "[grey](Move up and down to reveal more options)[/]"
                                         )
-                                        .AddChoices(new[] { "Sri Lanka", "Indonesia" })
+                                        .AddChoices(new[] { "Sri Lanka", "Indonesia", "Australia" })
                                 );
                                 Sail(choice);
                             }
@@ -212,6 +212,7 @@ namespace EcoQuest
                         }
                         break;
                     case "pick": //At the moment, the system doesnt take upgrades into account
+                        Credits.AddPickCommand();
                         Trash.Pick(currentRoom, sriLanka);
                         break;
                     default:
@@ -237,7 +238,7 @@ namespace EcoQuest
                         }
                         else
                         {
-                            Console.WriteLine("You're already in Sri Lanka!");
+                            AnsiConsole.WriteLine("[bold red]You're already in Sri Lanka !");
                         }
                         break;
                     case "Indonesia":
@@ -248,7 +249,15 @@ namespace EcoQuest
                         }
                         else
                         {
-                            System.Console.WriteLine("You're already in Indonesia !");
+                            AnsiConsole.WriteLine("[bold red]You're already in Indonesia !");
+                        }
+                        break;
+                    case "Australia":
+                        if (currentLocation != australia) {
+                            currentLocation = australia;
+                            currentRoom = australia?.Rooms["port"];
+                        } else {
+                            AnsiConsole.WriteLine("[bold red]You're already in Australia !");
                         }
                         break;
                 }

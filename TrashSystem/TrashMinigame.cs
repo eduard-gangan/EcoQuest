@@ -108,12 +108,14 @@ public static class TrashMinigame
             AnsiConsole.MarkupLine($"Correctly sorted[bold magenta] [[{item.Name}]][/] as {trashType}");
             AnsiConsole.MarkupLine($"Earned [bold green] {item.Value * Multiplier}[/] reputation!\n");
             Reputation.Add(item.Value * Multiplier);
+            Credits.AddCorrectlySorted();
         }
         else
         {
             AnsiConsole.MarkupLine($"Incorrectly sorted[bold magenta] [[{item.Name}]][/] as {trashType}, the correct answer was {item.TrashType}.");
             AnsiConsole.MarkupLine($"Lost [bold red] {item.Value * Multiplier}[/] reputation!\n");
             Reputation.Decrease(item.Value * Multiplier);
+            Credits.AddIncorrectlySorted();
         }
     }
 
