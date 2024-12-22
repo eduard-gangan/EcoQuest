@@ -231,7 +231,7 @@ namespace EcoQuest
                         }
                         else
                         {
-                            AnsiConsole.WriteLine("[bold red]You're already in Sri Lanka !");
+                            AnsiConsole.MarkupLine("[bold red]You're already in Sri Lanka !");
                         }
                         break;
                     case "Indonesia":
@@ -242,7 +242,7 @@ namespace EcoQuest
                         }
                         else
                         {
-                            AnsiConsole.WriteLine("[bold red]You're already in Indonesia !");
+                            AnsiConsole.MarkupLine("[bold red]You're already in Indonesia !");
                         }
                         break;
                     case "Australia":
@@ -253,7 +253,7 @@ namespace EcoQuest
                         }
                         else
                         {
-                            AnsiConsole.WriteLine("[bold red]You're already in Australia !");
+                            AnsiConsole.MarkupLine("[bold red]You're already in Australia !");
                         }
                         break;
                 }
@@ -322,7 +322,6 @@ namespace EcoQuest
             var rule = new Rule($"[bold][[{currentRoom?.RoomName}]][/]");
             AnsiConsole.Write(rule);
 
-            //Console.WriteLine($"[{currentRoom?.RoomName}]");
             Console.WriteLine(currentRoom?.RoomDescription);
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write($"[Suggested Commands]: ");
