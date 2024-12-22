@@ -89,13 +89,7 @@ namespace EcoQuest
                         {
                             currentRoom = indonesia.Rooms["submarine"];
                             previousRoom = null;
-                            System.Console.WriteLine(currentRoom.RoomDescription);
-                            Console.Write($"[Suggested Commands]: ");
-                            foreach (string commands in currentRoom.AvailableCommands)
-                            {
-                                Console.Write($"{commands} ");
-                            }
-                            System.Console.WriteLine();
+                            DisplayRoomInformation(currentRoom);
 
                         }
                         else
@@ -108,13 +102,7 @@ namespace EcoQuest
                         {
                             currentRoom = indonesia.Rooms["submarinedock"];
                             previousRoom = null;
-                            System.Console.WriteLine(currentRoom.RoomDescription);
-                            Console.Write($"[Suggested Commands]: ");
-                            foreach (string commands in currentRoom.AvailableCommands)
-                            {
-                                Console.Write($"{commands} ");
-                            }
-                            System.Console.WriteLine();
+                            DisplayRoomInformation(currentRoom);
                         }
                         else
                         {
@@ -272,11 +260,40 @@ namespace EcoQuest
 
                 Console.Clear();
                 Console.WriteLine($"You're on your way to {currentLocation.LocationName} \n");
-                ConsoleMethods.RecursiveWrite("...", 5);
+                AnsiConsole.Progress()
+                    .Columns(new ProgressColumn[]
+                    {
+                    new ProgressBarColumn(),
+                    })
+                    .Start(ctx =>
+                    {
+                    var Task = ctx.AddTask("SailingTask", autoStart: false).IsIndeterminate(true);
+                    Thread.Sleep(1500);
+                    Task.StartTask();
+                    Task.IsIndeterminate(false);
+                    Task.Increment(100);
+                });
                 Console.Clear();
-                Console.WriteLine($"You arrived in {currentLocation.LocationName}!");
+                var rule = new Rule($"[bold][[{currentLocation.LocationName}]][/]");
+                AnsiConsole.Write(rule);
+                AnsiConsole.MarkupLine($"[bold]You arrived in {currentLocation.LocationName}![/]");
+                AnsiConsole.MarkupLine($"{currentLocation.LocationDescription}!");
+                AnsiConsole.WriteLine();
                 AnsiConsole.MarkupLine("[grey37]Type 'look' to see you what's around you.[/]");
                 AnsiConsole.MarkupLine("[grey37]Navigate by typing 'north', 'south', 'east', or 'west'.\n[/]");
+                AnsiConsole.MarkupLine("[grey37]Press any key to continue...[/]");
+
+                bool Continue = false;
+                while (!Continue)
+                {
+                    if (Console.KeyAvailable)
+                    {
+                        Console.ReadKey(true);
+                        Continue = true;
+                    }
+
+                }
+                DisplayRoomInformation(currentRoom);
             }
             else
             {
@@ -303,7 +320,10 @@ namespace EcoQuest
         {
             Console.Clear();
 
-            Console.WriteLine($"[{currentRoom?.RoomName}]");
+            var rule = new Rule($"[bold][[{currentRoom?.RoomName}]][/]");
+            AnsiConsole.Write(rule);
+
+            //Console.WriteLine($"[{currentRoom?.RoomName}]");
             Console.WriteLine(currentRoom?.RoomDescription);
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write($"[Suggested Commands]: ");
