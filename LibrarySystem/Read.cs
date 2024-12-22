@@ -22,9 +22,9 @@ public static class Read
     public static void Start(Room currentRoom)
     {
         // Check if the room is correct.
-        if (currentRoom.RoomName.Contains("Library"))
+        if (!currentRoom.RoomName.Contains("Library"))
         {
-            AnsiConsole.MarkupLine("[bald red]You are not in the Library![/]");
+            AnsiConsole.MarkupLine("[bold red]You are not in the Library![/]");
             return;
         }
 
@@ -37,6 +37,7 @@ public static class Read
         Choices.Add("[dim bold][[Stop reading]][/]");
 
         // Prompt the book selection.
+        Console.Clear();
         bool Continue = true;
         while (Continue)
             Continue = Prompt();

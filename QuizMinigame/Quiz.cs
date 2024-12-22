@@ -20,27 +20,24 @@ using static Questions;
 
 public static class Quiz
 {
-    private static List<Question> questionList = List;
+    private static List<Question> questionList = [];
 
     public static void Play(Room currentRoom)
     {
-        // Check if the room is correct
-        
-        if (currentRoom.RoomName.Contains("Port"))
-        {
-            AnsiConsole.MarkupLine("[bald red]You are not in the Port![/]");
-            return;
-        }
+        Console.Clear();
 
         // Reset Available Questions
-        questionList = List;
+        questionList = new List<Question>(List);
 
         // Prompt with a number of questions
         for(int i = 1; i <= 3; i++)
         {
             bool Continue = Prompt(i);
             if (!Continue)
+            {
+                Game.DisplayRoomInformation(currentRoom);
                 return;
+            }
         }
 
         // If you answer everything correctly then..
@@ -69,7 +66,7 @@ public static class Quiz
     {
         // Random question
         Random rnd = new Random();
-        Question question = questionList[rnd.Next(questionList.Count)];
+        Question question = questionList[rnd.Next(0, questionList.Count)];
 
         // Remove the question from the current questions list, so that it couldn't be used in the future.
         questionList.Remove(question);

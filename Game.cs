@@ -180,8 +180,10 @@ namespace EcoQuest
                     case "map":
                         if (currentLocation == sriLanka)
                             MapSriLanka.ShowMap(currentRoom);
-                        else if (currentLocation == indonesia) ;
-                        MapIndonesia.ShowMap(currentRoom);
+                        else if (currentLocation == indonesia)
+                            MapIndonesia.ShowMap(currentRoom);
+                        else if (currentLocation == australia)
+                            MapAustralia.ShowMap(currentRoom);
                         break;
                     case "reputation":
                         AnsiConsole.MarkupLine($"You currently have [bold green]{Reputation.Get()}[/] reputation!");
@@ -211,9 +213,12 @@ namespace EcoQuest
                             System.Console.WriteLine("There is no one here...");
                         }
                         break;
-                    case "pick": //At the moment, the system doesnt take upgrades into account
+                    case "pick":
                         Credits.AddPickCommand();
                         Trash.Pick(currentRoom, sriLanka);
+                        break;
+                    case "read":
+                        Read.Start(currentRoom);
                         break;
                     default:
                         break;
@@ -498,7 +503,7 @@ namespace EcoQuest
                 ConsoleMethods.SlowWrite(NpcReply.CAPTAIN_WHY);
                 NPCs.Captain.MainDialogue.InsertOption("Start Quiz", () =>
                 {
-                    //Insert Start Quiz here
+                    Quiz.Play(currentRoom);
                 }, NPCs.Captain.MainDialogue.OptionList.Count - 1);
             });
             NPCs.Captain.MainDialogue.AddOption(PlayerReply.BYE, () =>
