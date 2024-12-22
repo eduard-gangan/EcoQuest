@@ -23,9 +23,9 @@ namespace EcoQuest
             Parser parser = new();
             CreateNpcs();
 
-            sriLanka = new SriLanka("Sri Lanka", "Description for Sri Lanka", 0);
-            indonesia = new Indonesia("Indonesia", "Description for Indonesia", 1000);
-            australia = new Australia("Australia", "Description for Australia", 2000);
+            sriLanka = new SriLanka("Sri Lanka", "You arrive in Sri Lanka. Once a vibrant paradise, the beaches now struggle under the weight of plastic and waste, highlighting the urgent need to combat pollution and protect marine life.", 0);
+            indonesia = new Indonesia("Indonesia", "You arrive in Indonesia, where overfishing has taken its toll on the ocean. Perhaps understanding the movements of vulnerable fish could help create safe zones for their recovery.", 1000);
+            australia = new Australia("Australia", "You arrive in Australia, unsure of your purpose here. The fading Great Barrier Reef comes to mind—the coral is bleaching, and marine life is vanishing. ", 2000);
             startingLocation = new Start(
                 "Ship",
                 "Somewhere at sea..",
@@ -276,12 +276,11 @@ namespace EcoQuest
                 Console.Clear();
                 var rule = new Rule($"[bold][[{currentLocation.LocationName}]][/]");
                 AnsiConsole.Write(rule);
-                AnsiConsole.MarkupLine($"[bold]You arrived in {currentLocation.LocationName}![/]");
-                AnsiConsole.MarkupLine($"{currentLocation.LocationDescription}!");
+                AnsiConsole.MarkupLine($"{currentLocation.LocationDescription}");
                 AnsiConsole.WriteLine();
                 AnsiConsole.MarkupLine("[grey37]Type 'look' to see you what's around you.[/]");
                 AnsiConsole.MarkupLine("[grey37]Navigate by typing 'north', 'south', 'east', or 'west'.\n[/]");
-                AnsiConsole.MarkupLine("[grey37]Press any key to continue...[/]");
+                AnsiConsole.MarkupLine("[grey37]Press any key to step ashore..[/]");
 
                 bool Continue = false;
                 while (!Continue)
@@ -416,6 +415,7 @@ namespace EcoQuest
                 {
                     ConsoleMethods.SlowWrite(NpcReply.GARRY_BYE);
                     NPCs.Garry.MainDialogue.TriggerDialogue();
+                    DisplayRoomInformation(currentRoom);
                 }
             );
 
@@ -438,6 +438,7 @@ namespace EcoQuest
                 {
                     ConsoleMethods.SlowWrite(NpcReply.LARRY_BYE);
                     NPCs.Larry.MainDialogue.TriggerDialogue();
+                    DisplayRoomInformation(currentRoom);
                 }
             );
 
@@ -482,6 +483,7 @@ namespace EcoQuest
                 {
                     ConsoleMethods.SlowWrite(NpcReply.LANKA_BYE);
                     NPCs.Lanka.MainDialogue.TriggerDialogue();
+                    DisplayRoomInformation(currentRoom);
                 }
             );
             //Indonesia NPC
@@ -529,6 +531,7 @@ namespace EcoQuest
             NPCs.Captain.MainDialogue.AddOption(PlayerReply.BYE, () =>
             {
                 NPCs.Captain.MainDialogue.TriggerDialogue();
+                DisplayRoomInformation(currentRoom);
             });
         }
     }
