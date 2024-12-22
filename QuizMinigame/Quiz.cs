@@ -24,6 +24,10 @@ public static class Quiz
 
     public static void Play(Room currentRoom)
     {
+                
+        // End the Dialogue
+        NPCs.Captain.MainDialogue.TriggerDialogue();
+
         Console.Clear();
 
         // Reset Available Questions
@@ -44,7 +48,7 @@ public static class Quiz
             // The captain writes some encouraging words.
         AnsiConsole.WriteLine();
         AnsiConsole.MarkupLine("[bold white]You did it champ![/]");
-
+        AnsiConsole.MarkupLine("[bold white][[Insert some more words here]][/]");
         AnsiConsole.MarkupLine("[grey37]Press any key to end the game...[/]");
         
         bool end = false;
@@ -60,6 +64,7 @@ public static class Quiz
         }
 
         // Trigger the game ending.
+        Credits.Show();
     }
 
     private static bool Prompt(int streak)
@@ -87,7 +92,22 @@ public static class Quiz
         else
         {
             AnsiConsole.MarkupLine("[bold red]Incorrect![/]");
-            AnsiConsole.MarkupLine("[grey37]Do some more reading in the library.[/]");
+            if (streak == 1) AnsiConsole.MarkupLine($"[bold grey37]Answered [[{streak - 1}/8]] correctly![/]");
+            AnsiConsole.MarkupLine("[grey37]Come back here after doing some research in the library[/]");
+            AnsiConsole.WriteLine();
+            AnsiConsole.MarkupLine("[grey37]Press any key to continue...[/]");
+
+            bool end = false;
+            while (!end)
+            {
+                if (Console.KeyAvailable)
+                {
+                    Console.ReadKey(true);
+                    end = true;
+                    Console.Clear();
+                }
+
+            }
             return false;
         }
     }
