@@ -16,9 +16,6 @@ namespace EcoQuest;
 public static class Questions
 {
     public readonly static List<Question> List = [
-        new Question("What is 1 + 1?", ["Its obviously 3 bro", "I give up", "2 maybe"], "2 maybe"),
-        new Question("What is a fish?", ["Fish is a human", "Fish is an animal", "Never heard of em"], "Fish is an animal"),
-        new Question("How tall are you?", ["True", "False"], "True"),
         new Question("What is the benefit of preventing coastal pollution?", ["It protects mairne life and ecosystems", "It reduces beach tourism", "It increases fish populations for overfishing", "It creates more plastic islands"],"It protects mairne life and ecosystems"),
         new Question("How does coastal pollution affect the environment if it is not prevented?", ["It causes coral growth to accelerate", "It decreases water clarity for fishing boats", "It disrupts marine habitats and harms biodiversity", "It boosts local economy"],"It disrupts marine habitats and harms biodiversity"),
         new Question("How can coastal pollution be prevented?", ["By increasing oil drilling near the coast", "By building more dams near shorelines", "By using more fertilizers in agriculture", "By reducing plastic waste and improving waste management"],"By reducing plastic waste and improving waste management"),

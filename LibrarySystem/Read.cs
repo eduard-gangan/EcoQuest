@@ -63,10 +63,10 @@ public static class Read
         // Print the book
         if (chosenBook != null)
             {   
-                var bookTable = new Table().ShowRowSeparators();
+                var bookTable = new Table().ShowRowSeparators().Width(60);
                 bookTable.Border = TableBorder.Double;
                 bookTable.AddColumn($"[bold white]{chosenBook.Title}[/]");
-                bookTable.AddRow(new CanvasImage($"./LibrarySystem/Covers/{chosenBook.Title}.png").MaxWidth(16));
+                bookTable.AddRow(new CanvasImage($"./LibrarySystem/Covers/{chosenBook.Title}.png").MaxWidth(32));
                 bookTable.AddRow(chosenBook.Contents);
                 AnsiConsole.Write(bookTable);
                 return true;

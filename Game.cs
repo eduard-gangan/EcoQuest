@@ -267,14 +267,14 @@ namespace EcoQuest
                     })
                     .Start(ctx =>
                     {
-                    var Task = ctx.AddTask("SailingTask", autoStart: false).IsIndeterminate(true);
-                    Thread.Sleep(1500);
-                    Task.StartTask();
-                    Task.IsIndeterminate(false);
-                    Task.Increment(100);
-                });
+                        var Task = ctx.AddTask("SailingTask", autoStart: false).IsIndeterminate(true);
+                        Thread.Sleep(1500);
+                        Task.StartTask();
+                        Task.IsIndeterminate(false);
+                        Task.Increment(100);
+                    });
                 Console.Clear();
-                var rule = new Rule($"[bold][[{currentLocation.LocationName}]][/]");
+                var rule = new Rule($"[bold][[{currentLocation.LocationName}]][/]").LeftJustified();
                 AnsiConsole.Write(rule);
                 AnsiConsole.MarkupLine($"{currentLocation.LocationDescription}");
                 AnsiConsole.WriteLine();
@@ -319,7 +319,7 @@ namespace EcoQuest
         {
             Console.Clear();
 
-            var rule = new Rule($"[bold][[{currentRoom?.RoomName}]][/]");
+            var rule = new Rule($"[bold][[{currentRoom?.RoomName}]][/]").LeftJustified();
             AnsiConsole.Write(rule);
 
             Console.WriteLine(currentRoom?.RoomDescription);
