@@ -24,7 +24,7 @@ public static class Quiz
 
     public static void Play(Room currentRoom)
     {
-                
+
         // End the Dialogue
         NPCs.Captain.MainDialogue.TriggerDialogue();
 
@@ -34,7 +34,7 @@ public static class Quiz
         questionList = new List<Question>(List);
 
         // Prompt with a number of questions
-        for(int i = 1; i <= 3; i++)
+        for (int i = 1; i <= 8; i++)
         {
             bool Continue = Prompt(i);
             if (!Continue)
@@ -45,12 +45,12 @@ public static class Quiz
         }
 
         // If you answer everything correctly then..
-            // The captain writes some encouraging words.
+        // The captain writes some encouraging words.
         AnsiConsole.WriteLine();
         AnsiConsole.MarkupLine("[bold white]You did it champ![/]");
         AnsiConsole.MarkupLine("[bold white][[Insert some more words here]][/]");
         AnsiConsole.MarkupLine("[grey37]Press any key to end the game...[/]");
-        
+
         bool end = false;
         while (!end)
         {
@@ -82,7 +82,7 @@ public static class Quiz
                                 .Title(question.QuestionName)
                                 .AddChoices(question.Choices)
         );
-        
+
         // Validate answer
         if (choice == question.Answer)
         {
