@@ -126,18 +126,27 @@ namespace EcoQuest
                                 currentLocation == startingLocation
                                 || (currentRoom?.RoomName?.Contains("Port") ?? false)
                             )
-                            {
+                            {   
                                 Console.Clear();
-                                var choice = AnsiConsole.Prompt(
-                                    new SelectionPrompt<string>()
-                                        .Title("Where do you want to sail?")
-                                        .PageSize(10)
-                                        .MoreChoicesText(
-                                            "[grey](Move up and down to reveal more options)[/]"
-                                        )
-                                        .AddChoices(new[] { "Sri Lanka", "Indonesia", "Australia" })
-                                );
-                                Sail(choice);
+                                Restart:
+                                    var choice = AnsiConsole.Prompt(
+                                        new SelectionPrompt<string>()
+                                            .Title("Where do you want to sail?")
+                                            .PageSize(10)
+                                            .MoreChoicesText(
+                                                "[grey](Move up and down to reveal more options)[/]"
+                                            )
+                                            .AddChoices(new[] { "Sri Lanka", "Indonesia", "Australia" })
+                                    );
+                                    if (choice == "Indonesia" && Reputation.Get() < indonesia?.ReputationReq) {
+                                        AnsiConsole.MarkupLine($"[bold red]You must have {indonesia?.ReputationReq} reputation to sail to Indonesia![/]");
+                                        goto Restart;
+                                    }
+                                    else if (choice == "Australia" && Reputation.Get() < australia?.ReputationReq) {
+                                        AnsiConsole.MarkupLine($"[bold red]You must have {australia?.ReputationReq} reputation to sail to Australia![/]");
+                                        goto Restart;
+                                    }
+                                    Sail(choice);
                             }
                             else
                             {
@@ -222,26 +231,18 @@ namespace EcoQuest
                 switch (destination)
                 {
                     case "Sri Lanka":
-
-                        if (currentLocation != sriLanka)
-                        {
-
+                        if (currentLocation != sriLanka) {
                             currentLocation = sriLanka;
                             currentRoom = sriLanka?.Rooms["port"];
-                        }
-                        else
-                        {
+                        } else {
                             AnsiConsole.MarkupLine("[bold red]You're already in Sri Lanka !");
                         }
                         break;
                     case "Indonesia":
-                        if (currentLocation != indonesia)
-                        {
+                        if (currentLocation != indonesia) {
                             currentLocation = indonesia;
                             currentRoom = indonesia?.Rooms["port"];
-                        }
-                        else
-                        {
+                        } else {
                             AnsiConsole.MarkupLine("[bold red]You're already in Indonesia !");
                         }
                         break;
