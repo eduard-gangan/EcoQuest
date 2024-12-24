@@ -40,10 +40,11 @@ public static class NpcReply
 
     //Captain Sylvia
 
-    public const string CAPTAIN_GREETING = ">CAPTAIN SYLVIA: ..."; // Please do this
-    public const string CAPTAIN_WHAT = ">CAPTAIN SYLVIA: i wanna retire type shit";
-    public const string CAPTAIN_WHY = ">CAPTAIN SYLVIA: im tired fr and i think you're goated";
-    public const string CAPTAIN_TEST = ">CAPTAIN SYLVIA: i gotta test you tho";
+    public const string CAPTAIN_GREETING = ">CAPTAIN SYLVIA: Ah, Australia, here we are at the very place where the Great Barrier Reef exists. Magnificent, isn’t it?\nThe largest living structure on Earth, home to thousands of species.\nIt's been my life's mission to protect places like this, and to see others understand their importance.\nAnd now, here we are, at the end of our journey together."; // Please do this
+    public const string CAPTAIN_WHAT = ">CAPTAIN SYLVIA: Well, every journey must end, and I’ve given my life to this mission.\nI’ve sailed these seas, tackled pollution, fought overfishing, and raised awareness for SDG 14.\nBut the world needs people like you who have the knowledge, passion, and drive to continue the work.";
+    public const string CAPTAIN_WHY = ">CAPTAIN SYLVIA: Aye, it’s time. I’ve sailed these waters for decades, but now the world needs fresh minds and hearts like yours.\nThis ship, this wheel, it’s yours now.\nYou’ve proven you have what it takes to lead, to educate others, and to protect the oceans.";
+    public const string CAPTAIN_TURNOVER = ">CAPTAIN SYLVIA: Yes, you. You’ve earned it. You’ve shown you understand the urgency of reducing marine pollution, preventing overfishing, and conserving habitats.\nYou know how vital it is to inspire others to act.\nI trust you to steer this ship, and this mission, into the future.";
+    public const string CAPTAIN_TEST = ">CAPTAIN SYLVIA: That’s all I’ve ever wanted. Remember, the ocean doesn’t need a single hero,it needs many.\nTeach others what you’ve learned. Spread the awareness.\nProtect the life below water, for all life above it depends on it.\nThis is your journey now, Captain.\nMay your compass always guide you true.\nBut lastly i must test you.";
 
 }
 

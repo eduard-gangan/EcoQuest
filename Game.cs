@@ -25,7 +25,7 @@ namespace EcoQuest
 
             sriLanka = new SriLanka("Sri Lanka", "You arrive in Sri Lanka. Once a vibrant paradise, the beaches now struggle under the weight of plastic and waste, highlighting the urgent need to combat pollution and protect marine life.", 0);
             indonesia = new Indonesia("Indonesia", "You arrive in Indonesia, where overfishing has taken its toll on the ocean. Perhaps understanding the movements of vulnerable fish could help create safe zones for their recovery.", 1000);
-            australia = new Australia("Australia", "You arrive in Australia, unsure of your purpose here. The fading Great Barrier Reef comes to mind—the coral is bleaching, and marine life is vanishing. ", 2000);
+            australia = new Australia("Australia", "You arrive in Australia, unsure of your purpose here. The fading Great Barrier Reef comes to mind—the coral is bleaching, and marine life is vanishing. ", 0);
             startingLocation = new Start(
                 "Ship",
                 "Somewhere at sea..",
@@ -126,27 +126,29 @@ namespace EcoQuest
                                 currentLocation == startingLocation
                                 || (currentRoom?.RoomName?.Contains("Port") ?? false)
                             )
-                            {   
+                            {
                                 Console.Clear();
-                                Restart:
-                                    var choice = AnsiConsole.Prompt(
-                                        new SelectionPrompt<string>()
-                                            .Title("Where do you want to sail?")
-                                            .PageSize(10)
-                                            .MoreChoicesText(
-                                                "[grey](Move up and down to reveal more options)[/]"
-                                            )
-                                            .AddChoices(new[] { "Sri Lanka", "Indonesia", "Australia" })
-                                    );
-                                    if (choice == "Indonesia" && Reputation.Get() < indonesia?.ReputationReq) {
-                                        AnsiConsole.MarkupLine($"[bold red]You must have {indonesia?.ReputationReq} reputation to sail to Indonesia![/]");
-                                        goto Restart;
-                                    }
-                                    else if (choice == "Australia" && Reputation.Get() < australia?.ReputationReq) {
-                                        AnsiConsole.MarkupLine($"[bold red]You must have {australia?.ReputationReq} reputation to sail to Australia![/]");
-                                        goto Restart;
-                                    }
-                                    Sail(choice);
+                            Restart:
+                                var choice = AnsiConsole.Prompt(
+                                    new SelectionPrompt<string>()
+                                        .Title("Where do you want to sail?")
+                                        .PageSize(10)
+                                        .MoreChoicesText(
+                                            "[grey](Move up and down to reveal more options)[/]"
+                                        )
+                                        .AddChoices(new[] { "Sri Lanka", "Indonesia", "Australia" })
+                                );
+                                if (choice == "Indonesia" && Reputation.Get() < indonesia?.ReputationReq)
+                                {
+                                    AnsiConsole.MarkupLine($"[bold red]You must have {indonesia?.ReputationReq} reputation to sail to Indonesia![/]");
+                                    goto Restart;
+                                }
+                                else if (choice == "Australia" && Reputation.Get() < australia?.ReputationReq)
+                                {
+                                    AnsiConsole.MarkupLine($"[bold red]You must have {australia?.ReputationReq} reputation to sail to Australia![/]");
+                                    goto Restart;
+                                }
+                                Sail(choice);
                             }
                             else
                             {
@@ -231,18 +233,24 @@ namespace EcoQuest
                 switch (destination)
                 {
                     case "Sri Lanka":
-                        if (currentLocation != sriLanka) {
+                        if (currentLocation != sriLanka)
+                        {
                             currentLocation = sriLanka;
                             currentRoom = sriLanka?.Rooms["port"];
-                        } else {
+                        }
+                        else
+                        {
                             AnsiConsole.MarkupLine("[bold red]You're already in Sri Lanka !");
                         }
                         break;
                     case "Indonesia":
-                        if (currentLocation != indonesia) {
+                        if (currentLocation != indonesia)
+                        {
                             currentLocation = indonesia;
                             currentRoom = indonesia?.Rooms["port"];
-                        } else {
+                        }
+                        else
+                        {
                             AnsiConsole.MarkupLine("[bold red]You're already in Indonesia !");
                         }
                         break;
@@ -523,6 +531,14 @@ namespace EcoQuest
             NPCs.Captain.MainDialogue.AddOption(PlayerReply.CAPTAIN_WHY, () =>
             {
                 ConsoleMethods.SlowWrite(NpcReply.CAPTAIN_WHY);
+            });
+            NPCs.Captain.MainDialogue.AddOption(PlayerReply.CAPTAIN_TURNOVER, () =>
+            {
+                ConsoleMethods.SlowWrite(NpcReply.CAPTAIN_TURNOVER);
+            });
+            NPCs.Captain.MainDialogue.AddOption(PlayerReply.CAPTAIN_TEST, () =>
+            {
+                ConsoleMethods.SlowWrite(NpcReply.CAPTAIN_TEST);
                 NPCs.Captain.MainDialogue.InsertOption("Start Quiz", () =>
                 {
                     Quiz.Play(currentRoom);

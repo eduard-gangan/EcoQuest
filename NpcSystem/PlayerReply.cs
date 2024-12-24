@@ -25,9 +25,10 @@ public static class PlayerReply
 
     // Captain Sylvia
     // Please do this
-    public const string CAPTAIN_WHAT = "wtf are you doing here b";
-    public const string CAPTAIN_WHY = "why do you wanna retire and why should i be the one doing YOUR job";
-    public const string CAPTAIN_TEST = "ok then ill do it";
+    public const string CAPTAIN_WHAT = "Captain, what are you doing out here?";
+    public const string CAPTAIN_WHY = "Captain, you’re retiring, aren’t you?";
+    public const string CAPTAIN_TURNOVER = "Captain, Me?";
+    public const string CAPTAIN_TEST = "I’ll accept the role";
 
 
 
