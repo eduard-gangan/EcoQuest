@@ -64,7 +64,7 @@ public static class Quiz
         }
 
         // Trigger the game ending.
-        Credits.Show();
+        Credits.EndGame();
     }
 
     private static bool Prompt(int streak)
