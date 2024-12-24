@@ -530,8 +530,16 @@ public class Game
             ConsoleMethods.SlowWrite(NpcReply.CAPTAIN_WHAT);
         });
         NPCs.Captain.MainDialogue.AddOption(PlayerReply.CAPTAIN_WHY, () =>
+       {
+           ConsoleMethods.SlowWrite(NpcReply.CAPTAIN_WHY);
+       });
+        NPCs.Captain.MainDialogue.AddOption(PlayerReply.CAPTAIN_TURNOVER, () =>
+       {
+           ConsoleMethods.SlowWrite(NpcReply.CAPTAIN_TURNOVER);
+       });
+        NPCs.Captain.MainDialogue.AddOption(PlayerReply.CAPTAIN_TEST, () =>
         {
-            ConsoleMethods.SlowWrite(NpcReply.CAPTAIN_WHY);
+            ConsoleMethods.SlowWrite(NpcReply.CAPTAIN_TEST);
             NPCs.Captain.MainDialogue.InsertOption("Start Quiz", () =>
             {
                 Quiz.Play(currentRoom);
@@ -543,5 +551,4 @@ public class Game
             DisplayRoomInformation(currentRoom);
         });
     }
-}
 }
