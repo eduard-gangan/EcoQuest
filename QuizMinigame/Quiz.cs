@@ -39,7 +39,7 @@ public static class Quiz
             bool Continue = Prompt(i);
             if (!Continue)
             {
-                Game.DisplayRoomInformation(currentRoom);
+                Game.DisplayRoomInformation();
                 return;
             }
         }

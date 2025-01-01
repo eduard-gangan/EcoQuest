@@ -57,7 +57,7 @@ public static class Credits
   }
   public static void ShowCredits()
   {
-    var panel = new Panel("Victor Petrica\nEduard Gangan\nGene Enrick Miguel Giroy\nDeividas Petrulis\nToni Vera Gutierrez");
+    var panel = new Panel("Victor Petrica\nEduard Gangan\nGene Enrick Miguel Giroy\nDeividas Petrulis\nToni Vera Gutierrez\n Matús Ilavský");
 
     AnsiConsole.MarkupLine("This game was developed on top of the pre-existing [purple] WorldOfZuul [/]game.");
     AnsiConsole.MarkupLine("It was created for the 1st Semester Project at SDU by Group nr. 20 consisting of students:");

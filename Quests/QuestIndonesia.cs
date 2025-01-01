@@ -1,26 +1,32 @@
+using Spectre.Console;
+
 namespace EcoQuest;
 
 public static class QuestIndonesia
 {
+    public static string Description = "Find, tag and track all endangered species using the Life Form Analyzer Machine on the Submarine!";
     public static bool Active = false;
     public static bool Completed = false;
 
 
-    public static void start()
+    public static void Start()
     {
-        Active = true;
+        if (!Active && !Completed)
+        {
+            AnsiConsole.Markup($"[yellow]Quest started![/] \n {Description}");
+            System.Console.WriteLine();
+            Active = true;
+        }
     }
 
     public static void Finished()
     {
         Completed = true;
         Active = false;
-        Console.WriteLine($"You have finished the quest.");
+        AnsiConsole.Markup("[yellow]Quest finished![/] \nYou have found all endangered species and finished the quest.\nYou gained enough reputation to move onto the next location.");
+        System.Console.WriteLine();
         Reputation.Add(20000);
     }
 
-    public static void GetDescription()
-    {
-        Console.WriteLine($"Find all endangered species in order to finish this quest.");
-    }
+
 }

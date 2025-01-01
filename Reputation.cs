@@ -16,17 +16,24 @@ you want to decrease the reputation by. You cannot decrease it lower than 0
 ex. Reputation.Decrease(30) will decrease it by 30
  */
 
-namespace EcoQuest {
-    public static class Reputation {   
+namespace EcoQuest
+{
+    public static class Reputation
+    {
         public static int reputation = 0;
-        public static void Add(int amount) {
+        public static void Add(int amount)
+        {
             reputation += amount;
             QuestSriLanka.CheckQuest();
         }
-        public static void Decrease(int amount) {
-            if (reputation - amount >= 0) {
+        public static void Decrease(int amount)
+        {
+            if (reputation - amount >= 0)
+            {
                 reputation -= amount;
-            } else {
+            }
+            else
+            {
                 reputation = 0;
             }
         }

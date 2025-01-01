@@ -42,17 +42,6 @@ public static class ConsoleMethods
         }
         Console.WriteLine();
     }
-    public static void FigletSlowWrite(string text, Color color)
-    {
-        foreach (char c in text)
-        {
-            AnsiConsole.Write(
-                     new FigletText(c.ToString())
-                     .Color(color));
-            Thread.Sleep(100);
-        }
-    }
-
 
     public static void RecursiveWrite(string text, int loops)
     {

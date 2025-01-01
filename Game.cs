@@ -10,7 +10,7 @@ namespace EcoQuest;
 
 public class Game
 {
-    private Room? currentRoom;
+    public static Room? currentRoom;
     private Room? previousRoom;
     private Location? currentLocation;
     public Start? startingLocation;
@@ -89,7 +89,7 @@ public class Game
                     {
                         currentRoom = indonesia.Rooms["submarine"];
                         previousRoom = null;
-                        DisplayRoomInformation(currentRoom);
+                        DisplayRoomInformation();
 
                     }
                     else
@@ -102,7 +102,7 @@ public class Game
                     {
                         currentRoom = indonesia.Rooms["submarinedock"];
                         previousRoom = null;
-                        DisplayRoomInformation(currentRoom);
+                        DisplayRoomInformation();
                     }
                     else
                     {
@@ -301,7 +301,7 @@ public class Game
                 }
 
             }
-            DisplayRoomInformation(currentRoom);
+            DisplayRoomInformation();
         }
         else
         {
@@ -316,7 +316,7 @@ public class Game
         {
             previousRoom = currentRoom;
             currentRoom = currentRoom?.Exits[direction];
-            DisplayRoomInformation(currentRoom);
+            DisplayRoomInformation();
         }
         else
         {
@@ -325,11 +325,11 @@ public class Game
     }
 
 
-    public static void DisplayRoomInformation(Room currentRoom)
+    public static void DisplayRoomInformation()
     {
         Console.Clear();
 
-        var rule = new Rule($"[bold][[{currentRoom?.RoomName}]][/]").LeftJustified();
+        var rule = new Rule($"[bold][[{currentRoom.RoomName}]][/]").LeftJustified();
         AnsiConsole.Write(rule);
 
         Console.WriteLine(currentRoom?.RoomDescription);
@@ -411,6 +411,7 @@ public class Game
             () =>
             {
                 ConsoleMethods.SlowWrite(NpcReply.GARRY_QUEST);
+                System.Console.WriteLine();
                 Inventory.InventoryCapacity = 5;
                 QuestSriLanka.start();
                 AnsiConsole.MarkupLine("[rapidblink purple]Your inventory space has been increased to 5![/]");
@@ -424,7 +425,7 @@ public class Game
             {
                 ConsoleMethods.SlowWrite(NpcReply.GARRY_BYE);
                 NPCs.Garry.MainDialogue.TriggerDialogue();
-                DisplayRoomInformation(currentRoom);
+                DisplayRoomInformation();
             }
         );
 
@@ -447,7 +448,7 @@ public class Game
             {
                 ConsoleMethods.SlowWrite(NpcReply.LARRY_BYE);
                 NPCs.Larry.MainDialogue.TriggerDialogue();
-                DisplayRoomInformation(currentRoom);
+                DisplayRoomInformation();
             }
         );
 
@@ -463,7 +464,7 @@ public class Game
                     {
                         if (Reputation.Get() >= 0)
                         {
-                            ConsoleMethods.SlowWrite(NpcReply.LANKA_STATION_YES);
+                            ConsoleMethods.SlowWriteLine(NpcReply.LANKA_STATION_YES);
                             TrashMinigame.RepairRecyclingStation();
                             AnsiConsole.MarkupLine("[grey37]The Recycling Station is now functional, use command (sort) to sort items while in the Recycling Station[/]");
                             NPCs.Lanka.MainDialogue.RemoveOption(PlayerReply.LANKA_STATION);
@@ -471,7 +472,7 @@ public class Game
                         }
                         else
                         {
-                            ConsoleMethods.SlowWrite(NpcReply.LANKA_STATION_NO);
+                            ConsoleMethods.SlowWriteLine(NpcReply.LANKA_STATION_NO);
                             AnsiConsole.MarkupLine("[grey37]You need 500 reputation to repair the recycling station[/]");
                         }
                     },
@@ -492,20 +493,20 @@ public class Game
             {
                 ConsoleMethods.SlowWrite(NpcReply.LANKA_BYE);
                 NPCs.Lanka.MainDialogue.TriggerDialogue();
-                DisplayRoomInformation(currentRoom);
+                DisplayRoomInformation();
             }
         );
         //Indonesia NPC
         NPCs.Andrew.MainDialogue.AddOption(PlayerReply.ANDREW_1, () =>
         {
-            ConsoleMethods.SlowWrite(NpcReply.ANDREW_11);
-            ConsoleMethods.SlowWrite(NpcReply.ANDREW_12);
+            ConsoleMethods.SlowWriteLine(NpcReply.ANDREW_11);
+            ConsoleMethods.SlowWriteLine(NpcReply.ANDREW_12);
             NPCs.Andrew.MainDialogue.RemoveOptionAt(0);
             NPCs.Andrew.MainDialogue.AddOption(PlayerReply.ANDREW_2, () =>
             {
-                ConsoleMethods.SlowWrite(NpcReply.ANDREW_21);
-                ConsoleMethods.SlowWrite(NpcReply.ANDREW_22);
-                ConsoleMethods.SlowWrite(NpcReply.ANDREW_23);
+                ConsoleMethods.SlowWriteLine(NpcReply.ANDREW_21);
+                ConsoleMethods.SlowWriteLine(NpcReply.ANDREW_22);
+                ConsoleMethods.SlowWriteLine(NpcReply.ANDREW_23);
                 NPCs.Andrew.MainDialogue.RemoveOptionAt(0);
                 NPCs.Andrew.MainDialogue.AddOption(PlayerReply.ANDREW_3, () =>
                 {
@@ -513,8 +514,9 @@ public class Game
                     NPCs.Andrew.MainDialogue.RemoveOptionAt(0);
                     NPCs.Andrew.MainDialogue.AddOption(PlayerReply.BYE, () =>
                 {
-                    ConsoleMethods.SlowWrite(NpcReply.ANDREW_BYE);
+                    ConsoleMethods.SlowWriteLine(NpcReply.ANDREW_BYE);
                     NPCs.Andrew.MainDialogue.TriggerDialogue();
+                    QuestIndonesia.Start();
                     AnsiConsole.MarkupLine("[gray]Head North to the Submarine Dock and use command 'descend' to enter the Research Submarine and descend into the Ocean.[/]");
                 });
 
@@ -548,7 +550,7 @@ public class Game
         NPCs.Captain.MainDialogue.AddOption(PlayerReply.BYE, () =>
         {
             NPCs.Captain.MainDialogue.TriggerDialogue();
-            DisplayRoomInformation(currentRoom);
+            DisplayRoomInformation();
         });
     }
 }
