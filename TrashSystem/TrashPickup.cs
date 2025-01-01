@@ -18,6 +18,7 @@ namespace EcoQuest
                 {
                     AnsiConsole.MarkupLine("[bold green]\nYou have cleared 500 pieces of trash !\n[/]");
                     AnsiConsole.MarkupLine("[bold green]As the beach clears of trash, the water becomes clearer, and small fish cautiously return to the shore.\n[/]");
+                    Program.game.sriLanka.Rooms["port"].ChangeRoomDescription("You are at the central port. To the east is a beach, to the north there is a recycling station, and to the west is the Town Hall.\n[NPC]\nThere is a stranger standing in the port. His face lights up when sees you, maybe you should go talk to him.\n(Use the 'talk' command to interact with them)");
                     milestones[0] = true;
 
                 }

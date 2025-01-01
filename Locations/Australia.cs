@@ -10,7 +10,7 @@ namespace EcoQuest
         {
             Room? australia_port = new("Australia Port",
             $"You are at the central port. You're not sure how, but you just feel there's a library to the north.\n[NPC]\nCaptain Sylvia is ashore.. what could this possibly mean?\nThe captain usually never leaves the ship.",
-            ["look", "talk", "map", "north"], NPCs.Captain
+            ["look", "talk", "map", "north", "sail"], NPCs.Captain
             );
             Room? australia_library = new("Library",
              "You're at the local library. You look around a bit, and locate the 'Marine Life' section",

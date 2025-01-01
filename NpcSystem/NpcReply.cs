@@ -36,7 +36,7 @@ public static class NpcReply
     //Andrew
 
     public const string ANDREW_GREETING = ">ANDREW: You're one of those scientists, huh? Always coming here, saying you’ll save the ocean.";
-    public const string ANDREW_GREETING2 = ">ANDREW: Thank you, you definetly deserver your title as a Marine Biologist";
+    public const string ANDREW_GREETING2 = ">ANDREW: Thank you, you truly deserve your title as a Marine Biologist.";
     public const string ANDREW_11 = ">ANDREW: You think tracking fish is the answer, huh? The sea’s been good to us for generations, but now... it’s different. Fish are disappearing.\nThere are fewer of the big ones, the ones we rely on. But not all fish are the same. Some of them are special—rare, you could say.";
     public const string ANDREW_12 = ">ANDREW: See, some species of fish, like the Atlantic bluefin tuna or the green sea turtles, are at risk because they only reproduce in certain places, and they don’t produce enough offspring to recover quickly. \nThey’re slow to grow, and they’re targeted by fishing nets because of their high value. Overfishing is pushing them closer to extinction, and once they’re gone, they’re gone for good.";
     public const string ANDREW_21 = ">ANDREW: That’s where your trackers come in. We can tag these endangered species to understand their movements, their breeding patterns, where they like to swim. \nBy tracking them, we can learn more about where they’re going and how they’re surviving. \nThis helps us keep them safe from overfishing. When we know where they are, we can create protected areas,places where no one fishes, so the populations can recover.";

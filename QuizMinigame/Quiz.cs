@@ -24,7 +24,7 @@ public static class Quiz
 
     public static void Play(Room currentRoom)
     {
-
+        Credits.AddQuizTries();
         // End the Dialogue
         NPCs.Captain.MainDialogue.TriggerDialogue();
 
@@ -48,7 +48,7 @@ public static class Quiz
         // The captain writes some encouraging words.
         AnsiConsole.WriteLine();
         AnsiConsole.MarkupLine("[bold white]You did it champ![/]");
-        AnsiConsole.MarkupLine("[bold white][[Insert some more words here]][/]");
+        ConsoleMethods.SlowWriteLine(">CAPTAIN SYLVIA: You’ve shown courage, wisdom, and unwavering dedication to protecting marine life. \nI couldn’t ask for a better successor. From this moment on, the ship and the mission are yours. You are the new Captain, ready to lead the fight for our oceans and inspire others to join you.");
         AnsiConsole.MarkupLine("[grey37]Press any key to end the game...[/]");
 
         bool end = false;

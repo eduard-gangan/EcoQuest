@@ -25,8 +25,8 @@ public class Game
         CreateNpcs();
 
         sriLanka = new SriLanka("Sri Lanka", "You arrive in Sri Lanka. Once a vibrant paradise, the beaches now struggle under the weight of plastic and waste, highlighting the urgent need to combat pollution and protect marine life.", 0);
-        indonesia = new Indonesia("Indonesia", "You arrive in Indonesia, where overfishing has taken its toll on the ocean. Perhaps understanding the movements of vulnerable fish could help create safe zones for their recovery.", 1000);
-        australia = new Australia("Australia", "You arrive in Australia, unsure of your purpose here. The fading Great Barrier Reef comes to mind—the coral is bleaching, and marine life is vanishing. ", 2000);
+        indonesia = new Indonesia("Indonesia", "You arrive in Indonesia, where overfishing has taken its toll on the ocean. Perhaps understanding the movements of vulnerable fish could help create safe zones for their recovery.", 10000);
+        australia = new Australia("Australia", "You arrive in Australia, unsure of your purpose here. The fading Great Barrier Reef comes to mind—the coral is bleaching, and marine life is vanishing. ", 30000);
         startingLocation = new Start(
             "Ship",
             "Somewhere at sea..",
@@ -328,7 +328,6 @@ public class Game
     public static void DisplayRoomInformation()
     {
         Console.Clear();
-
         var rule = new Rule($"[bold][[{currentRoom.RoomName}]][/]").LeftJustified();
         AnsiConsole.Write(rule);
 
@@ -462,13 +461,22 @@ public class Game
                     PlayerReply.LANKA_STATION,
                     () =>
                     {
-                        if (Reputation.Get() >= 0)
+                        if (Reputation.Get() >= 500)
                         {
                             ConsoleMethods.SlowWriteLine(NpcReply.LANKA_STATION_YES);
                             TrashMinigame.RepairRecyclingStation();
                             AnsiConsole.MarkupLine("[grey37]The Recycling Station is now functional, use command (sort) to sort items while in the Recycling Station[/]");
+                            sriLanka.Rooms["station"].ChangeRoomDescription("You approach the restored building. The recycling station is now fully operational, with organized bins separating materials and machinery humming as it processes waste. Sunlight streams through repaired windows, illuminating clean, well-maintained equipment. The station stands as a symbol of renewal, running smoothly and efficiently..\n[NPC]\nYou see Larry again, he seems very happy to see you, maybe you should go talk to him.");
+                            NPCs.Larry.ChangeGreeting(NpcReply.LARRY_GREETING2);
+                            NPCs.Larry.MainDialogue.OptionList = [];
+                            NPCs.Larry.MainDialogue.DialogueOptions = [];
+                            NPCs.Larry.MainDialogue.AddOption(PlayerReply.BYE, () => { ConsoleMethods.SlowWriteLine(NpcReply.LARRY_BYE2); NPCs.Larry.MainDialogue.TriggerDialogue(); });
                             NPCs.Lanka.MainDialogue.RemoveOption(PlayerReply.LANKA_STATION);
                             NPCs.Lanka.MainDialogue.RemoveOption(PlayerReply.LANKA_PLAYER);
+                            NPCs.Lanka.MainDialogue.RemoveOption(PlayerReply.BYE);
+                            NPCs.Lanka.MainDialogue.AddOption(PlayerReply.BYE, () => { ConsoleMethods.SlowWriteLine(NpcReply.LANKA_BYE2); NPCs.Lanka.MainDialogue.TriggerDialogue(); });
+                            NPCs.Lanka.ChangeGreeting(NpcReply.LANKA_GREETING2);
+                            sriLanka.Rooms["townhall"].ChangeRoomDescription("You are at the Town Hall, you can see the mayor's office. His assistant lets you in.");
                         }
                         else
                         {

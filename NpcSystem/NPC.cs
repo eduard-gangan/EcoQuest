@@ -18,6 +18,7 @@ public class NPC
     public void ChangeGreeting(string newGreeting)
     {
         Greeting = newGreeting;
+        MainDialogue.Prompt = newGreeting;
     }
 
     public virtual void Talk()

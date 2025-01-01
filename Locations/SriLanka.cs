@@ -10,7 +10,7 @@ namespace EcoQuest
         {
             Room? srilanka_port = new("Sri Lanka Port",
             $"You are at the central port. To the east is a very dirty and polluted beach, to the north there is a recycling station, and to the west is the Town Hall.\n[NPC]\nThere is a stranger standing in the port. His face lights up when sees you, maybe you should go talk to him.\n(Use the 'talk' command to interact with them)",
-            new List<string> { "talk", "east", "north" },
+            new List<string> { "talk", "east", "north", "sail" },
             NPCs.Garry
             );
 
