@@ -380,10 +380,15 @@ public class Game
         Console.WriteLine("  Type 'look' for more details.");
         Console.WriteLine("  Type 'back' to go to the previous room.");
         Console.WriteLine("  Type 'reputation' to see your reputation.");
+        Console.WriteLine("  Type 'read' in the library to open up a book.");
         Console.WriteLine("  Type 'inventory' to see your inventory.");
         Console.WriteLine("  Type 'dump' to dump your trash.");
         Console.WriteLine("  Type 'sort' to sort your trash.");
         Console.WriteLine("  Type 'talk' to talk to an NPC.");
+        Console.WriteLine("  Type 'map' to view the game map.");
+        Console.WriteLine("  Type 'descend' to go down to the submarine while on the Submarine Dock.");
+        Console.WriteLine("  Type 'ascend' to get out of the submarine.");
+        Console.WriteLine("  Type 'analyze' when you are on the submarine to use the Life Form Analyzer.");
         Console.WriteLine("  Type 'help' to print this message again.");
         Console.WriteLine("  Type 'quit' to exit the game.");
         Console.WriteLine("|------------------------------------------------------------|");
