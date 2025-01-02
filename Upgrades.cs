@@ -1,3 +1,5 @@
+using Spectre.Console;
+
 namespace EcoQuest
 {
     public static class Upgrades
@@ -41,14 +43,35 @@ namespace EcoQuest
             bool playing = true;
             int currentRep = Reputation.Get();
 
+            // var choice = AnsiConsole.Prompt(
+            //     new SelectionPrompt<string>()
+            //     .Title("Where do you want to sail?")
+            //     .PageSize(20)
+            //     .MoreChoicesText("[grey](Move up and down to reveal more options)[/]")
+            //     .AddChoices(new[] { 
+            //         "Basic Glove Set : 2x multiplier",
+            //         "Eco-friendly Net : 4x multiplier",
+            //         "Eco Shoes : 8x multiplier",
+            //         "Mini Grabber Bot : 16x multiplier",
+            //         "Advanced Eco Drone : 32x multiplier",
+            //         "Community Support : 64x multiplier",
+            //         "Nation-wide Campaign : 128x multiplier",
+            //         "Lidl Bag : 20 inventory cap",
+            //         "Reinforced Backpack : 40 inventory cap",
+            //         "Trash Sledge : 80 inventory cap",
+            //         "Family-size Shopping Cart : 160 inventory cap",
+            //         "Eco Trailer : 320 inventory cap",
+            //         "Solar-Powered Trash Compactor : 640 inventory cap"
+            //     }));
+
             while (playing)
             {
-                Console.WriteLine("\nTrash pick-up upgrades:\n");
+                AnsiConsole.MarkupLine("[bold blue]\nTrash pick-up upgrades:\n[/]");
                 for (int i = 0; i < Multipliers.Count; i++)
                 {
                     Console.WriteLine($"{i + 1}. {Multipliers[i]} : {Math.Pow(2, i + 1)}x multiplier  ({MultipliersRep[i]} rep)");
                 }
-                Console.WriteLine("\nInventory upgrades:\n");
+                AnsiConsole.MarkupLine("[bold blue]\nInventory upgrades:\n[/]");
                 for (int i = 0; i < InventoryUpgrades.Count; i++)
                 {
                     Console.WriteLine($"{i + 1 + Multipliers.Count}. {InventoryUpgrades[i]} : {5 * Math.Pow(2, i + 2)} capacity  ({InventoryRep[i]}) rep");
