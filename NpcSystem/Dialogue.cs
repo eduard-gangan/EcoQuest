@@ -18,7 +18,7 @@ public class Dialogue
     public void Start()
     {
         TriggerDialogue();
-        ConsoleMethods.SlowWrite(Prompt);
+        ConsoleMethods.SlowWriteLine(Prompt);
         while (Active)
         {
             var playerChoice = AnsiConsole.Prompt(

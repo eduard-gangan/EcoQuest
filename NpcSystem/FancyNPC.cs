@@ -21,7 +21,7 @@ public class FancyNPC : NPC
         }
         else
         {
-            AnsiConsole.WriteLine($"[red]You don't have enough reputation to talk to this NPC! You have ({Reputation.Get()} / {ReputationReq}) reputation.[/]");
+            AnsiConsole.MarkupLine($"[bold red]You don't have enough reputation to talk to this NPC! You have ({Reputation.Get()} / {ReputationReq}) reputation.[/]");
         }
     }
 }

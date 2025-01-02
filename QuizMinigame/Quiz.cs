@@ -20,36 +20,37 @@ using static Questions;
 
 public static class Quiz
 {
-    private static List<Question> questionList = List;
+    private static List<Question> questionList = [];
 
     public static void Play(Room currentRoom)
     {
-        // Check if the room is correct
-        
-        if (currentRoom.RoomName.Contains("Port"))
-        {
-            AnsiConsole.MarkupLine("[bald red]You are not in the Port![/]");
-            return;
-        }
+        Credits.AddQuizTries();
+        // End the Dialogue
+        NPCs.Captain.MainDialogue.TriggerDialogue();
+
+        Console.Clear();
 
         // Reset Available Questions
-        questionList = List;
+        questionList = new List<Question>(List);
 
         // Prompt with a number of questions
-        for(int i = 1; i <= 3; i++)
+        for (int i = 1; i <= 8; i++)
         {
             bool Continue = Prompt(i);
             if (!Continue)
+            {
+                Game.DisplayRoomInformation();
                 return;
+            }
         }
 
         // If you answer everything correctly then..
-            // The captain writes some encouraging words.
+        // The captain writes some encouraging words.
         AnsiConsole.WriteLine();
         AnsiConsole.MarkupLine("[bold white]You did it champ![/]");
-
+        ConsoleMethods.SlowWriteLine(">CAPTAIN SYLVIA: You’ve shown courage, wisdom, and unwavering dedication to protecting marine life. \nI couldn’t ask for a better successor. From this moment on, the ship and the mission are yours. You are the new Captain, ready to lead the fight for our oceans and inspire others to join you.");
         AnsiConsole.MarkupLine("[grey37]Press any key to end the game...[/]");
-        
+
         bool end = false;
         while (!end)
         {
@@ -63,13 +64,14 @@ public static class Quiz
         }
 
         // Trigger the game ending.
+        Credits.EndGame();
     }
 
     private static bool Prompt(int streak)
     {
         // Random question
         Random rnd = new Random();
-        Question question = questionList[rnd.Next(questionList.Count)];
+        Question question = questionList[rnd.Next(0, questionList.Count)];
 
         // Remove the question from the current questions list, so that it couldn't be used in the future.
         questionList.Remove(question);
@@ -80,7 +82,7 @@ public static class Quiz
                                 .Title(question.QuestionName)
                                 .AddChoices(question.Choices)
         );
-        
+
         // Validate answer
         if (choice == question.Answer)
         {
@@ -90,7 +92,22 @@ public static class Quiz
         else
         {
             AnsiConsole.MarkupLine("[bold red]Incorrect![/]");
-            AnsiConsole.MarkupLine("[grey37]Do some more reading in the library.[/]");
+            if (streak == 1) AnsiConsole.MarkupLine($"[bold grey37]Answered [[{streak - 1}/8]] correctly![/]");
+            AnsiConsole.MarkupLine("[grey37]Come back here after doing some research in the library[/]");
+            AnsiConsole.WriteLine();
+            AnsiConsole.MarkupLine("[grey37]Press any key to continue...[/]");
+
+            bool end = false;
+            while (!end)
+            {
+                if (Console.KeyAvailable)
+                {
+                    Console.ReadKey(true);
+                    end = true;
+                    Console.Clear();
+                }
+
+            }
             return false;
         }
     }

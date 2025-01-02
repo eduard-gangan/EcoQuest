@@ -21,6 +21,25 @@ public static class ConsoleMethods
                 Thread.Sleep(rnd.Next(min, max));
             }
         }
+    }
+    public static void SlowWriteLine(string text, int min = 25, int max = 35)
+    {
+        Random rnd = new Random();
+        bool skipDelay = false;
+        foreach (char c in text)
+        {
+            Console.Write(c);
+
+            if (Console.KeyAvailable)
+            {
+                Console.ReadKey(true);
+                skipDelay = true;
+            }
+            if (!skipDelay)
+            {
+                Thread.Sleep(rnd.Next(min, max));
+            }
+        }
         Console.WriteLine();
     }
 

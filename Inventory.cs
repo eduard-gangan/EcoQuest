@@ -1,3 +1,5 @@
+using Spectre.Console;
+
 namespace EcoQuest;
 
 public static class Inventory
@@ -47,6 +49,7 @@ public static class Inventory
 
     public static void DisplayInventory()
     {
+        AnsiConsole.MarkupLine($"[grey]>Inventory({Items.Count}/{InventoryCapacity}):[/]");
         if (Items.Count > 0)
         {
             for (int i = 0; i < Items.Count; i++)

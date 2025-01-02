@@ -21,13 +21,11 @@ namespace EcoQuest
     public static class Reputation
     {
         public static int reputation = 0;
-
         public static void Add(int amount)
         {
             reputation += amount;
             QuestSriLanka.CheckQuest();
         }
-
         public static void Decrease(int amount)
         {
             if (reputation - amount >= 0)
@@ -39,7 +37,6 @@ namespace EcoQuest
                 reputation = 0;
             }
         }
-
         public static int Get() { return reputation; }
     }
 }

@@ -45,6 +45,8 @@ public static class FishAnalyzer
 
         //Call, you get a call congratulating and thanking you
         Call();
+        Game.DisplayRoomInformation();
+        QuestIndonesia.Finished();
     }
     private static void Call()
     {
@@ -69,9 +71,9 @@ public static class FishAnalyzer
                 }
             }
         });
-        ConsoleMethods.SlowWrite(">ANDREW: Hey there! I've heard the news.");
-        ConsoleMethods.SlowWrite(">ANDREW: The data you’ve collected is invaluable. You’re a true ally of the ocean! Me and my team will head back to the lab and upload the tracking data. Next, we’ll analyze water samples to assess the health of the reefs.");
-        ConsoleMethods.SlowWrite(">ANDREW: Well done! Thanks to your careful choices, we’ve made excellent progress in our mission to protect the ocean’s biodiversity. Each fish you tagged contributes valuable data that scientists can use to safeguard these species and their habitats.");
+        ConsoleMethods.SlowWriteLine(">ANDREW: Hey there! I've heard the news.");
+        ConsoleMethods.SlowWriteLine(">ANDREW: The data you’ve collected is invaluable. You’re a true ally of the ocean! Me and my team will head back to the lab and upload the tracking data. Next, we’ll analyze water samples to assess the health of the reefs.");
+        ConsoleMethods.SlowWriteLine(">ANDREW: Well done! Thanks to your careful choices, we’ve made excellent progress in our mission to protect the ocean’s biodiversity. Each fish you tagged contributes valuable data that scientists can use to safeguard these species and their habitats.");
 
     }
     private static void End(Fish first, Fish second, Fish third, Fish fourth)

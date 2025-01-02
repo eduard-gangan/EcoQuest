@@ -18,30 +18,31 @@ using Spectre.Console;
 public static class Read
 {
     private static List<string> Choices = [];
-    
+
     public static void Start(Room currentRoom)
     {
         // Check if the room is correct.
-        if (currentRoom.RoomName.Contains("Library"))
+        if (!currentRoom.RoomName.Contains("Library"))
         {
-            AnsiConsole.MarkupLine("[bald red]You are not in the Library![/]");
+            AnsiConsole.MarkupLine("[bold red]You are not in the Library![/]");
             return;
         }
 
         // Add all the titles to a list.
         Choices = [];
-        foreach(Book book in List)
+        foreach (Book book in List)
         {
             Choices.Add(book.Title);
         }
         Choices.Add("[dim bold][[Stop reading]][/]");
 
         // Prompt the book selection.
+        Console.Clear();
         bool Continue = true;
         while (Continue)
             Continue = Prompt();
         Console.Clear();
-        Game.DisplayRoomInformation(currentRoom);
+        Game.DisplayRoomInformation();
     }
 
     private static bool Prompt()
@@ -55,21 +56,21 @@ public static class Read
         );
 
         Console.Clear();
-        
+
         // Find the book.
         Book? chosenBook = List.Find(Book => Book.Title == choice);
 
         // Print the book
         if (chosenBook != null)
-            {   
-                var bookTable = new Table().ShowRowSeparators();
-                bookTable.Border = TableBorder.Double;
-                bookTable.AddColumn($"[bold white]{chosenBook.Title}[/]");
-                bookTable.AddRow(new CanvasImage($"./LibrarySystem/Covers/{chosenBook.Title}.png").MaxWidth(16));
-                bookTable.AddRow(chosenBook.Contents);
-                AnsiConsole.Write(bookTable);
-                return true;
-            }
+        {
+            var bookTable = new Table().ShowRowSeparators().Width(60);
+            bookTable.Border = TableBorder.Double;
+            bookTable.AddColumn($"[bold white]{chosenBook.Title}[/]");
+            bookTable.AddRow(new CanvasImage($"./LibrarySystem/Covers/{chosenBook.Title}.png").MaxWidth(32));
+            bookTable.AddRow(chosenBook.Contents);
+            AnsiConsole.Write(bookTable);
+            return true;
+        }
         return false;
     }
 }

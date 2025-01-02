@@ -14,25 +14,35 @@ namespace EcoQuest
             if (amount - Stats.Get() > 0)
             {
                 amount -= Stats.Get();
-                if (amount < 9500 && !milestones[0]){
+                if (amount < 9500 && !milestones[0])
+                {
                     AnsiConsole.MarkupLine("[bold green]\nYou have cleared 500 pieces of trash !\n[/]");
                     AnsiConsole.MarkupLine("[bold green]As the beach clears of trash, the water becomes clearer, and small fish cautiously return to the shore.\n[/]");
-                } else if (amount < 8000 && !milestones[1]){
+                    Program.game.sriLanka.Rooms["port"].ChangeRoomDescription("You are at the central port. To the east is a beach, to the north there is a recycling station, and to the west is the Town Hall.\n[NPC]\nThere is a stranger standing in the port. His face lights up when sees you, maybe you should go talk to him.\n(Use the 'talk' command to interact with them)");
+                    milestones[0] = true;
+
+                }
+                else if (amount < 8000 && !milestones[1])
+                {
                     AnsiConsole.MarkupLine("[bold green]\nYou have cleared 2000 pieces of trash !\n[/]");
                     AnsiConsole.MarkupLine("[bold green]With continued cleanup, vibrant corals begin to bloom, and coastal plants take root, slowly breathing life into the shore.\n[/]");
                     milestones[1] = true;
-                } else if (amount < 5000 && !milestones[2]){
+                }
+                else if (amount < 5000 && !milestones[2])
+                {
                     AnsiConsole.MarkupLine("[bold green]\nYou have cleared 5000 pieces of trash !\n[/]");
                     AnsiConsole.MarkupLine("[bold green]Seabirds start visiting the beach again, and a sea turtle nest appears — a hopeful sign of the ecosystem’s revival.\n[/]");
                     milestones[2] = true;
-                } else if (amount == 0 && !milestones[3]){
+                }
+                else if (amount == 0 && !milestones[3])
+                {
                     AnsiConsole.MarkupLine("[bold green]\nYou have cleared all the trash !\n[/]");
                     AnsiConsole.MarkupLine("[bold green]The beach thrives with life! Dolphins leap in the distance, the reef buzzes with activity, and nature’s beauty is fully restored.\n[/]");
                     milestones[3] = true;
                 }
             }
             else
-            {   
+            {
                 amount = 0;
                 Console.WriteLine("The beach thrives with life! Dolphins leap in the distance, the reef buzzes with activity, and nature’s beauty is fully restored. \n There is no more trash !");
             }
@@ -46,7 +56,10 @@ namespace EcoQuest
             else
             {
                 if (Inventory.Items.Count() == Inventory.InventoryCapacity)
+                {
                     AnsiConsole.MarkupLine("[bold red]Your inventory is full![/]");
+                    AnsiConsole.MarkupLine("[grey] Go to the recycling station and use the command 'sort' or 'dump'.[/]");
+                }
                 else
                 {
                     int stat = Stats.Get();
@@ -215,7 +228,7 @@ namespace EcoQuest
 
                     }
                     PickUp();
-                    AnsiConsole.MarkupLine("$[grey37]Your intuition tells you there are {Get()} pieces of trash left on this beach[/]");
+                    AnsiConsole.MarkupLine($"[grey37]Your intuition tells you there are {Get()} pieces of trash left on this beach[/]");
                 }
             }
         }
