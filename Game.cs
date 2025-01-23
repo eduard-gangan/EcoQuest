@@ -162,7 +162,9 @@ public class Game
                         Console.WriteLine("You can't sail while you have an active quest.");
                     }
                     break;
-
+                case "end":
+                    Credits.EndGame();
+                    break;
                 case "north":
                 case "south":
                 case "east":
